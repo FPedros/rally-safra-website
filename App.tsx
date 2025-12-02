@@ -17,7 +17,7 @@ type View = 'home' | 'blog' | 'post' | 'historia';
 
 const LandingPage: React.FC<{
   onNavigate: (view: View, sectionId?: string) => void;
-  onOpenPost: (postId: number | null) => void;
+  onOpenPost: (postId: number | null, originPage?: number) => void;
   posts: BlogPost[];
   loading: boolean;
 }> = ({ onNavigate, onOpenPost, posts, loading }) => {
@@ -80,6 +80,7 @@ const App: React.FC = () => {
   const [posts, setPosts] = useState<BlogPost[]>(MOCK_POSTS);
   const [loadingPosts, setLoadingPosts] = useState<boolean>(false);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+  const [blogPage, setBlogPage] = useState<number>(1);
   const [scrollToPostId, setScrollToPostId] = useState<number | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -153,6 +154,9 @@ const App: React.FC = () => {
   }, []);
 
   const handleNavigate = (view: View, sectionId?: string) => {
+    if (view === 'blog') {
+      setBlogPage(1);
+    }
     setCurrentView(view);
     if (view !== 'blog') setCategoryFilter(null);
     if (view !== 'post') {
@@ -175,7 +179,12 @@ const App: React.FC = () => {
     }
   };
 
-  const handleOpenPost = (postId: number | null) => {
+  const handleOpenPost = (postId: number | null, originPage?: number) => {
+    if (typeof originPage === 'number') {
+      setBlogPage(originPage);
+    } else {
+      setBlogPage(1);
+    }
     setSelectedPostId(postId);
     if (postId !== null) {
       setCurrentView('post');
@@ -190,6 +199,7 @@ const App: React.FC = () => {
 
   const handleSelectCategory = (category: string) => {
     setCategoryFilter(category);
+    setBlogPage(1);
     setSelectedPostId(null);
     setCurrentView('blog');
     window.scrollTo(0, 0);
@@ -215,6 +225,8 @@ const App: React.FC = () => {
             categoryFilter={categoryFilter}
             onCategorySelect={handleSelectCategory}
             scrollToPostId={scrollToPostId}
+            initialPage={blogPage}
+            onPageChange={setBlogPage}
             onScrollHandled={() => setScrollToPostId(null)}
           />
         ) : currentView === 'historia' ? (

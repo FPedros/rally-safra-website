@@ -5,13 +5,15 @@ import { BlogPost } from '../types';
 
 interface BlogPageProps {
   selectedPostId: number | null;
-  onOpenPost: (postId: number | null) => void;
+  onOpenPost: (postId: number | null, originPage?: number) => void;
   posts: BlogPost[];
   loading?: boolean;
   categoryFilter?: string | null;
   onCategorySelect?: (category: string | null) => void;
   scrollToPostId?: number | null;
   onScrollHandled?: () => void;
+  initialPage?: number;
+  onPageChange?: (page: number) => void;
 }
 
 export const BlogPage: React.FC<BlogPageProps> = ({
@@ -23,36 +25,68 @@ export const BlogPage: React.FC<BlogPageProps> = ({
   onCategorySelect,
   scrollToPostId,
   onScrollHandled,
+  initialPage,
+  onPageChange,
 }) => {
   const filteredPosts = categoryFilter ? posts.filter((p) => p.category === categoryFilter) : posts;
   const heroPost = filteredPosts[0];
   const secondPost = filteredPosts[1];
   const listPosts = filteredPosts.slice(2); // remove destaque e segundo destaque da lista principal
 
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(initialPage || 1);
   const pageSize = 6;
 
   const totalPages = Math.max(1, Math.ceil(Math.max(listPosts.length, 0) / pageSize));
   const pagePosts = listPosts.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
+  useEffect(() => {
+    setCurrentPage(initialPage || 1);
+  }, [initialPage]);
+
   const handleOpen = (postId: number) => {
-    onOpenPost(postId);
+    onOpenPost(postId, currentPage);
   };
 
-  const handlePageChange = (page: number) => {
+  const handlePageChange = (page: number, opts?: { skipScroll?: boolean }) => {
     const clamped = Math.min(Math.max(page, 1), totalPages);
+    if (clamped === currentPage) return;
     setCurrentPage(clamped);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    onPageChange?.(clamped);
+    if (!opts?.skipScroll) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+      onPageChange?.(totalPages);
+    }
+  }, [currentPage, totalPages, onPageChange]);
+
+  useEffect(() => {
     if (!scrollToPostId) return;
+
+    const findPageForPost = (postId: number) => {
+      if (heroPost?.id === postId || secondPost?.id === postId) return 1;
+      const indexInList = listPosts.findIndex((p) => p.id === postId);
+      if (indexInList === -1) return null;
+      return Math.floor(indexInList / pageSize) + 1;
+    };
+
+    const targetPage = findPageForPost(scrollToPostId);
+    if (targetPage && targetPage !== currentPage) {
+      setCurrentPage(targetPage);
+      onPageChange?.(targetPage);
+      return;
+    }
+
     const el = document.getElementById(`post-card-${scrollToPostId}`);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     onScrollHandled?.();
-  }, [scrollToPostId, onScrollHandled]);
+  }, [scrollToPostId, onScrollHandled, onPageChange, heroPost, secondPost, listPosts, currentPage]);
 
   return (
     <div className="bg-[#f4f1ea] min-h-screen pt-32 pb-14">

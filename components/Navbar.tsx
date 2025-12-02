@@ -11,7 +11,6 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categories = [], onSelectCategory }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isBlogOpen, setIsBlogOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [passedHero, setPassedHero] = useState(false);
   const assetBase = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
   const logoMarcaBranca = `${assetBase}hero/marca2026-branca.svg`;
@@ -19,17 +18,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
   const logoBrancaFallback = `${assetBase}hero/marca2026-branca.png`;
   const logoColoridaFallback = `${assetBase}hero/marca2026-colorida.png`;
   const isHeroStage = currentView === 'home' && !passedHero;
-  // Header fica claro no Hero; escurece ao sair dele ou em outras paginas
-  const isDarkNav = !isHeroStage && (scrolled || currentView === 'blog' || currentView === 'post' || currentView === 'historia');
+  // Header fica transparente no Hero; fica branco assim que sair dele ou em outras paginas
+  const isDarkNav = !isHeroStage;
   const logoSrc = isDarkNav ? logoMarcaColorida : logoMarcaBranca; // logo segue a cor atual do header
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Usa sentinela no fim do Hero para saber quando trocar o estilo
   useEffect(() => {
@@ -72,9 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
 
   const ctaClass = isHeroStage
     ? 'border-2 border-white text-white bg-transparent hover:bg-white/10'
-    : isDarkNav
-      ? 'bg-hunter-green text-white hover:bg-dark-green'
-      : 'bg-white text-dark-green hover:bg-gray-100';
+    : 'bg-hunter-green text-white hover:bg-dark-green';
 
   return (
     <nav

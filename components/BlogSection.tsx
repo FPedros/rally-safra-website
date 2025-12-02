@@ -5,7 +5,7 @@ import { BlogPost } from '../types';
 
 interface BlogSectionProps {
   onNavigate: (view: 'home' | 'blog') => void;
-  onOpenPost: (postId: number | null) => void;
+  onOpenPost: (postId: number | null, originPage?: number) => void;
   posts: BlogPost[];
   loading?: boolean;
 }
