@@ -2,18 +2,20 @@ import React from 'react';
 import { Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
 
 export const Footer: React.FC = () => {
+  const assetBase = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
+  const logoBranca = `${assetBase}hero/marca2026-branca.png`;
+
   return (
     <footer className="bg-cafe-noir text-white py-12 border-t border-gray-800">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <div className="mb-6 md:mb-0 text-center md:text-left">
-             <div className="font-heading font-bold text-2xl tracking-tighter mb-2">
-              <span className="text-white">RALLY DA </span>
-              <span className="text-khaki">SAFRA</span>
-            </div>
-            <p className="text-gray-400 text-sm">
-              &copy; {new Date().getFullYear()} Todos os direitos reservados.
-            </p>
+            <img
+              src={logoBranca}
+              alt="Rally da Safra"
+              className="h-28 md:h-32 w-auto mx-auto md:mx-0 drop-shadow-lg"
+            />
+            
           </div>
 
           <div className="flex space-x-6">
@@ -33,7 +35,7 @@ export const Footer: React.FC = () => {
         </div>
         
         <div className="text-center text-gray-500 text-xs mt-8">
-          <p>Política de Privacidade | Termos de Uso</p>
+          <p>Política de Privacidade | Todos os Direito Reservados.</p>
         </div>
       </div>
     </footer>

@@ -1,15 +1,18 @@
 import React from 'react';
-import { MOCK_POSTS } from '../constants';
 import { Calendar, ArrowUpRight, ArrowRight, Bookmark } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { BlogPost } from '../types';
 
 interface BlogSectionProps {
   onNavigate: (view: 'home' | 'blog') => void;
+  onOpenPost: (postId: number | null) => void;
+  posts: BlogPost[];
+  loading?: boolean;
 }
 
-export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate }) => {
-  const featuredPost = MOCK_POSTS[0];
-  const otherPosts = MOCK_POSTS.slice(1, 7); // Show limited posts on home
+export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost, posts, loading }) => {
+  const featuredPost = posts[0];
+  const otherPosts = posts.slice(1, 7);
 
   return (
     <section id="blog" className="py-24 bg-gradient-to-b from-white to-light-sand relative overflow-hidden">
@@ -23,13 +26,13 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate }) => {
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
           <div className="max-w-2xl">
             <span className="text-hunter-green font-bold tracking-wider text-sm uppercase mb-2 block">
-              Notícias & Insights
+              Noticias & Insights
             </span>
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-dark-green leading-tight">
-              Diário de Bordo <span className="text-raw-umber">.</span>
+              Diario de Bordo <span className="text-raw-umber">.</span>
             </h2>
             <p className="mt-4 text-gray-600 text-lg">
-              Acompanhe as últimas atualizações, análises técnicas e os bastidores da nossa expedição pelo Brasil.
+              Acompanhe as ultimas atualizacoes, analises tecnicas e os bastidores da nossa expedicao pelo Brasil.
             </p>
           </div>
           <button 
@@ -42,6 +45,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate }) => {
         </div>
 
         {/* Featured Post Card */}
+        {featuredPost && (
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -88,8 +92,8 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate }) => {
                 {featuredPost.excerpt}
               </p>
               
-              <button onClick={() => onNavigate('blog')} className="inline-flex items-center text-white font-bold text-lg group/btn">
-                Ler matéria completa
+              <button onClick={() => onOpenPost(featuredPost.id)} className="inline-flex items-center text-white font-bold text-lg group/btn">
+                Ler materia completa
                 <span className="ml-3 bg-white/10 p-2 rounded-full group-hover/btn:bg-khaki group-hover/btn:text-dark-green transition-all duration-300">
                   <ArrowUpRight className="w-5 h-5 group-hover/btn:scale-110 transition-transform" />
                 </span>
@@ -97,6 +101,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate }) => {
             </div>
           </div>
         </motion.div>
+        )}
 
         {/* Grid of Other Posts */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -147,7 +152,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate }) => {
                 </p>
                 
                 <div className="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
-                  <button onClick={() => onNavigate('blog')} className="text-dark-green font-bold text-sm flex items-center group/link">
+                  <button onClick={() => onOpenPost(post.id)} className="text-dark-green font-bold text-sm flex items-center group/link">
                     Ler mais 
                     <ArrowUpRight className="w-3 h-3 ml-1 text-raw-umber group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
                   </button>
@@ -164,7 +169,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate }) => {
             onClick={() => onNavigate('blog')}
             className="w-full bg-white border border-gray-300 text-dark-green font-bold py-4 rounded-xl hover:bg-gray-50 transition-colors shadow-sm"
           >
-            Ver todas as notícias
+            Ver todas as noticias
           </button>
         </div>
       </div>

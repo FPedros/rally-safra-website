@@ -1,232 +1,219 @@
-import React from 'react';
-import { MOCK_POSTS } from '../constants';
-import { Calendar, Clock, User, ChevronRight, Search, TrendingUp, Tag } from 'lucide-react';
+import React, { useState } from 'react';
+import { Calendar, Clock, User, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { BlogPost } from '../types';
 
-export const BlogPage: React.FC = () => {
-  const featuredPost = MOCK_POSTS[0];
-  const secondaryPosts = MOCK_POSTS.slice(1, 3);
-  const remainingPosts = MOCK_POSTS.slice(3);
+interface BlogPageProps {
+  selectedPostId: number | null;
+  onOpenPost: (postId: number | null) => void;
+  posts: BlogPost[];
+  loading?: boolean;
+}
 
-  const categories = ["Milho", "Soja", "Algodão", "Tecnologia", "Mercado", "Clima", "Sustentabilidade"];
-  const popularTags = ["Safra 23/24", "El Niño", "Produtividade", "Agro 4.0", "Exportação"];
+export const BlogPage: React.FC<BlogPageProps> = ({ selectedPostId, onOpenPost, posts, loading }) => {
+  const heroPost = posts[0];
+  const secondPost = posts[1];
+  const listPosts = posts.slice(2); // remove destaque e segundo destaque da lista principal
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const pageSize = 6;
+
+  const totalPages = Math.max(1, Math.ceil(Math.max(listPosts.length, 0) / pageSize));
+  const pagePosts = listPosts.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+
+  const handleOpen = (postId: number) => {
+    onOpenPost(postId);
+  };
+
+  const handlePageChange = (page: number) => {
+    const clamped = Math.min(Math.max(page, 1), totalPages);
+    setCurrentPage(clamped);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
-    <div className="bg-[#f4f1ea] min-h-screen pt-24 pb-20">
-      
-      {/* Header Section */}
-      <div className="container mx-auto px-6 mb-12 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <p className="text-hunter-green font-bold tracking-[0.2em] text-sm uppercase mb-3">Rally da Safra</p>
-          <h1 className="font-serif text-5xl md:text-7xl font-bold text-dark-green mb-6">
-            Diário de Campo<span className="text-raw-umber text-6xl">.</span>
-          </h1>
-          <div className="h-1 w-24 bg-raw-umber mx-auto rounded-full"></div>
-        </motion.div>
-      </div>
-
+    <div className="bg-[#f4f1ea] min-h-screen pt-32 pb-14">
       <div className="container mx-auto px-6">
-        
-        {/* Main Featured Layout */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
-          
-          {/* Main Hero Post (Left - 8 cols) */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="lg:col-span-8 group cursor-pointer"
-          >
-            <div className="relative h-[500px] rounded-xl overflow-hidden mb-6 shadow-xl">
-              <img 
-                src={featuredPost.imageUrl} 
-                alt={featuredPost.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 p-8 md:p-10 text-white w-full">
-                <span className="bg-raw-umber text-white text-xs font-bold px-3 py-1 rounded mb-4 inline-block uppercase tracking-wider">
-                  {featuredPost.category}
-                </span>
-                <h2 className="font-serif text-3xl md:text-5xl font-bold mb-4 leading-tight group-hover:text-khaki transition-colors">
-                  {featuredPost.title}
-                </h2>
-                <p className="text-gray-200 text-lg md:text-xl line-clamp-2 max-w-3xl font-sans font-light">
-                  {featuredPost.excerpt}
-                </p>
-                <div className="flex items-center gap-6 mt-6 text-sm text-gray-300 font-sans">
-                  <span className="flex items-center gap-2"><User size={16} /> Equipe Rally</span>
-                  <span className="flex items-center gap-2"><Calendar size={16} /> {featuredPost.date}</span>
-                  <span className="flex items-center gap-2"><Clock size={16} /> 5 min de leitura</span>
+        {/* Hero block */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          <div className="lg:col-span-8">
+            <div className="relative overflow-hidden rounded-3xl shadow-2xl bg-gradient-to-br from-dark-green via-hunter-green to-raw-umber text-white">
+              {heroPost && (
+                <>
+                  <img
+                    src={heroPost.imageUrl}
+                    alt={heroPost.title}
+                    className="absolute inset-0 w-full h-full object-cover opacity-40"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                </>
+              )}
+              <div className="relative p-10 md:p-16">
+                <div className="flex flex-wrap items-center gap-3 text-sm font-bold uppercase tracking-wide mb-4">
+                  <span className="bg-white/15 px-3 py-1 rounded-full border border-white/20 flex items-center gap-2">
+                    <User size={16} /> Equipe Rally
+                  </span>
+                  {heroPost && (
+                    <>
+                      <span className="bg-white/10 px-3 py-1 rounded-full border border-white/20 flex items-center gap-2">
+                        <Calendar size={16} /> {heroPost.date}
+                      </span>
+                      <span className="bg-white/10 px-3 py-1 rounded-full border border-white/20">
+                        {heroPost.category}
+                      </span>
+                    </>
+                  )}
                 </div>
+                <h1 className="font-serif text-4xl md:text-5xl font-bold leading-tight mb-4 drop-shadow">
+                  {heroPost ? heroPost.title : 'Conteudo em breve'}
+                </h1>
+                <p className="text-white/90 text-lg md:text-xl max-w-3xl mb-6">
+                  {heroPost ? heroPost.excerpt : 'Acompanhe as ultimas analises da expedição pelo Brasil.'}
+                </p>
+                {heroPost && (
+                  <button
+                    onClick={() => handleOpen(heroPost.id)}
+                    className="inline-flex items-center gap-2 bg-white text-dark-green font-bold px-6 py-3 rounded-full shadow-lg hover:translate-y-[-1px] transition-all"
+                  >
+                    Ler materia completa
+                    <ChevronRight size={18} />
+                  </button>
+                )}
               </div>
             </div>
-          </motion.div>
-
-          {/* Secondary Featured (Right - 4 cols) */}
-          <div className="lg:col-span-4 flex flex-col gap-8">
-            {secondaryPosts.map((post, idx) => (
-              <motion.div 
-                key={post.id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 + (idx * 0.1) }}
-                className="flex-1 bg-white rounded-xl overflow-hidden shadow-md group hover:shadow-xl transition-all border border-stone-100 flex flex-col"
-              >
-                <div className="h-48 overflow-hidden relative">
-                  <img 
-                    src={post.imageUrl} 
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur text-dark-green text-xs font-bold px-2 py-1 rounded">
-                    {post.category}
-                  </div>
-                </div>
-                <div className="p-6 flex flex-col justify-between flex-grow">
-                  <div>
-                    <h3 className="font-serif text-xl font-bold text-dark-green mb-3 leading-snug group-hover:text-raw-umber transition-colors">
-                      {post.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm line-clamp-2 mb-4">{post.excerpt}</p>
-                  </div>
-                  <div className="text-xs text-gray-400 font-bold uppercase tracking-wider flex justify-between items-center">
-                    <span>{post.date}</span>
-                    <ChevronRight size={16} className="text-raw-umber" />
-                  </div>
-                </div>
-              </motion.div>
-            ))}
           </div>
-        </section>
 
-        {/* Content Grid with Sidebar */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          
-          {/* Main Feed */}
-          <div className="lg:col-span-8">
-            <div className="flex items-center justify-between mb-8 border-b-2 border-hunter-green pb-4">
-              <h3 className="font-heading text-2xl font-bold text-dark-green uppercase tracking-wide">
-                Últimas Notícias
-              </h3>
+          <div className="lg:col-span-4">
+            {secondPost && (
+              <div
+                className="h-full bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden flex flex-col cursor-pointer hover:shadow-2xl transition-shadow"
+                onClick={() => handleOpen(secondPost.id)}
+              >
+                <div className="relative h-52 overflow-hidden">
+                  <img
+                    src={secondPost.imageUrl}
+                    alt={secondPost.title}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                  <span className="absolute top-3 left-3 bg-raw-umber text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Destaque
+                  </span>
+                  <span className="absolute top-3 right-3 bg-white/90 text-dark-green text-xs font-bold px-3 py-1 rounded-full">
+                    {secondPost.category}
+                  </span>
+                </div>
+                <div className="p-6 flex flex-col gap-3 flex-grow">
+                  <div className="flex items-center gap-3 text-xs text-gray-500 font-semibold">
+                    <span className="flex items-center gap-1"><Calendar size={14} /> {secondPost.date}</span>
+                  </div>
+                  <h3 className="font-heading text-2xl text-dark-green font-bold leading-snug hover:text-hunter-green transition-colors">
+                    {secondPost.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                    {secondPost.excerpt}
+                  </p>
+                  <div className="mt-auto inline-flex items-center text-sm font-bold text-raw-umber hover:translate-x-1 transition-transform">
+                    Ler materia <ChevronRight size={16} className="ml-1" />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Rest of posts */}
+        <div className="mt-10">
+          <div className="w-full bg-white/70 backdrop-blur rounded-3xl border border-khaki/30 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.45)] p-6 md:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+              <div>
+                <p className="text-sm font-bold tracking-[0.28em] uppercase text-raw-umber">Leia Mais</p>
+                <h3 className="font-heading text-2xl md:text-3xl font-bold text-dark-green">Explorando a Safra</h3>
+              </div>
+              {loading && <span className="text-sm text-gray-500">Carregando...</span>}
             </div>
 
-            <div className="space-y-8">
-              {remainingPosts.map((post, idx) => (
-                <motion.article 
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {pagePosts.map((post, idx) => (
+                <motion.article
                   key={post.id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="flex flex-col md:flex-row gap-6 bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-all border border-gray-100 group"
+                  transition={{ delay: idx * 0.05 }}
+                  className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl border border-gray-100 flex flex-col cursor-pointer relative"
+                  onClick={() => handleOpen(post.id)}
                 >
-                  <div className="md:w-1/3 h-52 md:h-auto overflow-hidden rounded-lg relative shrink-0">
-                     <img 
-                      src={post.imageUrl} 
+                  <span className="absolute top-3 right-3 bg-raw-umber text-white text-[11px] font-bold px-3 py-1 rounded-full z-10 shadow">
+                    {post.category}
+                  </span>
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={post.imageUrl}
                       alt={post.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
-                  <div className="flex flex-col justify-center flex-grow">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="text-raw-umber font-bold text-xs uppercase tracking-wider">{post.category}</span>
-                      <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-                      <span className="text-gray-400 text-xs">{post.date}</span>
+                  <div className="p-5 flex flex-col gap-3 flex-grow">
+                    <div className="flex items-center gap-3 text-xs text-gray-500 font-semibold">
+                      <span className="flex items-center gap-1"><Calendar size={14} /> {post.date}</span>
                     </div>
-                    <h3 className="font-serif text-2xl font-bold text-dark-green mb-3 group-hover:text-hunter-green transition-colors">
+                    <h4 className="font-heading text-xl text-dark-green font-bold leading-snug group-hover:text-hunter-green transition-colors">
                       {post.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4 line-clamp-2 leading-relaxed">
+                    </h4>
+                    <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
                       {post.excerpt}
                     </p>
-                    <a href={post.url} className="inline-flex items-center text-sm font-bold text-dark-green hover:text-raw-umber transition-colors uppercase tracking-wide">
-                      Ler Artigo Completo <ChevronRight size={16} className="ml-1" />
-                    </a>
+                    <div className="mt-auto inline-flex items-center text-sm font-bold text-raw-umber group-hover:translate-x-1 transition-transform">
+                      Ler materia <ChevronRight size={16} className="ml-1" />
+                    </div>
                   </div>
                 </motion.article>
               ))}
             </div>
 
-            {/* Pagination Mock */}
-            <div className="mt-12 flex justify-center gap-2">
-              <button className="w-10 h-10 flex items-center justify-center rounded-full bg-hunter-green text-white font-bold">1</button>
-              <button className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-dark-green hover:bg-gray-100 font-bold border border-gray-200">2</button>
-              <button className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-dark-green hover:bg-gray-100 font-bold border border-gray-200">3</button>
-              <span className="w-10 h-10 flex items-center justify-center text-gray-400">...</span>
-              <button className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-dark-green hover:bg-gray-100 font-bold border border-gray-200"><ChevronRight size={16} /></button>
-            </div>
-          </div>
-
-          {/* Sidebar */}
-          <aside className="lg:col-span-4 space-y-10">
-            
-            {/* Search Widget */}
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <div className="relative">
-                <input 
-                  type="text" 
-                  placeholder="Buscar notícias..." 
-                  className="w-full bg-gray-50 border border-gray-200 rounded-lg py-3 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-hunter-green text-sm"
-                />
-                <Search className="absolute left-3 top-3.5 text-gray-400" size={18} />
-              </div>
-            </div>
-
-            {/* Newsletter Widget */}
-            <div className="bg-dark-green text-white p-8 rounded-2xl shadow-lg relative overflow-hidden">
-               <div className="absolute top-0 right-0 w-32 h-32 bg-khaki/20 rounded-full translate-x-10 -translate-y-10 blur-xl"></div>
-               <h4 className="font-serif text-2xl font-bold mb-2 relative z-10">Rally News</h4>
-               <p className="text-gray-300 text-sm mb-6 relative z-10">Receba as análises exclusivas da safra diretamente no seu e-mail.</p>
-               <input 
-                  type="email" 
-                  placeholder="Seu melhor e-mail" 
-                  className="w-full bg-white/10 border border-white/20 rounded-lg py-3 px-4 mb-3 text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-khaki"
-                />
-                <button className="w-full bg-khaki text-dark-green font-bold py-3 rounded-lg text-sm hover:bg-white transition-colors">
-                  Inscrever-se
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="mt-6 flex items-center justify-center gap-2 flex-wrap">
+                <button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className={`px-3 py-2 rounded-full border text-sm font-semibold ${
+                    currentPage === 1 ? 'text-gray-400 border-gray-200 cursor-not-allowed' : 'text-dark-green border-gray-300 hover:bg-gray-100'
+                  }`}
+                >
+                  Anterior
                 </button>
-            </div>
-
-            {/* Categories Widget */}
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-              <h4 className="font-heading text-lg font-bold text-dark-green mb-6 flex items-center gap-2">
-                <TrendingUp size={20} className="text-raw-umber" /> Categorias
-              </h4>
-              <ul className="space-y-3">
-                {categories.map((cat, idx) => (
-                  <li key={idx}>
-                    <a href="#" className="flex justify-between items-center text-gray-600 hover:text-hunter-green group transition-colors">
-                      <span className="font-medium">{cat}</span>
-                      <span className="bg-gray-100 text-xs font-bold px-2 py-1 rounded text-gray-400 group-hover:bg-hunter-green/10 group-hover:text-hunter-green transition-colors">
-                        {Math.floor(Math.random() * 20) + 5}
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Popular Tags */}
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-              <h4 className="font-heading text-lg font-bold text-dark-green mb-6 flex items-center gap-2">
-                <Tag size={20} className="text-raw-umber" /> Tópicos em Alta
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {popularTags.map((tag, idx) => (
-                  <a key={idx} href="#" className="bg-gray-50 text-gray-600 text-xs font-bold px-3 py-2 rounded-lg border border-gray-100 hover:bg-raw-umber hover:text-white hover:border-raw-umber transition-all">
-                    #{tag}
-                  </a>
-                ))}
+                {Array.from({ length: totalPages }).map((_, idx) => {
+                  const page = idx + 1;
+                  const isActive = page === currentPage;
+                  return (
+                    <button
+                      key={page}
+                      onClick={() => handlePageChange(page)}
+                      className={`w-10 h-10 rounded-full font-bold ${
+                        isActive
+                          ? 'bg-hunter-green text-white shadow'
+                          : 'bg-white text-dark-green border border-gray-200 hover:bg-gray-100'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  );
+                })}
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className={`px-3 py-2 rounded-full border text-sm font-semibold ${
+                    currentPage === totalPages ? 'text-gray-400 border-gray-200 cursor-not-allowed' : 'text-dark-green border-gray-300 hover:bg-gray-100'
+                  }`}
+                >
+                  Proxima
+                </button>
               </div>
-            </div>
-
-          </aside>
-        </section>
-
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

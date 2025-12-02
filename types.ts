@@ -6,6 +6,7 @@ export interface BlogPost {
   imageUrl: string;
   url: string;
   category: string;
+  content: string;
 }
 
 export interface Sponsor {

@@ -67,7 +67,7 @@ export const Hero: React.FC = () => {
               RALLY DA <span className="text-khaki">SAFRA</span>
             </h1>
             <p className="font-sans text-lg md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto drop-shadow-md">
-              A maior expedição técnica privada sobre a safra de grãos do Brasil.
+              Uma viagem pelo Brasil que produz
             </p>
             <button 
               onClick={() => document.getElementById('historia')?.scrollIntoView({ behavior: 'smooth' })}
