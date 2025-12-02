@@ -16,7 +16,8 @@ export const MOCK_POSTS: BlogPost[] = [
     excerpt: "Confira os dados atualizados das equipes em campo sobre a produtividade da soja no Centro-Oeste.",
     date: "14 Mar 2024",
     imageUrl: "https://images.unsplash.com/photo-1530507629858-e4977d30e9e0?auto=format&fit=crop&q=80&w=800",
-    url: "#"
+    url: "#",
+    category: "Notícias"
   },
   {
     id: 2,
@@ -24,7 +25,8 @@ export const MOCK_POSTS: BlogPost[] = [
     excerpt: "Como a agricultura de precisão está mudando o mapeamento de pragas nas lavouras de milho.",
     date: "10 Mar 2024",
     imageUrl: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&q=80&w=800",
-    url: "#"
+    url: "#",
+    category: "E-book"
   },
   {
     id: 3,
@@ -32,7 +34,8 @@ export const MOCK_POSTS: BlogPost[] = [
     excerpt: "Especialistas discutem como os regimes de chuva afetaram o plantio da segunda safra.",
     date: "05 Mar 2024",
     imageUrl: "https://images.unsplash.com/photo-1594771804886-715c52e46e86?auto=format&fit=crop&q=80&w=800",
-    url: "#"
+    url: "#",
+    category: "Newsletter"
   },
   {
     id: 4,
@@ -40,7 +43,8 @@ export const MOCK_POSTS: BlogPost[] = [
     excerpt: "Logística eficiente garante escoamento rápido da produção para os portos.",
     date: "28 Fev 2024",
     imageUrl: "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?auto=format&fit=crop&q=80&w=800",
-    url: "#"
+    url: "#",
+    category: "Notícias"
   },
   {
     id: 5,
@@ -48,7 +52,8 @@ export const MOCK_POSTS: BlogPost[] = [
     excerpt: "Pesquisadores apresentam sementes mais resistentes à seca para o cerrado.",
     date: "20 Fev 2024",
     imageUrl: "https://images.unsplash.com/photo-1598253241551-76674e30064f?auto=format&fit=crop&q=80&w=800",
-    url: "#"
+    url: "#",
+    category: "Eventos"
   },
   {
     id: 6,
@@ -56,7 +61,17 @@ export const MOCK_POSTS: BlogPost[] = [
     excerpt: "Fazendas modelo mostram que é possível produzir preservando as nascentes.",
     date: "15 Fev 2024",
     imageUrl: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&q=80&w=800",
-    url: "#"
+    url: "#",
+    category: "E-book"
+  },
+  {
+    id: 7,
+    title: "Milho safrinha: Oportunidades",
+    excerpt: "Análise completa sobre o fechamento da janela de plantio e as expectativas de mercado.",
+    date: "12 Fev 2024",
+    imageUrl: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&q=80&w=800",
+    url: "#",
+    category: "Newsletter"
   }
 ];
 

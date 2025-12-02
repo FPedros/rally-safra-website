@@ -5,6 +5,7 @@ export interface BlogPost {
   date: string;
   imageUrl: string;
   url: string;
+  category: string;
 }
 
 export interface Sponsor {
