@@ -9,9 +9,17 @@ interface BlogPageProps {
   posts: BlogPost[];
   loading?: boolean;
   categoryFilter?: string | null;
+  onCategorySelect?: (category: string | null) => void;
 }
 
-export const BlogPage: React.FC<BlogPageProps> = ({ selectedPostId, onOpenPost, posts, loading, categoryFilter }) => {
+export const BlogPage: React.FC<BlogPageProps> = ({
+  selectedPostId,
+  onOpenPost,
+  posts,
+  loading,
+  categoryFilter,
+  onCategorySelect,
+}) => {
   const filteredPosts = categoryFilter ? posts.filter((p) => p.category === categoryFilter) : posts;
   const heroPost = filteredPosts[0];
   const secondPost = filteredPosts[1];
@@ -127,9 +135,35 @@ export const BlogPage: React.FC<BlogPageProps> = ({ selectedPostId, onOpenPost, 
         <div className="mt-10">
           <div className="w-full bg-white/70 backdrop-blur rounded-3xl border border-khaki/30 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.45)] p-6 md:p-8">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-              <div>
+              <div className="flex flex-col gap-1">
                 <p className="text-sm font-bold tracking-[0.28em] uppercase text-raw-umber">Leia Mais</p>
-                <h3 className="font-heading text-2xl md:text-3xl font-bold text-dark-green">Explorando a Safra</h3>
+                <div className="flex items-center gap-3 flex-wrap">
+                  <h3 className="font-heading text-2xl md:text-3xl font-bold text-dark-green">Explorando a Safra</h3>
+                  {onCategorySelect && (
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <select
+                        value={categoryFilter || ''}
+                        onChange={(e) => onCategorySelect(e.target.value || null)}
+                        className="border border-gray-300 rounded-full px-4 py-2 text-sm text-dark-green bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-hunter-green focus:border-transparent"
+                      >
+                        <option value="">Todas as categorias</option>
+                        {Array.from(new Set(posts.map((p) => p.category))).sort().map((cat) => (
+                          <option key={cat} value={cat}>
+                            {cat}
+                          </option>
+                        ))}
+                      </select>
+                      {categoryFilter && (
+                        <button
+                          onClick={() => onCategorySelect(null)}
+                          className="text-sm font-semibold text-raw-umber underline underline-offset-4"
+                        >
+                          Limpar filtro
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
               {loading && <span className="text-sm text-gray-500">Carregando...</span>}
             </div>

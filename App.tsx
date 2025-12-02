@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ChevronUp } from 'lucide-react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { HistorySection } from './components/HistorySection';
@@ -22,6 +23,8 @@ const LandingPage: React.FC<{
 }> = ({ onNavigate, onOpenPost, posts, loading }) => {
   const assetBase = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
   const logoMarcaColorida = `${assetBase}hero/marca2026-colorida.png`;
+  const edicaoImage = `${assetBase}edicao.png`;
+  const edicaoFallback = `${assetBase}nossa-historia.png`;
 
   return (
     <>
@@ -32,13 +35,33 @@ const LandingPage: React.FC<{
           <div className="bg-white shadow-[0_20px_60px_-30px_rgba(0,0,0,0.25)] border border-khaki/30 rounded-3xl p-8 md:p-10 flex flex-col gap-8">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.25em] text-raw-umber mb-2">Edição</p>
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-raw-umber mb-2">Edicao</p>
                 <h2 className="font-heading text-3xl md:text-4xl font-bold">Rally da Safra 2026</h2>
                 <p className="text-gray-600 mt-2 max-w-2xl">
-                  A proxima jornada ja tem data: a edição 2026 traz novas rotas, tecnologias e descobertas pelo agro brasileiro.
+                  A próxima jornada já tem data: a edição 2026 traz novas rotas, tecnologias e descobertas pelo agro brasileiro.
                 </p>
+                <div className="mt-4">
+                  <a
+                    href="https://form.rallydasafra.com.br/e-book-rally-da-safra-2025-largada-algodao"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="relative inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-raw-umber via-hunter-green to-dark-green text-white font-bold text-sm shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all overflow-hidden"
+                  >
+                    <span className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-300 via-hunter-green to-raw-umber opacity-70 blur-sm animate-[spin_6s_linear_infinite]"></span>
+                    <span className="relative z-10">E-book: Largada da Etapa Algodão</span>
+                    <span className="relative z-10 text-xs bg-white/20 px-2 py-1 rounded-full">Download</span>
+                  </a>
+                </div>
               </div>
-              <img src={logoMarcaColorida} alt="Rally da Safra" className="h-30 md:h-40 w-auto drop-shadow-lg" />
+              <img
+                src={edicaoImage}
+                alt="Edicao Rally da Safra"
+                className="h-28 md:h-36 w-auto drop-shadow-lg rounded-2xl object-cover"
+                onError={(e) => {
+                  const target = e.currentTarget as HTMLImageElement;
+                  if (target.src !== edicaoFallback) target.src = edicaoFallback;
+                }}
+              />
             </div>
           </div>
         </div>
@@ -57,6 +80,7 @@ const App: React.FC = () => {
   const [posts, setPosts] = useState<BlogPost[]>(MOCK_POSTS);
   const [loadingPosts, setLoadingPosts] = useState<boolean>(false);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -119,6 +143,14 @@ const App: React.FC = () => {
     fetchPosts();
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const handleNavigate = (view: View, sectionId?: string) => {
     setCurrentView(view);
     if (view !== 'blog') setCategoryFilter(null);
@@ -175,6 +207,7 @@ const App: React.FC = () => {
             posts={posts}
             loading={loadingPosts}
             categoryFilter={categoryFilter}
+            onCategorySelect={handleSelectCategory}
           />
         ) : currentView === 'historia' ? (
           <NossaHistoria />
@@ -183,6 +216,16 @@ const App: React.FC = () => {
         )}
       </main>
       <Footer />
+      {showScrollTop && (
+        <button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-6 right-6 z-[150] p-3 rounded-full bg-gradient-to-r from-hunter-green to-raw-umber text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
+          aria-label="Voltar para o topo"
+        >
+          <ChevronUp className="w-5 h-5" />
+        </button>
+      )}
     </div>
   );
 };

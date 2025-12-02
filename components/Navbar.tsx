@@ -14,8 +14,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
   const [scrolled, setScrolled] = useState(false);
   const [passedHero, setPassedHero] = useState(false);
   const assetBase = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
-  const logoMarcaBranca = `${assetBase}hero/marca2026-branca.png`;
-  const logoMarcaColorida = `${assetBase}hero/marca2026-colorida.png`;
+  const logoMarcaBranca = `${assetBase}hero/marca2026-branca.svg`;
+  const logoMarcaColorida = `${assetBase}hero/marca2026-colorida.svg`;
+  const logoBrancaFallback = `${assetBase}hero/marca2026-branca.png`;
+  const logoColoridaFallback = `${assetBase}hero/marca2026-colorida.png`;
   const isHeroStage = currentView === 'home' && !passedHero;
   // Header fica claro no Hero; escurece ao sair dele ou em outras paginas
   const isDarkNav = !isHeroStage && (scrolled || currentView === 'blog' || currentView === 'post' || currentView === 'historia');
@@ -79,19 +81,25 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
         isDarkNav ? 'bg-white shadow-md py-3' : 'bg-transparent py-6'
       }`}
     >
-      <div className="container mx-auto px-6 flex justify-between items-center">
+      <div className="container mx-auto px-6 flex items-center gap-4">
         {/* Logo */}
         <button onClick={() => handleNavClick('home')} className="flex items-center gap-2">
           <img
             src={logoSrc}
             alt="Rally da Safra"
-            className="h-16 md:h-20 w-auto drop-shadow-lg"
+            className="h-12 md:h-16 w-auto drop-shadow-lg"
+            onError={(e) => {
+              const target = e.currentTarget as HTMLImageElement;
+              const isWhite = target.src.includes('marca2026-branca');
+              const fallback = isWhite ? logoBrancaFallback : logoColoridaFallback;
+              if (target.src !== fallback) target.src = fallback;
+            }}
           />
           <span className="sr-only">Rally da Safra</span>
         </button>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden md:flex items-center space-x-8 ml-auto">
           {navLinks.map((link) => (
             <button
               key={link.name}
@@ -142,16 +150,19 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
               </div>
             )}
           </div>
-          <button
-            onClick={() => handleNavClick('home', 'contato')}
-            className={`px-5 py-2 rounded-full font-bold text-sm transition-colors cursor-pointer ${ctaClass}`}>
+          <a
+            href="https://form.rallydasafra.com.br/e-book-rally-da-safra-2025-largada-algodao"
+            target="_blank"
+            rel="noreferrer"
+            className={`px-5 py-2 rounded-full font-bold text-sm transition-colors cursor-pointer ${ctaClass}`}
+          >
             Inscreva-se
-          </button>
+          </a>
         </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden focus:outline-none"
+          className="md:hidden focus:outline-none ml-auto"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? (

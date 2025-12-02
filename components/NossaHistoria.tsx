@@ -7,10 +7,7 @@ type TimelineEvent = {
 };
 
 const timelineEvents: TimelineEvent[] = [
-  {
-    year: '2000',
-    items: ['Fundação da Agroconsult', 'Criação da Rede Agroconsult de Pesquisas'],
-  },
+  { year: '2000', items: ['Fundação da Agroconsult', 'Criação da Rede Agroconsult de Pesquisas'] },
   {
     year: '2001',
     items: [
@@ -18,10 +15,7 @@ const timelineEvents: TimelineEvent[] = [
       'Criação do índice de produtividade considerando tecnologia e ambiente de produção',
     ],
   },
-  {
-    year: '2002',
-    items: ['Dr. Chico não participa mais das viagens do Rally da Safra'],
-  },
+  { year: '2002', items: ['Dr. Chico não participa mais das viagens do Rally da Safra'] },
   {
     year: '2003',
     items: [
@@ -29,62 +23,20 @@ const timelineEvents: TimelineEvent[] = [
       '10 colaboradores',
     ],
   },
-  {
-    year: '2004',
-    items: ['Abertura de escritório em São Paulo', '16 colaboradores'],
-  },
-  {
-    year: '2005',
-    items: ['Novo índice de qualidade da lavoura', 'Criação do Projeto Pecuária', '23 colaboradores'],
-  },
-  {
-    year: '2006',
-    items: ['Reajuste do Rally da Pecuária'],
-  },
-  {
-    year: '2007',
-    items: ['40 colaboradores'],
-  },
-  {
-    year: '2008',
-    items: ['Lançamento do Índice de Sustentabilidade e início do ICAGRO'],
-  },
-  {
-    year: '2010',
-    items: ['32 colaboradores'],
-  },
-  {
-    year: '2012',
-    items: ['Novo Jade em MS', '40 colaboradores'],
-  },
-  {
-    year: '2013',
-    items: ['Lançamento da 1ª edição do Rally da Pecuária'],
-  },
-  {
-    year: '2014',
-    items: ['30 cidades da 1ª edição do Rally da Pecuária', '45 colaboradores'],
-  },
-  {
-    year: '2015',
-    items: ['100 cidades da edição do Rally da Pecuária', 'Revitalização do ICAGRO'],
-  },
-  {
-    year: '2017',
-    items: ['O ciclo do Rally da Pecuária alcança 168 cidades', '70 colaboradores'],
-  },
-  {
-    year: '2018',
-    items: ['Criação do Rally do Algodão', '80 colaboradores'],
-  },
-  {
-    year: '2019',
-    items: ['Fundação da AG', 'Aprovação e criação do novo índice de produtividade'],
-  },
-  {
-    year: '2021',
-    items: ['Revisão do índice de áreas de pastagem', 'Consolidação do novo índice de produtividade'],
-  },
+  { year: '2004', items: ['Abertura de escritório em São Paulo', '16 colaboradores'] },
+  { year: '2005', items: ['Novo índice de qualidade da lavoura', 'Criação do Projeto Pecuária', '23 colaboradores'] },
+  { year: '2006', items: ['Reajuste do Rally da Pecuária'] },
+  { year: '2007', items: ['40 colaboradores'] },
+  { year: '2008', items: ['Lançamento do Índice de Sustentabilidade e início do ICAGRO'] },
+  { year: '2010', items: ['32 colaboradores'] },
+  { year: '2012', items: ['Novo Jade em MS', '40 colaboradores'] },
+  { year: '2013', items: ['Lançamento da 1ª edição do Rally da Pecuária'] },
+  { year: '2014', items: ['30 cidades da 1ª edição do Rally da Pecuária', '45 colaboradores'] },
+  { year: '2015', items: ['100 cidades da edição do Rally da Pecuária', 'Revitalização do ICAGRO'] },
+  { year: '2017', items: ['O ciclo do Rally da Pecuária alcança 168 cidades', '70 colaboradores'] },
+  { year: '2018', items: ['Criação do Rally do Algodão', '80 colaboradores'] },
+  { year: '2019', items: ['Fundação da AG', 'Aprovação e criação do novo índice de produtividade'] },
+  { year: '2021', items: ['Revisão do índice de áreas de pastagem', 'Consolidação do novo índice de produtividade'] },
   {
     year: '2022',
     items: [
@@ -114,9 +66,7 @@ export const NossaHistoria: React.FC = () => {
 
       <div className="relative container mx-auto px-6 py-20 lg:py-28">
         <div className="max-w-5xl">
-          <p className="text-amber-300 font-semibold uppercase tracking-[0.22em] text-sm mb-3">
-            Linha do Tempo
-          </p>
+          <p className="text-amber-300 font-semibold uppercase tracking-[0.22em] text-sm mb-3">Linha do Tempo</p>
           <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 backdrop-blur border border-white/15 shadow-lg mb-4">
             <span className="w-2 h-2 rounded-full bg-amber-300 animate-pulse" />
             <span className="text-emerald-50/90 text-sm">Do pioneirismo à expansão: nossa trilha pelo agro</span>
