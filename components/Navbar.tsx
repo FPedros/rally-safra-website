@@ -68,6 +68,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
     { name: 'Patrocinadores', view: 'home', sectionId: 'patrocinadores' },
     { name: 'Contato', view: 'home', sectionId: 'contato' },
   ];
+  const navLinksMobile = [...navLinks, { name: 'Blog', view: 'blog', sectionId: undefined }];
 
   const ctaClass = isHeroStage
     ? 'border-2 border-white text-white bg-transparent hover:bg-white/10'
@@ -117,7 +118,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
             onMouseLeave={() => setIsBlogOpen(false)}
           >
             <button
-              onClick={() => handleNavClick('blog')}
+              onClick={() => {
+                setIsBlogOpen(false);
+                handleNavClick('blog');
+              }}
               className={`font-sans font-semibold text-sm uppercase tracking-wide transition-colors hover:text-raw-umber ${
                 isDarkNav ? 'text-dark-green' : 'text-white/90'
               } flex items-center gap-1`}
@@ -176,7 +180,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
       {/* Mobile Menu Overlay */}
       {isOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-xl border-t border-gray-100 p-6 flex flex-col space-y-4 h-screen">
-          {navLinks.map((link) => (
+          {navLinksMobile.map((link) => (
             <button
               key={link.name}
               onClick={() => handleNavClick(link.view as 'home' | 'blog' | 'historia', link.sectionId)}

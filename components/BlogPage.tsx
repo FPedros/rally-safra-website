@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar, Clock, User, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { BlogPost } from '../types';
@@ -10,6 +10,8 @@ interface BlogPageProps {
   loading?: boolean;
   categoryFilter?: string | null;
   onCategorySelect?: (category: string | null) => void;
+  scrollToPostId?: number | null;
+  onScrollHandled?: () => void;
 }
 
 export const BlogPage: React.FC<BlogPageProps> = ({
@@ -19,6 +21,8 @@ export const BlogPage: React.FC<BlogPageProps> = ({
   loading,
   categoryFilter,
   onCategorySelect,
+  scrollToPostId,
+  onScrollHandled,
 }) => {
   const filteredPosts = categoryFilter ? posts.filter((p) => p.category === categoryFilter) : posts;
   const heroPost = filteredPosts[0];
@@ -41,13 +45,22 @@ export const BlogPage: React.FC<BlogPageProps> = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  useEffect(() => {
+    if (!scrollToPostId) return;
+    const el = document.getElementById(`post-card-${scrollToPostId}`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    onScrollHandled?.();
+  }, [scrollToPostId, onScrollHandled]);
+
   return (
     <div className="bg-[#f4f1ea] min-h-screen pt-32 pb-14">
       <div className="container mx-auto px-6">
         {/* Hero block */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           <div className="lg:col-span-8">
-            <div className="relative overflow-hidden rounded-3xl shadow-2xl bg-gradient-to-br from-dark-green via-hunter-green to-raw-umber text-white">
+            <div id={heroPost ? `post-card-${heroPost.id}` : undefined} className="relative overflow-hidden rounded-3xl shadow-2xl bg-gradient-to-br from-dark-green via-hunter-green to-raw-umber text-white">
               {heroPost && (
                 <>
                   <img
@@ -96,6 +109,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({
           <div className="lg:col-span-4">
             {secondPost && (
               <div
+                id={`post-card-${secondPost.id}`}
                 className="h-full bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden flex flex-col cursor-pointer hover:shadow-2xl transition-shadow"
                 onClick={() => handleOpen(secondPost.id)}
               >
@@ -172,6 +186,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({
               {pagePosts.map((post, idx) => (
                 <motion.article
                   key={post.id}
+                  id={`post-card-${post.id}`}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}

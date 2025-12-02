@@ -80,6 +80,7 @@ const App: React.FC = () => {
   const [posts, setPosts] = useState<BlogPost[]>(MOCK_POSTS);
   const [loadingPosts, setLoadingPosts] = useState<boolean>(false);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+  const [scrollToPostId, setScrollToPostId] = useState<number | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
@@ -182,6 +183,11 @@ const App: React.FC = () => {
     }
   };
 
+  const handleBackToBlog = () => {
+    if (selectedPostId) setScrollToPostId(selectedPostId);
+    setCurrentView('blog');
+  };
+
   const handleSelectCategory = (category: string) => {
     setCategoryFilter(category);
     setSelectedPostId(null);
@@ -208,11 +214,13 @@ const App: React.FC = () => {
             loading={loadingPosts}
             categoryFilter={categoryFilter}
             onCategorySelect={handleSelectCategory}
+            scrollToPostId={scrollToPostId}
+            onScrollHandled={() => setScrollToPostId(null)}
           />
         ) : currentView === 'historia' ? (
           <NossaHistoria />
         ) : (
-          <BlogPostDetail postId={selectedPostId} posts={posts} onBack={() => handleNavigate('blog')} />
+          <BlogPostDetail postId={selectedPostId} posts={posts} onBack={handleBackToBlog} />
         )}
       </main>
       <Footer />
