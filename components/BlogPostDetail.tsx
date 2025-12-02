@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Calendar, Clock, User, ArrowLeft } from 'lucide-react';
 import { BlogPost } from '../types';
 
@@ -10,6 +10,35 @@ interface DetailProps {
 
 export const BlogPostDetail: React.FC<DetailProps> = ({ postId, posts, onBack }) => {
   const post = useMemo(() => posts.find((p) => p.id === postId) || null, [postId, posts]);
+
+  useEffect(() => {
+    let startX = 0;
+    let startY = 0;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      startX = touch.clientX;
+      startY = touch.clientY;
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      const touch = e.changedTouches[0];
+      const deltaX = touch.clientX - startX;
+      const deltaY = touch.clientY - startY;
+      const isHorizontal = Math.abs(deltaX) > Math.abs(deltaY);
+      const threshold = 60;
+      if (isHorizontal && deltaX > threshold) {
+        onBack();
+      }
+    };
+
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [onBack]);
 
   if (!post) {
     return (
