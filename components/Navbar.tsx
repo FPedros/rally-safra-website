@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 
 interface NavbarProps {
-  currentView: 'home' | 'blog' | 'post';
-  onNavigate: (view: 'home' | 'blog' | 'post', sectionId?: string) => void;
+  currentView: 'home' | 'blog' | 'post' | 'historia';
+  onNavigate: (view: 'home' | 'blog' | 'post' | 'historia', sectionId?: string) => void;
+  categories?: string[];
+  onSelectCategory?: (category: string) => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
+export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categories = [], onSelectCategory }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isBlogOpen, setIsBlogOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [passedHero, setPassedHero] = useState(false);
   const assetBase = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
   const logoMarcaBranca = `${assetBase}hero/marca2026-branca.png`;
   const logoMarcaColorida = `${assetBase}hero/marca2026-colorida.png`;
-  const logoSrc = currentView === 'home' && !passedHero ? logoMarcaBranca : logoMarcaColorida;
   const isHeroStage = currentView === 'home' && !passedHero;
+  // Header fica claro no Hero; escurece ao sair dele ou em outras paginas
+  const isDarkNav = !isHeroStage && (scrolled || currentView === 'blog' || currentView === 'post' || currentView === 'historia');
+  const logoSrc = isDarkNav ? logoMarcaColorida : logoMarcaBranca; // logo segue a cor atual do header
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,7 +31,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
 
   // Usa sentinela no fim do Hero para saber quando trocar o estilo
   useEffect(() => {
-    if (currentView === 'blog' || currentView === 'post') {
+    if (currentView === 'blog' || currentView === 'post' || currentView === 'historia') {
       setPassedHero(true);
       return;
     }
@@ -50,21 +55,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
     return () => observer.disconnect();
   }, [currentView]);
 
-  const handleNavClick = (view: 'home' | 'blog', sectionId?: string) => {
+  const handleNavClick = (view: 'home' | 'blog' | 'historia', sectionId?: string) => {
     setIsOpen(false);
     onNavigate(view, sectionId);
   };
 
   const navLinks = [
     { name: 'Inicio', view: 'home', sectionId: undefined },
-    { name: 'Nossa Historia', view: 'home', sectionId: 'historia' },
+    { name: 'Nossa Historia', view: 'historia', sectionId: undefined },
     { name: 'Patrocinadores', view: 'home', sectionId: 'patrocinadores' },
-    { name: 'Blog', view: 'blog', sectionId: undefined },
     { name: 'Contato', view: 'home', sectionId: 'contato' },
   ];
 
-  // Estilo claro apos sair do Hero ou no Blog/Post; branco enquanto no Hero
-  const isDarkNav = !isHeroStage && (scrolled || currentView === 'blog' || currentView === 'post');
   const ctaClass = isHeroStage
     ? 'border-2 border-white text-white bg-transparent hover:bg-white/10'
     : isDarkNav
@@ -83,7 +85,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
           <img
             src={logoSrc}
             alt="Rally da Safra"
-            className="h-20 md:h-24 w-auto drop-shadow-lg"
+            className="h-16 md:h-20 w-auto drop-shadow-lg"
           />
           <span className="sr-only">Rally da Safra</span>
         </button>
@@ -93,7 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
           {navLinks.map((link) => (
             <button
               key={link.name}
-              onClick={() => handleNavClick(link.view as 'home' | 'blog', link.sectionId)}
+              onClick={() => handleNavClick(link.view as 'home' | 'blog' | 'historia', link.sectionId)}
               className={`font-sans font-semibold text-sm uppercase tracking-wide transition-colors hover:text-raw-umber ${
                 isDarkNav ? 'text-dark-green' : 'text-white/90'
               }`}
@@ -101,6 +103,45 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
               {link.name}
             </button>
           ))}
+          <div
+            className="relative"
+            onMouseEnter={() => setIsBlogOpen(true)}
+            onMouseLeave={() => setIsBlogOpen(false)}
+          >
+            <button
+              onClick={() => handleNavClick('blog')}
+              className={`font-sans font-semibold text-sm uppercase tracking-wide transition-colors hover:text-raw-umber ${
+                isDarkNav ? 'text-dark-green' : 'text-white/90'
+              } flex items-center gap-1`}
+            >
+              Blog
+              <ChevronDown
+                className={`w-4 h-4 transition-transform duration-200 ${isBlogOpen ? 'rotate-180' : ''} ${
+                  isDarkNav ? 'text-dark-green' : 'text-white/90'
+                }`}
+              />
+            </button>
+            {isBlogOpen && categories.length > 0 && (
+              <div
+                className="absolute right-0 top-full pt-2 w-44 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-[200]"
+                onMouseEnter={() => setIsBlogOpen(true)}
+                onMouseLeave={() => setIsBlogOpen(false)}
+              >
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => {
+                      onSelectCategory?.(cat);
+                      setIsBlogOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2 text-sm text-dark-green hover:bg-gray-100"
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <button
             onClick={() => handleNavClick('home', 'contato')}
             className={`px-5 py-2 rounded-full font-bold text-sm transition-colors cursor-pointer ${ctaClass}`}>
@@ -127,12 +168,33 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
           {navLinks.map((link) => (
             <button
               key={link.name}
-              onClick={() => handleNavClick(link.view as 'home' | 'blog', link.sectionId)}
+              onClick={() => handleNavClick(link.view as 'home' | 'blog' | 'historia', link.sectionId)}
               className="text-dark-green font-semibold text-lg py-2 border-b border-gray-100 text-left"
             >
               {link.name}
             </button>
           ))}
+          <div className="border-b border-gray-100 pb-2">
+            <p className="text-dark-green font-semibold text-lg mb-2">Blog</p>
+            <div className="flex flex-col space-y-2">
+              {categories.length > 0 ? (
+                categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => {
+                      onSelectCategory?.(cat);
+                      setIsOpen(false);
+                    }}
+                    className="text-dark-green text-base text-left px-2 py-1 rounded hover:bg-gray-100"
+                  >
+                    {cat}
+                  </button>
+                ))
+              ) : (
+                <span className="text-sm text-gray-500 px-2">Sem categorias</span>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </nav>

@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
-import { Send, MapPin, Mail, Phone } from 'lucide-react';
+import { Send, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 import { FormData } from '../types';
+
+const TikTokIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" {...props}>
+    <path d="M168 24h-32v120c0 17.673-14.327 32-32 32-17.673 0-32-14.327-32-32s14.327-32 32-32c4.42 0 8.64.9 12.48 2.52V96.27c-4.08-.6-8.2-.92-12.48-.92-35.346 0-64 28.654-64 64s28.654 64 64 64c35.262 0 64-28.738 64-64V114.3c10.43 7.43 23.2 11.7 36.88 11.7V96c-12.75-.04-24.64-4.45-33.85-12.65C168.96 72.47 168 61.77 168 51.68V24z" />
+  </svg>
+);
 
 export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -27,49 +33,82 @@ export const ContactSection: React.FC = () => {
     }, 1500);
   };
 
+  const socialLinks = [
+    {
+      name: 'Instagram',
+      handle: '@rallydasafra',
+      href: 'https://www.instagram.com/rallydasafra/',
+      color: 'from-[#f58529] via-[#dd2a7b] to-[#8134af]',
+      Icon: Instagram,
+    },
+    {
+      name: 'Facebook',
+      handle: '/rallydasafra',
+      href: 'https://www.facebook.com/rallydasafra',
+      color: 'from-[#1877F2] to-[#0f5dc1]',
+      Icon: Facebook,
+    },
+    {
+      name: 'YouTube',
+      handle: '/rallydasafra',
+      href: 'https://www.youtube.com/user/rallydasafra',
+      color: 'from-[#ff0000] to-[#b30000]',
+      Icon: Youtube,
+    },
+    {
+      name: 'X (Twitter)',
+      handle: '@rallydasafra',
+      href: 'https://x.com/i/flow/login?redirect_after_login=%2Frallydasafra',
+      color: 'from-[#1DA1F2] to-[#0f75bd]',
+      Icon: Twitter,
+    },
+    {
+      name: 'TikTok',
+      handle: '@rallydasafra',
+      href: 'https://www.tiktok.com/@rallydasafra',
+      color: 'from-[#69C9D0] to-[#EE1D52]',
+      Icon: TikTokIcon,
+    },
+  ];
+
   return (
     <section id="contato" className="py-24 bg-dark-green text-white relative">
       <div className="container mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-16">
           
-          {/* Info Column */}
+          {/* Redes Sociais / Conteudo */}
           <div>
-            <h2 className="font-heading text-4xl font-bold mb-6">Fale Conosco</h2>
-            <p className="text-gray-200 mb-10 text-lg">
-              Tem alguma dúvida sobre o Rally da Safra ou quer saber como patrocinar? Entre em contato com a nossa equipe.
+            <h2 className="font-heading text-4xl font-bold mb-6">Siga o Rally</h2>
+            <p className="text-gray-200 mb-8 text-lg">
+              Conteudo oficial, bastidores das etapas e novidades em tempo real. Escolha a sua rede favorita e acompanhe o Rally da Safra.
             </p>
 
-            <div className="space-y-6">
-              <div className="flex items-start">
-                <div className="bg-white/10 p-3 rounded-lg mr-4">
-                  <MapPin className="w-6 h-6 text-khaki" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg text-khaki">Nosso Escritório</h4>
-                  <p className="text-gray-300">Av. Brigadeiro Faria Lima, 1234<br/>São Paulo - SP</p>
-                </div>
-              </div>
-
-              <div className="flex items-start">
-                <div className="bg-white/10 p-3 rounded-lg mr-4">
-                  <Mail className="w-6 h-6 text-khaki" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg text-khaki">Email</h4>
-                  <p className="text-gray-300">contato@rallydasafra.com.br</p>
-                </div>
-              </div>
-
-              <div className="flex items-start">
-                <div className="bg-white/10 p-3 rounded-lg mr-4">
-                  <Phone className="w-6 h-6 text-khaki" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg text-khaki">Telefone</h4>
-                  <p className="text-gray-300">+55 (11) 3000-0000</p>
-                </div>
-              </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {socialLinks.map(({ name, handle, href, color, Icon }) => (
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${color} flex items-center justify-center text-white shadow-lg`}>
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-200">Siga no {name}</p>
+                      <p className="font-semibold text-white">{handle}</p>
+                    </div>
+                  </div>
+                  <span className="text-khaki font-bold text-sm group-hover:translate-x-1 transition-transform">Seguir</span>
+                </a>
+              ))}
             </div>
+
+            <p className="text-sm text-gray-300 mt-6">
+              Prefere falar diretamente com a equipe? Deixe sua mensagem ao lado que retornaremos em breve.
+            </p>
           </div>
 
           {/* Form Column */}
@@ -126,7 +165,7 @@ export const ContactSection: React.FC = () => {
                   <option value="">Selecione um assunto</option>
                   <option value="imprensa">Assessoria de Imprensa</option>
                   <option value="patrocinio">Quero Patrocinar</option>
-                  <option value="duvidas">Dúvidas Gerais</option>
+                  <option value="duvidas">Duvidas Gerais</option>
                 </select>
               </div>
 

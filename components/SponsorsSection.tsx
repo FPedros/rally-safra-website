@@ -1,6 +1,28 @@
 import React from 'react';
-import { SPONSORS_SOY, SPONSORS_COTTON } from '../constants';
-import { SponsorCategory } from '../types';
+import { SponsorCategory, Sponsor } from '../types';
+
+const soyImages = import.meta.glob('../public/patrocinadores-soja/*.{png,jpg,jpeg,webp,svg}', {
+  eager: true,
+  as: 'url',
+});
+
+const cottonImages = import.meta.glob('../public/patrocinadores-algodao/*.{png,jpg,jpeg,webp,svg}', {
+  eager: true,
+  as: 'url',
+});
+
+const mapImagesToSponsors = (images: Record<string, string>): Sponsor[] =>
+  Object.entries(images).map(([path, url], idx) => {
+    const fileName = path.split('/').pop() || `patrocinador-${idx + 1}`;
+    const name = fileName
+      .replace(/\.[^.]+$/, '')
+      .replace(/[-_]+/g, ' ')
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+    return { id: idx + 1, name, logoUrl: url };
+  });
+
+const sponsorsSoy = mapImagesToSponsors(soyImages as Record<string, string>);
+const sponsorsCotton = mapImagesToSponsors(cottonImages as Record<string, string>);
 
 export const SponsorsSection: React.FC = () => {
   return (
@@ -9,7 +31,7 @@ export const SponsorsSection: React.FC = () => {
         <div className="text-center mb-16">
           <h2 className="font-heading text-4xl font-bold text-dark-green mb-4">Patrocinadores</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Grandes marcas que apoiam o desenvolvimento do agronegócio brasileiro e fazem o Rally acontecer.
+            Grandes marcas que apoiam o desenvolvimento do agronegocio brasileiro e fazem o Rally acontecer.
           </p>
         </div>
 
@@ -23,17 +45,21 @@ export const SponsorsSection: React.FC = () => {
             <div className="h-px bg-gray-300 flex-1"></div>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            {SPONSORS_SOY.map((sponsor) => (
-              <div key={sponsor.id} className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center justify-center h-40 border border-gray-100">
-                <img 
-                  src={sponsor.logoUrl} 
-                  alt={sponsor.name} 
-                  className="max-h-full max-w-full w-auto h-auto object-contain"
-                />
-              </div>
-            ))}
-          </div>
+          {sponsorsSoy.length === 0 ? (
+            <p className="text-center text-sm text-gray-500">Nenhum patrocinador cadastrado para Milho e Soja.</p>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
+              {sponsorsSoy.map((sponsor) => (
+                <div key={sponsor.id} className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center justify-center h-40 border border-gray-100">
+                  <img 
+                    src={sponsor.logoUrl} 
+                    alt={sponsor.name} 
+                    className="max-h-full max-w-full w-auto h-auto object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Cotton Category */}
@@ -46,17 +72,21 @@ export const SponsorsSection: React.FC = () => {
             <div className="h-px bg-gray-300 flex-1"></div>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {SPONSORS_COTTON.map((sponsor) => (
-              <div key={sponsor.id} className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center justify-center h-32 border border-gray-100">
-                <img 
-                  src={sponsor.logoUrl} 
-                  alt={sponsor.name} 
-                  className="max-h-full max-w-full w-auto h-auto object-contain"
-                />
-              </div>
-            ))}
-          </div>
+          {sponsorsCotton.length === 0 ? (
+            <p className="text-center text-sm text-gray-500">Nenhum patrocinador cadastrado para Algodao.</p>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              {sponsorsCotton.map((sponsor) => (
+                <div key={sponsor.id} className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center justify-center h-32 border border-gray-100">
+                  <img 
+                    src={sponsor.logoUrl} 
+                    alt={sponsor.name} 
+                    className="max-h-full max-w-full w-auto h-auto object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>

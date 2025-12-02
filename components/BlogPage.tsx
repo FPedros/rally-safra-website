@@ -8,12 +8,14 @@ interface BlogPageProps {
   onOpenPost: (postId: number | null) => void;
   posts: BlogPost[];
   loading?: boolean;
+  categoryFilter?: string | null;
 }
 
-export const BlogPage: React.FC<BlogPageProps> = ({ selectedPostId, onOpenPost, posts, loading }) => {
-  const heroPost = posts[0];
-  const secondPost = posts[1];
-  const listPosts = posts.slice(2); // remove destaque e segundo destaque da lista principal
+export const BlogPage: React.FC<BlogPageProps> = ({ selectedPostId, onOpenPost, posts, loading, categoryFilter }) => {
+  const filteredPosts = categoryFilter ? posts.filter((p) => p.category === categoryFilter) : posts;
+  const heroPost = filteredPosts[0];
+  const secondPost = filteredPosts[1];
+  const listPosts = filteredPosts.slice(2); // remove destaque e segundo destaque da lista principal
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const pageSize = 6;
