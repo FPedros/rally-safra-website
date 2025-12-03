@@ -21,6 +21,9 @@ const dynamicHeroImages = Object.keys(heroImports)
 
 export const HERO_IMAGES = dynamicHeroImages;
 
+// E-book para download (espera-se o arquivo em /public/arquivo-download ou /dist/arquivo-download)
+export const EBOOK_DOWNLOAD_URL = `${assetBase}arquivo-download/e-book-rally-safra.pdf`;
+
 export const MOCK_POSTS: BlogPost[] = [
   {
     id: 1,

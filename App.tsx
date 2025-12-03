@@ -10,7 +10,7 @@ import { Footer } from './components/Footer';
 import { BlogPage } from './components/BlogPage';
 import { BlogPostDetail } from './components/BlogPostDetail';
 import { NossaHistoria } from './components/NossaHistoria';
-import { MOCK_POSTS } from './constants';
+import { EBOOK_DOWNLOAD_URL, MOCK_POSTS } from './constants';
 import { BlogPost } from './types';
 
 type View = 'home' | 'blog' | 'post' | 'historia';
@@ -42,13 +42,13 @@ const LandingPage: React.FC<{
                 </p>
                 <div className="mt-4">
                   <a
-                    href="https://form.rallydasafra.com.br/e-book-rally-da-safra-2025-largada-algodao"
+                    href={EBOOK_DOWNLOAD_URL}
                     target="_blank"
                     rel="noreferrer"
                     className="relative inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-raw-umber via-hunter-green to-dark-green text-white font-bold text-sm shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all overflow-hidden"
                   >
                     <span className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-300 via-hunter-green to-raw-umber opacity-70 blur-sm animate-[spin_6s_linear_infinite]"></span>
-                    <span className="relative z-10">E-book: Largada da Etapa Algodão</span>
+                    <span className="relative z-10">Veja a apresentação do projeto</span>
                     <span className="relative z-10 text-xs bg-white/20 px-2 py-1 rounded-full">Download</span>
                   </a>
                 </div>
