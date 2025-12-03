@@ -43,7 +43,7 @@ export const BlogPostDetail: React.FC<DetailProps> = ({ postId, posts, onBack })
   if (!post) {
     return (
       <div className="bg-[#f4f1ea] min-h-screen pt-32 pb-14">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-6 md:px-10 lg:px-16">
           <button onClick={onBack} className="inline-flex items-center gap-2 text-dark-green font-bold mb-6 hover:text-raw-umber">
             <ArrowLeft size={18} /> Voltar
           </button>
@@ -57,7 +57,7 @@ export const BlogPostDetail: React.FC<DetailProps> = ({ postId, posts, onBack })
 
   return (
     <div className="bg-[#f4f1ea] min-h-screen pt-32 pb-14">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 md:px-10 lg:px-16">
         <div className="relative overflow-hidden rounded-3xl shadow-2xl bg-dark-green text-white mb-8">
           <img src={post.imageUrl} alt={post.title} className="absolute inset-0 w-full h-full object-cover opacity-50" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />

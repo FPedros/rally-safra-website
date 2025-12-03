@@ -25,9 +25,12 @@ const sponsorsSoy = mapImagesToSponsors(soyImages as Record<string, string>);
 const sponsorsCotton = mapImagesToSponsors(cottonImages as Record<string, string>);
 
 export const SponsorsSection: React.FC = () => {
+  const hasSoy = sponsorsSoy.length > 0;
+  const hasCotton = sponsorsCotton.length > 0;
+
   return (
     <section id="patrocinadores" className="py-24 bg-light-sand">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 md:px-10 lg:px-16">
         <div className="text-center mb-16">
           <h2 className="font-heading text-4xl font-bold text-dark-green mb-4">Patrocinadores</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
@@ -36,18 +39,16 @@ export const SponsorsSection: React.FC = () => {
         </div>
 
         {/* Soy & Corn Category */}
-        <div className="mb-20">
-          <div className="flex items-center gap-4 mb-10">
-            <div className="h-px bg-gray-300 flex-1"></div>
-            <h3 className="font-heading text-2xl font-bold text-hunter-green px-4 py-2 border border-hunter-green rounded-full bg-white">
-              {SponsorCategory.SOY_CORN}
-            </h3>
-            <div className="h-px bg-gray-300 flex-1"></div>
-          </div>
-          
-          {sponsorsSoy.length === 0 ? (
-            <p className="text-center text-sm text-gray-500">Nenhum patrocinador cadastrado para Milho e Soja.</p>
-          ) : (
+        {hasSoy && (
+          <div className="mb-20">
+            <div className="flex items-center gap-4 mb-10">
+              <div className="h-px bg-gray-300 flex-1"></div>
+              <h3 className="font-heading text-2xl font-bold text-hunter-green px-4 py-2 border border-hunter-green rounded-full bg-white">
+                {SponsorCategory.SOY_CORN}
+              </h3>
+              <div className="h-px bg-gray-300 flex-1"></div>
+            </div>
+            
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
               {sponsorsSoy.map((sponsor) => (
                 <div key={sponsor.id} className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center justify-center h-40 border border-gray-100">
@@ -59,22 +60,20 @@ export const SponsorsSection: React.FC = () => {
                 </div>
               ))}
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Cotton Category */}
-        <div>
-          <div className="flex items-center gap-4 mb-10">
-            <div className="h-px bg-gray-300 flex-1"></div>
-            <h3 className="font-heading text-2xl font-bold text-raw-umber px-4 py-2 border border-raw-umber rounded-full bg-white">
-              {SponsorCategory.COTTON}
-            </h3>
-            <div className="h-px bg-gray-300 flex-1"></div>
-          </div>
-          
-          {sponsorsCotton.length === 0 ? (
-            <p className="text-center text-sm text-gray-500">Nenhum patrocinador cadastrado para Algodao.</p>
-          ) : (
+        {hasCotton && (
+          <div>
+            <div className="flex items-center gap-4 mb-10">
+              <div className="h-px bg-gray-300 flex-1"></div>
+              <h3 className="font-heading text-2xl font-bold text-raw-umber px-4 py-2 border border-raw-umber rounded-full bg-white">
+                {SponsorCategory.COTTON}
+              </h3>
+              <div className="h-px bg-gray-300 flex-1"></div>
+            </div>
+            
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {sponsorsCotton.map((sponsor) => (
                 <div key={sponsor.id} className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center justify-center h-32 border border-gray-100">
@@ -86,8 +85,8 @@ export const SponsorsSection: React.FC = () => {
                 </div>
               ))}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );

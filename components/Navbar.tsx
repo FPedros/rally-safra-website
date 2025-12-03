@@ -71,7 +71,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
         isDarkNav ? 'bg-white shadow-md py-3' : 'bg-transparent py-6'
       }`}
     >
-      <div className="container mx-auto px-6 flex items-center gap-4">
+      <div className="container mx-auto px-6 md:px-10 lg:px-16 flex items-center gap-4">
         {/* Logo */}
         <button onClick={() => handleNavClick('home')} className="flex items-center gap-2">
           <img
@@ -144,12 +144,12 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
             )}
           </div>
           <a
-            href="https://form.rallydasafra.com.br/e-book-rally-da-safra-2025-largada-algodao"
+            href="https://form.rallydasafra.com.br/newsletter-rally-da-safra"
             target="_blank"
             rel="noreferrer"
             className={`px-5 py-2 rounded-full font-bold text-sm transition-colors cursor-pointer ${ctaClass}`}
           >
-            Inscreva-se
+            Inscreva-se na newsletter do Rally
           </a>
         </div>
 

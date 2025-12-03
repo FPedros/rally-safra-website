@@ -1,41 +1,108 @@
 import React from 'react';
-import { Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
+import { Facebook, Instagram, Linkedin } from 'lucide-react';
+
+const XIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 1200 1227" fill="currentColor" aria-hidden="true" {...props}>
+    <path d="M714.163 519.284L1160.89 0h-105.74L671.03 442.72 427.697 0H0l468.211 810.405L0 1226.99h105.74L529.259 762.75l256.704 464.24H1200L714.163 519.284z" />
+  </svg>
+);
 
 export const Footer: React.FC = () => {
   const assetBase = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
   const logoBranca = `${assetBase}hero/marca2026-branca.png`;
 
   return (
-    <footer className="bg-cafe-noir text-white py-12 border-t border-gray-800">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-          <div className="mb-6 md:mb-0 text-center md:text-left">
-            <img
-              src={logoBranca}
-              alt="Rally da Safra"
-              className="h-28 md:h-32 w-auto mx-auto md:mx-0 drop-shadow-lg"
-            />
-            
+    <footer className="bg-dark-green text-white py-12 border-t border-dark-green">
+      <div className="container mx-auto px-6 md:px-10 lg:px-16">
+        <div className="flex flex-col gap-10">
+          <div className="grid md:grid-cols-[1fr,1fr,1.2fr] gap-8 items-start">
+            <div className="space-y-4 text-center md:text-left">
+              <img
+                src={logoBranca}
+                alt="Rally da Safra"
+                className="h-24 md:h-28 w-auto mx-auto md:mx-0 drop-shadow-lg"
+              />
+             
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="font-heading text-xl font-bold text-khaki">Mapa do site</h4>
+              <nav className="grid grid-cols-1 gap-2 text-gray-200 text-sm">
+                <a href="#hero" className="hover:text-khaki transition-colors">Início</a>
+                <a href="#historia" className="hover:text-khaki transition-colors">Nossa História</a>
+                <a href="#patrocinadores" className="hover:text-khaki transition-colors">Patrocinadores</a>
+                <a href="#blog" className="hover:text-khaki transition-colors">Blog</a>
+                <a href="#contato" className="hover:text-khaki transition-colors">Contato</a>
+                <a href="https://form.rallydasafra.com.br/newsletter-rally-da-safra" target="_blank" rel="noreferrer" className="hover:text-khaki transition-colors">
+                  Newsletter
+                </a>
+              </nav>
+            </div>
+
+            <div className="space-y-4">
+              <p className="text-lg font-semibold text-gray-100">
+                Inscreva-se na newsletter do Rally
+              </p>
+              <form
+                action="https://form.rallydasafra.com.br/newsletter-rally-da-safra"
+                method="get"
+                target="_blank"
+                className="flex flex-col sm:flex-row gap-3"
+              >
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Digite seu email"
+                  required
+                  className="flex-1 rounded-full px-4 py-3 bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-khaki focus:border-transparent"
+                />
+                <button
+                  type="submit"
+                  className="px-5 py-3 rounded-full bg-khaki text-dark-green font-bold text-sm transition-colors hover:bg-amber-300 whitespace-nowrap"
+                >
+                  Inscreva-se na newsletter do Rally
+                </button>
+              </form>
+              <div className="flex space-x-6 pt-2">
+                <a
+                  href="https://www.facebook.com/rallydasafra"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-khaki hover:text-white transition-colors"
+                >
+                  <Facebook className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://www.instagram.com/rallydasafra/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-khaki hover:text-white transition-colors"
+                >
+                  <Instagram className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://x.com/rallydasafra"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-khaki hover:text-white transition-colors"
+                >
+                  <XIcon className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/company/rally-da-safra/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-khaki hover:text-white transition-colors"
+                >
+                  <Linkedin className="w-6 h-6" />
+                </a>
+              </div>
+            </div>
           </div>
 
-          <div className="flex space-x-6">
-            <a href="#" className="text-khaki hover:text-white transition-colors">
-              <Facebook className="w-6 h-6" />
-            </a>
-            <a href="#" className="text-khaki hover:text-white transition-colors">
-              <Instagram className="w-6 h-6" />
-            </a>
-            <a href="#" className="text-khaki hover:text-white transition-colors">
-              <Twitter className="w-6 h-6" />
-            </a>
-            <a href="#" className="text-khaki hover:text-white transition-colors">
-              <Linkedin className="w-6 h-6" />
-            </a>
+          <div className="text-center text-gray-400 text-xs">
+            <p>Política de Privacidade | Todos os Direito Reservados.</p>
           </div>
-        </div>
-        
-        <div className="text-center text-gray-500 text-xs mt-8">
-          <p>Política de Privacidade | Todos os Direito Reservados.</p>
         </div>
       </div>
     </footer>

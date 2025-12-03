@@ -3,13 +3,23 @@ import { BlogPost, Sponsor } from './types';
 // Usa BASE_URL para funcionar em deploys em subpasta (evita path quebrado)
 const assetBase = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
 
-export const HERO_IMAGES = [
-  `${assetBase}hero/hero1.jpg`,
-  `${assetBase}hero/hero2.jpg`,
-  `${assetBase}hero/hero3.jpg`,
-  `${assetBase}hero/hero4.jpg`,
-  `${assetBase}hero/hero5.jpg`
-];
+// Carrega automaticamente todas as imagens da pasta public/hero/banner-hero
+const heroImports = import.meta.glob('./public/hero/banner-hero/*.{jpg,jpeg,png,webp,svg,gif}', {
+  eager: true,
+  as: 'url',
+}) as Record<string, string>;
+
+const normalizePublicUrl = (url: string) => {
+  // Remove prefixos como "/public/" ou "./public/" e aplica BASE_URL
+  const cleaned = url.replace(/^\.?\/?public\//, '').replace(/^\//, '');
+  return `${assetBase}${cleaned}`;
+};
+
+const dynamicHeroImages = Object.keys(heroImports)
+  .sort()
+  .map((key) => normalizePublicUrl(heroImports[key]));
+
+export const HERO_IMAGES = dynamicHeroImages;
 
 export const MOCK_POSTS: BlogPost[] = [
   {

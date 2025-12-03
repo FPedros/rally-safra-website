@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
-import { Send, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import { Send, Facebook, Instagram, Youtube } from 'lucide-react';
 import { FormData } from '../types';
 
 const TikTokIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" {...props}>
     <path d="M168 24h-32v120c0 17.673-14.327 32-32 32-17.673 0-32-14.327-32-32s14.327-32 32-32c4.42 0 8.64.9 12.48 2.52V96.27c-4.08-.6-8.2-.92-12.48-.92-35.346 0-64 28.654-64 64s28.654 64 64 64c35.262 0 64-28.738 64-64V114.3c10.43 7.43 23.2 11.7 36.88 11.7V96c-12.75-.04-24.64-4.45-33.85-12.65C168.96 72.47 168 61.77 168 51.68V24z" />
+  </svg>
+);
+
+const XIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 1200 1227" fill="currentColor" aria-hidden="true" {...props}>
+    <path d="M714.163 519.284L1160.89 0h-105.74L671.03 442.72 427.697 0H0l468.211 810.405L0 1226.99h105.74L529.259 762.75l256.704 464.24H1200L714.163 519.284z" />
   </svg>
 );
 
@@ -58,9 +64,9 @@ export const ContactSection: React.FC = () => {
     {
       name: 'X (Twitter)',
       handle: '@rallydasafra',
-      href: 'https://x.com/i/flow/login?redirect_after_login=%2Frallydasafra',
-      color: 'from-[#1DA1F2] to-[#0f75bd]',
-      Icon: Twitter,
+      href: 'https://x.com/rallydasafra',
+      color: 'from-[#111] to-[#333]',
+      Icon: XIcon,
     },
     {
       name: 'TikTok',
@@ -73,7 +79,7 @@ export const ContactSection: React.FC = () => {
 
   return (
     <section id="contato" className="py-24 bg-dark-green text-white relative">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 md:px-10 lg:px-16">
         <div className="grid md:grid-cols-2 gap-16">
           
           {/* Redes Sociais / Conteudo */}

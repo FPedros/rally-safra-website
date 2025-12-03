@@ -10,7 +10,7 @@ export const HistorySection: React.FC<HistorySectionProps> = ({ onNavigate }) =>
     <section id="historia" className="py-20 bg-white relative overflow-hidden">
       <div className="absolute top-0 right-0 w-64 h-64 bg-cerrado-brown/5 rounded-full -translate-y-1/2 translate-x-1/2" />
 
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
+      <div className="container mx-auto px-6 md:px-10 lg:px-16 relative z-10">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2">
             <h2 className="font-heading text-4xl font-bold text-amazon-green mb-6 relative inline-block">

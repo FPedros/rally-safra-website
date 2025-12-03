@@ -90,7 +90,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({
 
   return (
     <div className="bg-[#f4f1ea] min-h-screen pt-32 pb-14">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 md:px-10 lg:px-16">
         {/* Hero block */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           <div className="lg:col-span-8">

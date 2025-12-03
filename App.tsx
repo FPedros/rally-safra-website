@@ -31,7 +31,7 @@ const LandingPage: React.FC<{
       <Hero />
       <div id="hero-end" className="h-px w-full" />
       <section className="bg-light-sand text-dark-green py-12">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-6 md:px-10 lg:px-16">
           <div className="bg-white shadow-[0_20px_60px_-30px_rgba(0,0,0,0.25)] border border-khaki/30 rounded-3xl p-8 md:p-10 flex flex-col gap-8">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>

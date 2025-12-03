@@ -24,6 +24,6 @@ export interface FormData {
 }
 
 export enum SponsorCategory {
-  SOY_CORN = "Milho e Soja",
-  COTTON = "Algodão"
+  SOY_CORN = "Etapa Soja e Milho",
+  COTTON = "Etapa Algodão e Fronteiras"
 }

@@ -64,7 +64,7 @@ export const NossaHistoria: React.FC = () => {
       <div className="absolute bottom-[-20%] right-[-10%] w-[30rem] h-[30rem] bg-emerald-400/20 blur-[140px] rounded-full mix-blend-screen pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(251,191,36,0.12),transparent_30%),radial-gradient(circle_at_80%_60%,rgba(16,185,129,0.12),transparent_30%)]" />
 
-      <div className="relative container mx-auto px-6 py-20 lg:py-28">
+      <div className="relative container mx-auto px-6 md:px-10 lg:px-16 py-20 lg:py-28">
         <div className="max-w-5xl">
           <p className="text-amber-300 font-semibold uppercase tracking-[0.22em] text-sm mb-3">Linha do Tempo</p>
           <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 backdrop-blur border border-white/15 shadow-lg mb-4">

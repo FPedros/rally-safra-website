@@ -22,7 +22,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
         <div className="absolute bottom-1/4 -left-64 w-96 h-96 bg-hunter-green/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 md:px-10 lg:px-16 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
           <div className="max-w-2xl">
             <span className="text-hunter-green font-bold tracking-wider text-sm uppercase mb-2 block">
