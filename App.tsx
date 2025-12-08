@@ -24,7 +24,7 @@ const LandingPage: React.FC<{
   const assetBase = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
   const logoMarcaColorida = `${assetBase}hero/marca2026-colorida.png`;
   const edicaoImage = `${assetBase}edicao.png`;
-  const edicaoFallback = `${assetBase}nossa-historia.png`;
+  const edicaoFallback = `${assetBase}nossa-historia.webp`;
 
   return (
     <>

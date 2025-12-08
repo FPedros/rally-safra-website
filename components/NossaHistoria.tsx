@@ -175,7 +175,7 @@ const timelineEvents: TimelineEvent[] = [
 
 export const NossaHistoria: React.FC = () => {
   const assetBase = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
-  const bgImage = `${assetBase}nossa-historia.png`;
+  const bgImage = `${assetBase}nossa-historia.webp`;
 
   return (
     <section
