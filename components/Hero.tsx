@@ -32,7 +32,15 @@ export const Hero: React.FC = () => {
           className="absolute inset-0 w-full h-full"
           style={{ zIndex: index }}
         >
-          <img src={img} alt={`Rally da Safra Hero ${index + 1}`} className="w-full h-full object-cover opacity-80" />
+          <img
+            src={img}
+            alt={`Rally da Safra Hero ${index + 1}`}
+            loading={index === 0 ? 'eager' : 'lazy'}
+            decoding="async"
+            fetchPriority={index === 0 ? 'high' : 'low'}
+            sizes="100vw"
+            className="w-full h-full object-cover opacity-80"
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-dark-green/50 via-transparent to-dark-green/70" />
         </motion.div>
       ))}
