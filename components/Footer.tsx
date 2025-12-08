@@ -33,36 +33,11 @@ export const Footer: React.FC = () => {
                 <a href="#patrocinadores" className="hover:text-khaki transition-colors">Patrocinadores</a>
                 <a href="#blog" className="hover:text-khaki transition-colors">Blog</a>
                 <a href="#contato" className="hover:text-khaki transition-colors">Contato</a>
-                <a href="https://form.rallydasafra.com.br/newsletter-rally-da-safra" target="_blank" rel="noreferrer" className="hover:text-khaki transition-colors">
-                  Newsletter
-                </a>
               </nav>
             </div>
 
             <div className="space-y-4">
-              <p className="text-lg font-semibold text-gray-100">
-                Inscreva-se na newsletter do Rally
-              </p>
-              <form
-                action="https://form.rallydasafra.com.br/newsletter-rally-da-safra"
-                method="get"
-                target="_blank"
-                className="flex flex-col sm:flex-row gap-3"
-              >
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Digite seu email"
-                  required
-                  className="flex-1 rounded-full px-4 py-3 bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-khaki focus:border-transparent"
-                />
-                <button
-                  type="submit"
-                  className="px-5 py-3 rounded-full bg-khaki text-dark-green font-bold text-sm transition-colors hover:bg-amber-300 whitespace-nowrap"
-                >
-                  Inscreva-se na newsletter do Rally
-                </button>
-              </form>
+              <p className="text-lg font-semibold text-gray-100">Siga o Rally nas redes</p>
               <div className="flex space-x-6 pt-2">
                 <a
                   href="https://www.facebook.com/rallydasafra"

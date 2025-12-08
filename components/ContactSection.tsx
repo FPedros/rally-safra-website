@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
-import { Send, Facebook, Instagram, Youtube } from 'lucide-react';
-import { FormData } from '../types';
+import React, { useEffect } from 'react';
+import { Facebook, Instagram, Youtube } from 'lucide-react';
+
+declare global {
+  interface Window {
+    RDStationForms?: new (id: string, token: string) => { createForm: () => void };
+  }
+}
 
 const TikTokIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" {...props}>
@@ -15,29 +20,46 @@ const XIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 );
 
 export const ContactSection: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  });
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  useEffect(() => {
+    const formId = 'newsletter-rallydasafra-b9ac60da8f734314c843';
+    const token = 'UA-73363960-1';
+    const scriptId = 'rdstation-forms-script';
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+    const initForm = () => {
+      const container = document.getElementById(formId);
+      if (!container) return;
+      if (container.children.length > 0) return; // evita recriar se ja montou
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus('submitting');
-    // Simulate API call
-    setTimeout(() => {
-      setStatus('success');
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-      setTimeout(() => setStatus('idle'), 3000);
-    }, 1500);
-  };
+      if (window.RDStationForms) {
+        try {
+          new window.RDStationForms(formId, token).createForm();
+        } catch (error) {
+          console.error('Erro ao iniciar o RD Station Forms', error);
+        }
+      }
+    };
+
+    let script = document.getElementById(scriptId) as HTMLScriptElement | null;
+
+    if (script && window.RDStationForms) {
+      initForm();
+      return;
+    }
+
+    if (!script) {
+      script = document.createElement('script');
+      script.id = scriptId;
+      script.src = 'https://d335luupugsy2.cloudfront.net/js/rdstation-forms/stable/rdstation-forms.min.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+
+    script.addEventListener('load', initForm);
+
+    return () => {
+      script?.removeEventListener('load', initForm);
+    };
+  }, []);
 
   const socialLinks = [
     {
@@ -80,9 +102,7 @@ export const ContactSection: React.FC = () => {
   return (
     <section id="contato" className="py-24 bg-dark-green text-white relative">
       <div className="container mx-auto px-6 md:px-10 lg:px-16">
-        <div className="grid md:grid-cols-2 gap-16">
-          
-          {/* Redes Sociais / Conteudo */}
+        <div className="grid md:grid-cols-2 gap-16 items-start">
           <div>
             <h2 className="font-heading text-4xl font-bold mb-6">Siga o Rally</h2>
             <p className="text-gray-200 mb-8 text-lg">
@@ -113,95 +133,16 @@ export const ContactSection: React.FC = () => {
             </div>
 
             <p className="text-sm text-gray-300 mt-6">
-              Prefere falar diretamente com a equipe? Deixe sua mensagem ao lado que retornaremos em breve.
+              Prefere falar diretamente com a equipe? Envie uma mensagem pelas redes sociais e retornaremos em breve.
             </p>
           </div>
 
-          {/* Form Column */}
-          <div className="bg-white rounded-2xl p-8 shadow-2xl">
-            <h3 className="text-2xl font-bold text-dark-green mb-6">Envie uma mensagem</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-semibold text-gray-600 mb-1">Nome</label>
-                <input 
-                  type="text" 
-                  name="name"
-                  required
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-800 focus:outline-none focus:ring-2 focus:ring-hunter-green focus:border-transparent transition-all"
-                  placeholder="Seu nome completo"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-600 mb-1">E-mail</label>
-                  <input 
-                    type="email" 
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-800 focus:outline-none focus:ring-2 focus:ring-hunter-green focus:border-transparent transition-all"
-                    placeholder="seu@email.com"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-600 mb-1">Telefone</label>
-                  <input 
-                    type="tel" 
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-800 focus:outline-none focus:ring-2 focus:ring-hunter-green focus:border-transparent transition-all"
-                    placeholder="(00) 00000-0000"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-600 mb-1">Assunto</label>
-                <select 
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-800 focus:outline-none focus:ring-2 focus:ring-hunter-green focus:border-transparent transition-all"
-                >
-                  <option value="">Selecione um assunto</option>
-                  <option value="imprensa">Assessoria de Imprensa</option>
-                  <option value="patrocinio">Quero Patrocinar</option>
-                  <option value="duvidas">Duvidas Gerais</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-600 mb-1">Mensagem</label>
-                <textarea 
-                  name="message"
-                  required
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={4}
-                  className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-800 focus:outline-none focus:ring-2 focus:ring-hunter-green focus:border-transparent transition-all"
-                  placeholder="Como podemos ajudar?"
-                />
-              </div>
-
-              <button 
-                type="submit" 
-                disabled={status !== 'idle'}
-                className="w-full bg-raw-umber hover:bg-cafe-noir text-white font-bold py-4 rounded-lg transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {status === 'idle' && (
-                  <>
-                    Enviar Mensagem <Send className="w-5 h-5" />
-                  </>
-                )}
-                {status === 'submitting' && 'Enviando...'}
-                {status === 'success' && 'Mensagem Enviada!'}
-              </button>
-            </form>
+          <div className="rounded-2xl p-8 border border-white/10 bg-white/5 shadow-2xl text-white">
+            <h3 className="text-2xl font-bold mb-2">Inscreva-se na newsletter do Rally</h3>
+            <p className="text-gray-200 mb-6">
+              Receba novidades e os bastidores das etapas diretamente no seu email.
+            </p>
+            <div id="newsletter-rallydasafra-b9ac60da8f734314c843" role="main" className="newsletter-embed" />
           </div>
         </div>
       </div>
