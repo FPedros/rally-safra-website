@@ -106,7 +106,7 @@ export const ContactSection: React.FC = () => {
           <div>
             <h2 className="font-heading text-4xl font-bold mb-6">Siga o Rally</h2>
             <p className="text-gray-200 mb-8 text-lg">
-              Conteudo oficial, bastidores das etapas e novidades em tempo real. Escolha a sua rede favorita e acompanhe o Rally da Safra.
+              Conteúdo oficial, bastidores das etapas e novidades em tempo real. Escolha a sua rede favorita e acompanhe o Rally da Safra.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4">
@@ -140,7 +140,7 @@ export const ContactSection: React.FC = () => {
           <div className="rounded-2xl p-8 border border-white/10 bg-white/5 shadow-2xl text-white">
             <h3 className="text-2xl font-bold mb-2">Inscreva-se na newsletter do Rally</h3>
             <p className="text-gray-200 mb-6">
-              Receba novidades e os bastidores das etapas diretamente no seu email.
+              Receba novidades e os bastidores das etapas diretamente no seu e-mail.
             </p>
             <div id="newsletter-rallydasafra-b9ac60da8f734314c843" role="main" className="newsletter-embed" />
           </div>
@@ -149,3 +149,4 @@ export const ContactSection: React.FC = () => {
     </section>
   );
 };
+

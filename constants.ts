@@ -32,68 +32,68 @@ export const MOCK_POSTS: BlogPost[] = [
     date: "14 Mar 2024",
     imageUrl: "https://images.unsplash.com/photo-1530507629858-e4977d30e9e0?auto=format&fit=crop&q=80&w=800",
     url: "#",
-    category: "Noticias",
-    content: "O time do Rally percorreu as principais regioes produtoras e encontrou talhoes com boa sanidade e manejo equilibrado de umidade. As primeiras estimativas indicam ganho de produtividade em relacao ao ciclo anterior, especialmente onde o plantio ocorreu dentro da janela ideal.\n\nA equipe destaca que o controle de pragas foi eficiente e que a logistica de insumos ajudou a manter o ritmo do plantio. A consolidacao dos dados segue nas proximas semanas, com atualizacoes por estado."
+    category: "Notícias",
+    content: "O time do Rally percorreu as principais regiões produtoras e encontrou talhões com boa sanidade e manejo equilibrado de umidade. As primeiras estimativas indicam ganho de produtividade em relação ao ciclo anterior, especialmente onde o plantio ocorreu dentro da janela ideal.\n\nA equipe destaca que o controle de pragas foi eficiente e que a logística de insumos ajudou a manter o ritmo do plantio. A consolidação dos dados segue nas próximas semanas, com atualizações por estado."
   },
   {
     id: 2,
     title: "Tecnologia no campo: o uso de drones",
-    excerpt: "Como a agricultura de precisao esta mudando o mapeamento de pragas nas lavouras de milho.",
+    excerpt: "Como a agricultura de precisão está mudando o mapeamento de pragas nas lavouras de milho.",
     date: "10 Mar 2024",
     imageUrl: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&q=80&w=800",
     url: "#",
     category: "E-book",
-    content: "Equipes de campo estao usando drones para identificar falhas de plantio e pontos de infestacao com muito mais rapidez. Os mapas gerados permitem acao localizada, reduzindo custo de insumos e impactos ambientais.\n\nA integracao com estacoes meteorologicas ajuda a priorizar areas de risco e planejar voos. Nos proximos meses, novas rotas de coleta de dados serao abertas para comparar produtividade por talhao."
+    content: "Equipes de campo estão usando drones para identificar falhas de plantio e pontos de infestação com muito mais rapidez. Os mapas gerados permitem ação localizada, reduzindo custo de insumos e impactos ambientais.\n\nA integração com estações meteorológicas ajuda a priorizar áreas de risco e planejar voos. Nos próximos meses, novas rotas de coleta de dados serão abertas para comparar produtividade por talhão."
   },
   {
     id: 3,
-    title: "Clima: o impacto do El Nino",
+    title: "Clima: o impacto do El Niño",
     excerpt: "Especialistas discutem como os regimes de chuva afetaram o plantio da segunda safra.",
     date: "05 Mar 2024",
     imageUrl: "https://images.unsplash.com/photo-1594771804886-715c52e46e86?auto=format&fit=crop&q=80&w=800",
     url: "#",
     category: "Newsletter",
-    content: "O regime de chuvas foi irregular, mas suficiente para garantir nascimento uniforme em grande parte do Centro-Oeste. Produtores ajustaram janelas de plantio e intensificaram monitoramento de solo para evitar perdas por encharcamento.\n\nModelos apontam neutralidade no inicio do proximo trimestre, abrindo espaco para manejo mais agressivo de cobertura e rotacao."
+    content: "O regime de chuvas foi irregular, mas suficiente para garantir nascimento uniforme em grande parte do Centro-Oeste. Produtores ajustaram janelas de plantio e intensificaram monitoramento de solo para evitar perdas por encharcamento.\n\nModelos apontam neutralidade no início do próximo trimestre, abrindo espaço para manejo mais agressivo de cobertura e rotação."
   },
   {
     id: 4,
-    title: "Exportacoes batem recorde em fevereiro",
-    excerpt: "Logistica eficiente garante escoamento rapido da producao para os portos.",
+    title: "Exportações batem recorde em fevereiro",
+    excerpt: "Logística eficiente garante escoamento rápido da produção para os portos.",
     date: "28 Fev 2024",
     imageUrl: "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?auto=format&fit=crop&q=80&w=800",
     url: "#",
-    category: "Noticias",
-    content: "Corredores logisticos operaram acima da media com apoio de ferrovias e janelas maritimas bem sincronizadas. O fluxo rapido evitou gargalos em armazens e manteve premio positivo nos portos.\n\nA perspectiva e manter o ritmo com contratos ja firmados e reforco na frota de caminhoes nos proximos meses."
+    category: "Notícias",
+    content: "Corredores logísticos operaram acima da média com apoio de ferrovias e janelas marítimas bem sincronizadas. O fluxo rápido evitou gargalos em armazéns e manteve prêmio positivo nos portos.\n\nA perspectiva é manter o ritmo com contratos já firmados e reforço na frota de caminhões nos próximos meses."
   },
   {
     id: 5,
-    title: "Novas variedades de algodao",
-    excerpt: "Pesquisadores apresentam sementes mais resistentes a seca para o cerrado.",
+    title: "Novas variedades de algodão",
+    excerpt: "Pesquisadores apresentam sementes mais resistentes à seca para o cerrado.",
     date: "20 Fev 2024",
     imageUrl: "https://images.unsplash.com/photo-1598253241551-76674e30064f?auto=format&fit=crop&q=80&w=800",
     url: "#",
     category: "Eventos",
-    content: "Materiais de nova geracao mostram maior tolerancia a estiagem e melhor arquitetura de planta, facilitando colheita mecanizada. Em ensaios, a perda de produtividade em cenarios de estresse hidrico caiu quase pela metade.\n\nProdutores avaliam custos de licenciamento e recomendam planejamento de adubacao para extrair o potencial genetico dessas cultivares."
+    content: "Materiais de nova geração mostram maior tolerância à estiagem e melhor arquitetura de planta, facilitando colheita mecanizada. Em ensaios, a perda de produtividade em cenários de estresse hídrico caiu quase pela metade.\n\nProdutores avaliam custos de licenciamento e recomendam planejamento de adubação para extrair o potencial genético dessas cultivares."
   },
   {
     id: 6,
-    title: "Sustentabilidade na pratica",
-    excerpt: "Fazendas modelo mostram que e possivel produzir preservando as nascentes.",
+    title: "Sustentabilidade na prática",
+    excerpt: "Fazendas modelo mostram que é possível produzir preservando as nascentes.",
     date: "15 Fev 2024",
     imageUrl: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&q=80&w=800",
     url: "#",
     category: "E-book",
-    content: "Projetos de manejo de bacias com cercamento de nascentes e curvas de nivel reduziram erosao visivelmente. A combinacao de ILP e plantio direto ajuda a manter cobertura vegetal o ano todo e melhora materia organica do solo.\n\nOs resultados apontam aumento de produtividade e menor dependencia de corretivos, gerando ganho economico e ambiental."
+    content: "Projetos de manejo de bacias com cercamento de nascentes e curvas de nível reduziram erosão visivelmente. A combinação de ILP e plantio direto ajuda a manter cobertura vegetal o ano todo e melhora matéria orgânica do solo.\n\nOs resultados apontam aumento de produtividade e menor dependência de corretivos, gerando ganho econômico e ambiental."
   },
   {
     id: 7,
     title: "Milho safrinha: oportunidades",
-    excerpt: "Analise completa sobre o fechamento da janela de plantio e as expectativas de mercado.",
+    excerpt: "Análise completa sobre o fechamento da janela de plantio e as expectativas de mercado.",
     date: "12 Fev 2024",
     imageUrl: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&q=80&w=800",
     url: "#",
     category: "Newsletter",
-    content: "Apesar do atraso inicial, a janela de plantio se manteve dentro do esperado em varias microrregioes. A demanda externa continua firme e mantem os precos sustentados para contratos de exportacao.\n\nAnalistas indicam que a escolha por hibridos precoces pode equilibrar risco climatico e manter margens positivas."
+    content: "Apesar do atraso inicial, a janela de plantio se manteve dentro do esperado em várias microrregiões. A demanda externa continua firme e mantém os preços sustentados para contratos de exportação.\n\nAnalistas indicam que a escolha por híbridos precoces pode equilibrar risco climático e manter margens positivas."
   }
 ];
 

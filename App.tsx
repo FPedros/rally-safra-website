@@ -35,7 +35,7 @@ const LandingPage: React.FC<{
           <div className="bg-white shadow-[0_20px_60px_-30px_rgba(0,0,0,0.25)] border border-khaki/30 rounded-3xl p-8 md:p-10 flex flex-col gap-8">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.25em] text-raw-umber mb-2">Edicao</p>
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-raw-umber mb-2">Edição</p>
                 <h2 className="font-heading text-3xl md:text-4xl font-bold">Rally da Safra 2026</h2>
                 <p className="text-gray-600 mt-2 max-w-2xl">
                   A próxima jornada já tem data: a edição 2026 traz novas rotas, tecnologias e descobertas pelo agro brasileiro.
@@ -55,7 +55,7 @@ const LandingPage: React.FC<{
               </div>
               <img
                 src={edicaoImage}
-                alt="Edicao Rally da Safra"
+                alt="Edição Rally da Safra"
                 className="h-28 md:h-36 w-auto drop-shadow-lg rounded-2xl object-cover"
                 onError={(e) => {
                   const target = e.currentTarget as HTMLImageElement;
@@ -91,7 +91,7 @@ const App: React.FC = () => {
         if (c.includes('evento')) return 'Eventos';
         if (c.includes('ebook') || c.includes('e-book')) return 'E-book';
         if (c.includes('newsletter')) return 'Newsletter';
-        return 'Noticias';
+        return 'Notícias';
       };
       const stripHtml = (html: string) => {
         const tmp = document.createElement('div');
@@ -251,3 +251,5 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+

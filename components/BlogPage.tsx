@@ -122,17 +122,17 @@ export const BlogPage: React.FC<BlogPageProps> = ({
                   )}
                 </div>
                 <h1 className="font-serif text-4xl md:text-5xl font-bold leading-tight mb-4 drop-shadow">
-                  {heroPost ? heroPost.title : 'Conteudo em breve'}
+                  {heroPost ? heroPost.title : 'Conteúdo em breve'}
                 </h1>
                 <p className="text-white/90 text-lg md:text-xl max-w-3xl mb-6">
-                  {heroPost ? heroPost.excerpt : 'Acompanhe as ultimas analises da expedição pelo Brasil.'}
+                  {heroPost ? heroPost.excerpt : 'Acompanhe as últimas análises da expedição pelo Brasil.'}
                 </p>
                 {heroPost && (
                   <button
                     onClick={() => handleOpen(heroPost.id)}
                     className="inline-flex items-center gap-2 bg-white text-dark-green font-bold px-6 py-3 rounded-full shadow-lg hover:translate-y-[-1px] transition-all"
                   >
-                    Ler materia completa
+                    Ler matéria completa
                     <ChevronRight size={18} />
                   </button>
                 )}
@@ -171,7 +171,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({
                     {secondPost.excerpt}
                   </p>
                   <div className="mt-auto inline-flex items-center text-sm font-bold text-raw-umber hover:translate-x-1 transition-transform">
-                    Ler materia <ChevronRight size={16} className="ml-1" />
+                    Ler matéria <ChevronRight size={16} className="ml-1" />
                   </div>
                 </div>
               </div>
@@ -250,7 +250,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({
                       {post.excerpt}
                     </p>
                     <div className="mt-auto inline-flex items-center text-sm font-bold text-raw-umber group-hover:translate-x-1 transition-transform">
-                      Ler materia <ChevronRight size={16} className="ml-1" />
+                      Ler matéria <ChevronRight size={16} className="ml-1" />
                     </div>
                   </div>
                 </motion.article>
@@ -293,7 +293,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({
                     currentPage === totalPages ? 'text-gray-400 border-gray-200 cursor-not-allowed' : 'text-dark-green border-gray-300 hover:bg-gray-100'
                   }`}
                 >
-                  Proxima
+                  Próxima
                 </button>
               </div>
             )}
@@ -303,3 +303,4 @@ export const BlogPage: React.FC<BlogPageProps> = ({
     </div>
   );
 };
+

@@ -6,9 +6,9 @@ import { ChevronDown } from 'lucide-react';
 export const Hero: React.FC = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const editionStats = [
-    { value: '+1.99 Milhões', label: 'de Km percorridos' },
-    { value: '+34 Mil', label: 'lavouras avaliadas' },
-    { value: '+283 Mil', label: 'visualizações de produtores e profissionais do agronegócio' },
+    { value: '+1,99 milhões', label: 'de km percorridos' },
+    { value: '+34 mil', label: 'lavouras avaliadas' },
+    { value: '+283 mil', label: 'visualizações de produtores e profissionais do agronegócio' },
   ];
 
   useEffect(() => {
@@ -70,3 +70,4 @@ export const Hero: React.FC = () => {
     </div>
   );
 };
+

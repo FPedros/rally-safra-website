@@ -54,8 +54,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
   };
 
   const navLinks = [
-    { name: 'Inicio', view: 'home', sectionId: undefined },
-    { name: 'Nossa Historia', view: 'historia', sectionId: undefined },
+    { name: 'Início', view: 'home', sectionId: undefined },
+    { name: 'Nossa História', view: 'historia', sectionId: undefined },
     { name: 'Patrocinadores', view: 'home', sectionId: 'patrocinadores' },
     { name: 'Contato', view: 'home', sectionId: 'contato' },
   ];
@@ -204,3 +204,4 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
     </nav>
   );
 };
+

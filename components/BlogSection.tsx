@@ -26,13 +26,13 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
           <div className="max-w-2xl">
             <span className="text-hunter-green font-bold tracking-wider text-sm uppercase mb-2 block">
-              Noticias & Insights
+              Notícias & Insights
             </span>
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-dark-green leading-tight">
-              Diario de Bordo <span className="text-raw-umber">.</span>
+              Diário de Bordo <span className="text-raw-umber">.</span>
             </h2>
             <p className="mt-4 text-gray-600 text-lg">
-              Acompanhe as ultimas atualizacoes, analises tecnicas e os bastidores da nossa expedicao pelo Brasil.
+              Acompanhe as últimas atualizações, análises técnicas e os bastidores da nossa expedição pelo Brasil.
             </p>
           </div>
           <button 
@@ -93,7 +93,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
               </p>
               
               <button onClick={() => onOpenPost(featuredPost.id)} className="inline-flex items-center text-white font-bold text-lg group/btn">
-                Ler materia completa
+                Ler matéria completa
                 <span className="ml-3 bg-white/10 p-2 rounded-full group-hover/btn:bg-khaki group-hover/btn:text-dark-green transition-all duration-300">
                   <ArrowUpRight className="w-5 h-5 group-hover/btn:scale-110 transition-transform" />
                 </span>
@@ -169,10 +169,11 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
             onClick={() => onNavigate('blog')}
             className="w-full bg-white border border-gray-300 text-dark-green font-bold py-4 rounded-xl hover:bg-gray-50 transition-colors shadow-sm"
           >
-            Ver todas as noticias
+            Ver todas as notícias
           </button>
         </div>
       </div>
     </section>
   );
 };
+

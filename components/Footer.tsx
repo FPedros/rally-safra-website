@@ -76,10 +76,13 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="text-center text-gray-400 text-xs">
-            <p>Política de Privacidade | Todos os Direito Reservados.</p>
+            <p>Política de Privacidade | Todos os Direitos Reservados.</p>
           </div>
         </div>
       </div>
     </footer>
   );
 };
+
+
+

@@ -8,26 +8,26 @@ type TimelineEvent = {
 
 const timelineEvents: TimelineEvent[] = [
   {
-    title: '2003 - O Inicio',
+    title: '2003 - O Início',
     items: [
       'Nasce o projeto "De Olho na Safra" na temporada 2002/2003, realizado pela Agroconsult.',
-      'Uma unica equipe percorreu sete estados em 16 dias.',
-      'Objetivo: avaliar as condicoes das lavouras brasileiras.',
+      'Uma única equipe percorreu sete estados em 16 dias.',
+      'Objetivo: avaliar as condições das lavouras brasileiras.',
     ],
   },
   {
-    title: '2004 - Consolidacao',
+    title: '2004 - Consolidação',
     items: [
       'Passou a chamar-se "Rally da Safra".',
-      'Alem das visitas, comecaram a realizar eventos para reunir agricultores.',
+      'Além das visitas, começaram a realizar eventos para reunir agricultores.',
     ],
   },
   {
     title: '2005 - Safra 2004/2005',
     items: [
       'Marcada por uma seca que prejudicou lavouras no Sul, MT, MS e GO.',
-      'Houve a liberacao do plantio da primeira geracao de soja transgenica.',
-      'Producao no Sul do Brasil foi 20% menor que a safra anterior.',
+      'Houve a liberação do plantio da primeira geração de soja transgênica.',
+      'Produção no Sul do Brasil foi 20% menor que a safra anterior.',
     ],
   },
   {
@@ -38,92 +38,92 @@ const timelineEvents: TimelineEvent[] = [
   },
   {
     title: '2007',
-    items: ['Producao de graos: 122,5 MMT.'],
+    items: ['Produção de grãos: 122,5 MMT.'],
   },
   {
     title: '2008 - Monitoramento OGM',
     items: [
-      'A equipe comecou a coletar dados sobre a participacao de soja OGM (Transgenica).',
+      'A equipe começou a coletar dados sobre a participação de soja OGM (Transgênica).',
       '59% das lavouras avaliadas eram OGM.',
     ],
   },
   {
-    title: '2009 - Milho Transgenico',
+    title: '2009 - Milho Transgênico',
     items: [
-      'Primeira vez que produtores tiveram variedades comerciais de milho OGM a disposicao.',
-      '1,5% das amostras coletadas eram transgenicas.',
+      'Primeira vez que produtores tiveram variedades comerciais de milho OGM à disposição.',
+      '1,5% das amostras coletadas eram transgênicas.',
     ],
   },
   {
     title: '2010 - Produtividade Recorde',
     items: [
-      'Primeira vez na historia com produtividade media acima de 50 sacas por hectare e otima rentabilidade.',
+      'Primeira vez na história com produtividade média acima de 50 sacas por hectare e ótima rentabilidade.',
       'Quarta safra consecutiva com rentabilidade positiva.',
     ],
   },
   {
     title: '2011',
     items: [
-      'Media de 52 sacas de soja por hectare.',
-      'Producao de soja: 118 MMT.',
+      'Média de 52 sacas de soja por hectare.',
+      'Produção de soja: 118 MMT.',
     ],
   },
   {
-    title: '2012 - Inicio do Rally da Safrinha',
+    title: '2012 - Início do Rally da Safrinha',
     items: [
       'O Rally foi a campo pela primeira vez avaliar a "safrinha" de milho.',
-      'A safrinha se tornou maior que a safra de verao (54% do milho produzido foi na safrinha).',
+      'A safrinha se tornou maior que a safra de verão (54% do milho produzido foi na safrinha).',
     ],
   },
   {
-    title: '2013 - 150 Milhoes de Toneladas',
+    title: '2013 - 150 Milhões de Toneladas',
     items: [
       'A safra brasileira (soja + milho) ultrapassou 150 MMT.',
-      'Liberado o plantio da 2a geracao de soja geneticamente modificada.',
+      'Liberado o plantio da 2ª geração de soja geneticamente modificada.',
       'Amostras de milho OGM chegaram a 88% do total.',
     ],
   },
   {
-    title: '2014 - Pragas e Doencas',
-    items: ['Adversidades climaticas e incidencia de pragas frustraram expectativas de recorde.'],
+    title: '2014 - Pragas e Doenças',
+    items: ['Adversidades climáticas e incidência de pragas frustraram expectativas de recorde.'],
   },
   {
     title: '2015 - Safra de Extremos',
     items: [
-      'Chuvas garantiram produtividade em algumas regioes, enquanto estiagem prejudicou outras.',
+      'Chuvas garantiram produtividade em algumas regiões, enquanto estiagem prejudicou outras.',
       'Soja: quase 98 MMT; Milho: 85 MMT.',
     ],
   },
   {
-    title: '2016 - Quebra Climatica',
+    title: '2016 - Quebra Climática',
     items: [
       'Expectativa inicial de superar 100 MMT de soja foi frustrada pelo clima irregular.',
-      'Producao final de soja: 96,3 MMT (1% a menos que a anterior).',
+      'Produção final de soja: 96,3 MMT (1% a menos que a anterior).',
     ],
   },
   {
     title: '2017 - Clima Ideal',
     items: [
-      'Condicoes climaticas proximas do ideal e baixa pressao de pragas.',
+      'Condições climáticas próximas do ideal e baixa pressão de pragas.',
       'Soja: 114,6 MMT; Milho Safrinha: 69,4 MMT.',
     ],
   },
   {
     title: '2018',
     items: [
-      'Producao de soja: 119,5 MMT (Recorde pelo segundo ano consecutivo).',
+      'Produção de soja: 119,5 MMT (recorde pelo segundo ano consecutivo).',
       'Houve atraso no plantio no Sudeste do MT e seca grave no Sul do RS.',
     ],
   },
   {
     title: '2019',
     items: [
-      'Plantio de soja mais antecipado da historia.',
-      'Investimentos em perfil de solo ajudaram a mitigar clima ruim em algumas regioes.',
+      'Plantio de soja mais antecipado da história.',
+      'Investimentos em perfil de solo ajudaram a mitigar clima ruim em algumas regiões.',
     ],
   },
   {
-    title: '2020 - Pandemia e Digitalizacao',
+    title: '2020 - Pandemia e Digitalização',
     items: [
       'Soja: 123,1 MMT.',
       'Com a Covid-19, eventos presenciais viraram lives e a etapa milho foi totalmente virtual.',
@@ -131,34 +131,44 @@ const timelineEvents: TimelineEvent[] = [
     ],
   },
   {
-    title: '2021 - Atraso e Recuperacao',
+    title: '2021 - Atraso e Recuperação',
     items: [
-      'Clima irregular atrasou o plantio, mas lavouras recuperaram: Recorde de soja (137,1 MMT).',
+      'Clima irregular atrasou o plantio, mas lavouras recuperaram: recorde de soja (137,1 MMT).',
       'O milho sofreu com atraso e seca, retraindo 20% (60,9 MMT).',
-      'Metodologia evoluiu para coleta de mais de 1.000 amostras para avaliacao quantitativa.',
+      'Metodologia evoluiu para coleta de mais de 1.000 amostras para avaliação quantitativa.',
     ],
   },
   {
-    title: '2022 - Recuperacao do Milho',
+    title: '2022 - Recuperação do Milho',
     items: [
       'Soja: 127,5 MMT.',
-      'Milho: 92,3 MMT (Recuperacao em relacao a 20/21).',
-      'Alta infestacao de cigarrinhas no milho. Seca no Oeste do PR e no RS atrapalhou a soja.',
+      'Milho: 92,3 MMT (recuperação em relação a 20/21).',
+      'Alta infestação de cigarrinhas no milho. Seca no Oeste do PR e no RS atrapalhou a soja.',
     ],
   },
   {
     title: '2023 - 20 Anos de Rally',
     items: [
       'Quebra de recordes: Soja 157,8 MMT e Milho 108,2 MMT.',
-      'Comemoracao de 20 anos do projeto.',
+      'Comemoração de 20 anos do projeto.',
     ],
   },
   {
-    title: '2024 - 21a Edicao e Alta Tecnologia',
+    title: '2024 - 21ª Edição e Alta Tecnologia',
     items: [
-      'Producao de Soja estimada: 154,1 MMT.',
-      'Area plantada revisada para 46,4 milhoes de hectares com uso de algoritmos e imagens de satelite.',
-      'Cenario de safra avaliado com novas tecnologias.',
+      'Produção de soja estimada: 154,1 MMT.',
+      'Área plantada revisada para 46,4 milhões de hectares com uso de algoritmos e imagens de satélite.',
+      'Cenário de safra avaliado com novas tecnologias.',
+    ],
+  },
+  {
+    title: '2025 - Recordes Históricos',
+    items: [
+      'Um ano marcado por recordes históricos da expedição.',
+      'O Rally da Safra realizou a maior avaliação já feita de soja e milho, somando mais de 2.200 lavouras analisadas, completou 120 dias de campo, o maior volume da série, e ainda alcançou mais de 200 mil seguidores nas redes sociais.',
+      'Além das etapas tradicionais, o projeto ampliou seu escopo e passou a avaliar mais culturas e regiões do país.',
+      'Foi criada a etapa algodão, com quatro equipes percorrendo MT e BA para ouvir produtores e analisar lavouras.',
+      'Também nasceu a etapa fronteiras, dedicada a mapear e entender as novas regiões agrícolas brasileiras — sua primeira edição foi realizada em Roraima, ampliando o conhecimento sobre essa nova fronteira de produção.',
     ],
   },
 ];
@@ -185,11 +195,9 @@ export const NossaHistoria: React.FC = () => {
             <span className="text-emerald-50/90 text-sm">Os Caminhos do Rally da Safra</span>
           </div>
           <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-3 drop-shadow-[0_10px_40px_rgba(0,0,0,0.35)]">
-            Nossa Historia
+            Nossa História
           </h1>
-          <p className="text-emerald-50/90 max-w-3xl text-lg md:text-xl leading-relaxed">
-            Texto organizado cronologicamente e por topicos conforme o infografico "Os Caminhos do Rally da Safra".
-          </p>
+        
         </div>
 
         <div className="relative mt-14">
@@ -232,3 +240,4 @@ export const NossaHistoria: React.FC = () => {
 };
 
 export default NossaHistoria;
+
