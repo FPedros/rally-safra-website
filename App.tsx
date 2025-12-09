@@ -107,7 +107,9 @@ const App: React.FC = () => {
         const allPosts: any[] = [];
 
         while (page <= totalPages) {
-          const res = await fetch(`https://rallydasafra.com.br/wp-json/wp/v2/posts?per_page=${perPage}&page=${page}&_embed`);
+          const res = await fetch(
+            `https://darkorange-tiger-296251.hostingersite.com/wp-json/wp/v2/posts?per_page=${perPage}&page=${page}&_embed`
+          );
           if (!res.ok) break;
           const data = await res.json();
           const headerTotalPages = res.headers.get('X-WP-TotalPages');
