@@ -1,12 +1,12 @@
 import React from 'react';
 import { SponsorCategory, Sponsor } from '../types';
 
-const soyImages = import.meta.glob('../public/patrocinadores-soja/*.{png,jpg,jpeg,webp,svg}', {
+const soyImages = import.meta.glob('../public/patrocinadores-soja/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP,svg,SVG}', {
   eager: true,
   as: 'url',
 });
 
-const cottonImages = import.meta.glob('../public/patrocinadores-algodao/*.{png,jpg,jpeg,webp,svg}', {
+const cottonImages = import.meta.glob('../public/patrocinadores-algodao/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP,svg,SVG}', {
   eager: true,
   as: 'url',
 });
