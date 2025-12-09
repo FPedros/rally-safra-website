@@ -8,7 +8,7 @@ export const Hero: React.FC = () => {
   const editionStats = [
     { value: '+1,99 milhões', label: 'de km percorridos' },
     { value: '+34 mil', label: 'lavouras avaliadas' },
-    { value: '+283 mil', label: 'visualizações de produtores e profissionais do agronegócio' },
+    { value: '+220 mil', label: 'seguidores nas redes sociais' },
   ];
 
   useEffect(() => {
