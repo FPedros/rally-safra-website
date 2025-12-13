@@ -46,7 +46,7 @@ export const Hero: React.FC = () => {
       ))}
 
       {/* Static Overlay Content */}
-      <div className="absolute inset-0 z-50 flex flex-col items-center justify-center text-center px-4">
+      <div className="absolute inset-0 z-50 flex flex-col items-center justify-center text-center px-4 pt-24 md:pt-0">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="max-w-4xl">
           <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold italic text-white mb-4 drop-shadow-xl tracking-tight">
             Rally da <span className="text-khaki">Safra</span>
@@ -78,4 +78,3 @@ export const Hero: React.FC = () => {
     </div>
   );
 };
-

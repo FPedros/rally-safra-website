@@ -12,6 +12,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
   const [isOpen, setIsOpen] = useState(false);
   const [isBlogOpen, setIsBlogOpen] = useState(false);
   const [passedHero, setPassedHero] = useState(false);
+  const [hideForShortMobile, setHideForShortMobile] = useState(false);
   const assetBase = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
   const logoMarcaBranca = `${assetBase}hero/marca2026-branca.svg`;
   const logoMarcaColorida = `${assetBase}hero/marca2026-colorida.svg`;
@@ -22,8 +23,23 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
   const isDarkNav = !isHeroStage;
   const logoSrc = isDarkNav ? logoMarcaColorida : logoMarcaBranca; // logo segue a cor atual do header
 
+  // Esconde o header em viewports muito baixas no mobile para evitar sobreposiЦ╕es
+  useEffect(() => {
+    const checkViewport = () => {
+      if (typeof window === 'undefined') return;
+      const isShort = window.innerHeight < 481;
+      const isMobileWidth = window.innerWidth < 768; // segue breakpoint md do Tailwind
+      setHideForShortMobile(isShort && isMobileWidth);
+    };
+
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
+    return () => window.removeEventListener('resize', checkViewport);
+  }, []);
+
   // Usa sentinela no fim do Hero para saber quando trocar o estilo
   useEffect(() => {
+    if (hideForShortMobile) return;
     if (currentView === 'blog' || currentView === 'post' || currentView === 'historia') {
       setPassedHero(true);
       return;
@@ -46,7 +62,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
 
     observer.observe(sentinel);
     return () => observer.disconnect();
-  }, [currentView]);
+  }, [currentView, hideForShortMobile]);
 
   const handleNavClick = (view: 'home' | 'blog' | 'historia', sectionId?: string) => {
     setIsOpen(false);
@@ -64,6 +80,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
   const ctaClass = isHeroStage
     ? 'border-2 border-white text-white bg-transparent hover:bg-white/10'
     : 'bg-hunter-green text-white hover:bg-dark-green';
+
+  if (hideForShortMobile) return null;
 
   return (
     <nav
@@ -204,4 +222,3 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
     </nav>
   );
 };
-
