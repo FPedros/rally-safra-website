@@ -162,7 +162,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
             )}
           </div>
           <a
-            href="https://form.rallydasafra.com.br/newsletter-rally-da-safra"
+            href="https://rallydasafra.rds.land/newsletter-rally-da-safra"
             target="_blank"
             rel="noreferrer"
             className={`px-5 py-2 rounded-full font-bold text-sm transition-colors cursor-pointer ${ctaClass}`}
