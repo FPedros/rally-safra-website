@@ -1,13 +1,17 @@
 import React from 'react';
 import { Facebook, Instagram, Linkedin } from 'lucide-react';
 
+type FooterProps = {
+  onNavigate?: (view: 'home' | 'blog' | 'post' | 'historia' | 'privacidade', sectionId?: string) => void;
+};
+
 const XIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg viewBox="0 0 1200 1227" fill="currentColor" aria-hidden="true" {...props}>
     <path d="M714.163 519.284L1160.89 0h-105.74L671.03 442.72 427.697 0H0l468.211 810.405L0 1226.99h105.74L529.259 762.75l256.704 464.24H1200L714.163 519.284z" />
   </svg>
 );
 
-export const Footer: React.FC = () => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const assetBase = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
   const logoBranca = `${assetBase}hero/marca2026-branca.png`;
 
@@ -76,7 +80,19 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="text-center text-gray-400 text-xs">
-            <p>Política de Privacidade | Todos os Direitos Reservados.</p>
+            {onNavigate ? (
+              <button
+                type="button"
+                onClick={() => onNavigate('privacidade')}
+                className="text-khaki hover:text-white transition-colors"
+              >
+                Política de Privacidade
+              </button>
+            ) : (
+              <span className="text-khaki">Política de Privacidade</span>
+            )}
+            <span className="mx-2 text-gray-500">|</span>
+            <span>Todos os Direitos Reservados.</span>
           </div>
         </div>
       </div>

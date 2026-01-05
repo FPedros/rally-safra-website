@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 
 interface NavbarProps {
-  currentView: 'home' | 'blog' | 'post' | 'historia';
-  onNavigate: (view: 'home' | 'blog' | 'post' | 'historia', sectionId?: string) => void;
+  currentView: 'home' | 'blog' | 'post' | 'historia' | 'privacidade';
+  onNavigate: (view: 'home' | 'blog' | 'post' | 'historia' | 'privacidade', sectionId?: string) => void;
   categories?: string[];
   onSelectCategory?: (category: string) => void;
 }
@@ -40,7 +40,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
   // Usa sentinela no fim do Hero para saber quando trocar o estilo
   useEffect(() => {
     if (hideForShortMobile) return;
-    if (currentView === 'blog' || currentView === 'post' || currentView === 'historia') {
+    if (currentView === 'blog' || currentView === 'post' || currentView === 'historia' || currentView === 'privacidade') {
       setPassedHero(true);
       return;
     }
@@ -64,7 +64,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
     return () => observer.disconnect();
   }, [currentView, hideForShortMobile]);
 
-  const handleNavClick = (view: 'home' | 'blog' | 'historia', sectionId?: string) => {
+  const handleNavClick = (view: 'home' | 'blog' | 'historia' | 'privacidade', sectionId?: string) => {
     setIsOpen(false);
     onNavigate(view, sectionId);
   };

@@ -10,10 +10,11 @@ import { Footer } from './components/Footer';
 import { BlogPage } from './components/BlogPage';
 import { BlogPostDetail } from './components/BlogPostDetail';
 import { NossaHistoria } from './components/NossaHistoria';
+import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { EBOOK_DOWNLOAD_URL, MOCK_POSTS } from './constants';
 import { BlogPost } from './types';
 
-type View = 'home' | 'blog' | 'post' | 'historia';
+type View = 'home' | 'blog' | 'post' | 'historia' | 'privacidade';
 
 const LandingPage: React.FC<{
   onNavigate: (view: View, sectionId?: string) => void;
@@ -233,11 +234,13 @@ const App: React.FC = () => {
           />
         ) : currentView === 'historia' ? (
           <NossaHistoria />
+        ) : currentView === 'privacidade' ? (
+          <PrivacyPolicy onNavigate={handleNavigate} />
         ) : (
           <BlogPostDetail postId={selectedPostId} posts={posts} onBack={handleBackToBlog} />
         )}
       </main>
-      <Footer />
+      <Footer onNavigate={handleNavigate} />
       {showScrollTop && (
         <button
           type="button"
