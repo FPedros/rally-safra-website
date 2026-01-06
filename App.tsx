@@ -11,6 +11,7 @@ import { BlogPage } from './components/BlogPage';
 import { BlogPostDetail } from './components/BlogPostDetail';
 import { NossaHistoria } from './components/NossaHistoria';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
+import { PrivacyNotice } from './components/PrivacyNotice';
 import { EBOOK_DOWNLOAD_URL, MOCK_POSTS } from './constants';
 import { BlogPost } from './types';
 
@@ -84,6 +85,7 @@ const App: React.FC = () => {
   const [blogPage, setBlogPage] = useState<number>(1);
   const [scrollToPostId, setScrollToPostId] = useState<number | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [showPrivacyNotice, setShowPrivacyNotice] = useState(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -156,6 +158,17 @@ const App: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const privacyNoticeKey = 'rallydasafra_privacy_notice_ack';
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(privacyNoticeKey);
+      if (!stored) setShowPrivacyNotice(true);
+    } catch {
+      setShowPrivacyNotice(true);
+    }
+  }, [privacyNoticeKey]);
+
   const handleNavigate = (view: View, sectionId?: string) => {
     if (view === 'blog') {
       setBlogPage(1);
@@ -208,6 +221,15 @@ const App: React.FC = () => {
     window.scrollTo(0, 0);
   };
 
+  const handlePrivacyNoticeDismiss = () => {
+    try {
+      localStorage.setItem(privacyNoticeKey, new Date().toISOString());
+    } catch {
+      // Ignore storage errors to avoid blocking dismissal.
+    }
+    setShowPrivacyNotice(false);
+  };
+
   return (
     <div className="antialiased text-gray-800 bg-light-sand font-sans">
       <Navbar
@@ -241,6 +263,9 @@ const App: React.FC = () => {
         )}
       </main>
       <Footer onNavigate={handleNavigate} />
+      {showPrivacyNotice && currentView !== 'privacidade' && (
+        <PrivacyNotice onNavigate={handleNavigate} onDismiss={handlePrivacyNoticeDismiss} />
+      )}
       {showScrollTop && (
         <button
           type="button"
