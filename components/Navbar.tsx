@@ -162,12 +162,12 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
             )}
           </div>
           <a
-            href="https://rallydasafra.rds.land/newsletter-rally-da-safra"
+            href="http://rallydasafra.rds.land/evento-online-largada-soja-2026"
             target="_blank"
             rel="noreferrer"
             className={`px-5 py-2 rounded-full font-bold text-sm transition-colors cursor-pointer ${ctaClass}`}
           >
-            Inscreva-se na newsletter do Rally
+            Inscreva-se: Largada da Etapa Soja
           </a>
         </div>
 
