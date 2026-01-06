@@ -86,6 +86,38 @@ const App: React.FC = () => {
   const [scrollToPostId, setScrollToPostId] = useState<number | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showPrivacyNotice, setShowPrivacyNotice] = useState(false);
+  const privacyPath = '/politica-privacidade';
+  const legacyPrivacyPath = '/poitica-privacidade';
+
+  useEffect(() => {
+    const normalizePath = (path: string) => (path || '/').replace(/\/+$/, '') || '/';
+    const getViewFromPath = (path: string): View => {
+      const normalized = normalizePath(path);
+      if (normalized === privacyPath || normalized === legacyPrivacyPath) return 'privacidade';
+      return 'home';
+    };
+
+    const syncViewWithPath = () => {
+      const view = getViewFromPath(window.location.pathname);
+      setCurrentView(view);
+    };
+
+    syncViewWithPath();
+    window.addEventListener('popstate', syncViewWithPath);
+    return () => window.removeEventListener('popstate', syncViewWithPath);
+  }, []);
+
+  const updatePath = (view: View) => {
+    if (view === 'privacidade') {
+      if (window.location.pathname !== privacyPath) {
+        window.history.pushState({}, '', privacyPath);
+      }
+      return;
+    }
+    if (window.location.pathname !== '/') {
+      window.history.pushState({}, '', '/');
+    }
+  };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -174,6 +206,7 @@ const App: React.FC = () => {
       setBlogPage(1);
     }
     setCurrentView(view);
+    updatePath(view);
     if (view !== 'blog') setCategoryFilter(null);
     if (view !== 'post') {
       setSelectedPostId(null);

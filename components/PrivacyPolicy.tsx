@@ -26,8 +26,8 @@ const summaryItems: React.ReactNode[] = [
   </>,
   <>
     <strong>Coletamos informações de terceiros?</strong>{' '}
-    Podemos coletar informações de bancos de dados públicos, parceiros de marketing, plataformas de mídia social e outras
-    fontes externas. Saiba mais sobre as informações coletadas de outras fontes.
+    Podemos coletar informações de bancos de dados públicos, parceiros de marketing, plataformas de mídia social e
+    outras fontes externas. Saiba mais sobre as informações coletadas de outras fontes.
   </>,
   <>
     <strong>Como processamos suas informações?</strong>{' '}
@@ -46,9 +46,9 @@ const summaryItems: React.ReactNode[] = [
     Temos medidas adequadas de segurança organizacional e processos e procedimentos técnicos implementados para proteger
     suas informações pessoais. No entanto, nenhuma transmissão eletrônica pela internet ou tecnologia de armazenamento de
     informações pode ser garantida como 100% segura, portanto, não podemos prometer ou garantir que hackers,
-    cibercriminosos ou outros não consigam acessar suas informações pessoais. Terceiros não poderão burlar nossa segurança
-    e coletar, acessar, roubar ou modificar suas informações indevidamente. Saiba mais sobre como protegemos suas
-    informações.
+    cibercriminosos ou outros não consigam acessar suas informações pessoais. Terceiros não poderão burlar nossa
+    segurança e coletar, acessar, roubar ou modificar suas informações indevidamente. Saiba mais sobre como protegemos
+    suas informações.
   </>,
   <>
     <strong>Quais são os seus direitos?</strong>{' '}
@@ -72,14 +72,29 @@ const indexItems = [
   'COMO PROCESSAMOS SUAS INFORMAÇÕES?',
   'QUANDO E COM QUEM COMPARTILHAMOS SUAS INFORMAÇÕES PESSOAIS?',
   'UTILIZAMOS COOKIES E OUTRAS TECNOLOGIAS DE RASTREAMENTO?',
-  'Por quanto tempo guardamos suas informações?',
+  'POR QUANTO TEMPO GUARDAMOS SUAS INFORMAÇÕES?',
   'COMO MANTEMOS SUAS INFORMAÇÕES SEGURAS?',
-  'Coletamos informações de menores de idade?',
+  'COLETAMOS INFORMAÇÕES DE MENORES DE IDADE?',
   'QUAIS SÃO OS SEUS DIREITOS DE PRIVACIDADE?',
   'CONTROLES PARA RECURSOS DE NÃO RASTREAR',
   'ATUALIZAMOS ESTE AVISO?',
   'COMO VOCÊ PODE ENTRAR EM CONTATO CONOSCO SOBRE ESTE AVISO?',
-  'Como você pode revisar, atualizar ou excluir os dados que coletamos de você?',
+  'COMO VOCÊ PODE REVISAR, ATUALIZAR OU EXCLUIR OS DADOS QUE COLETAMOS DE VOCÊ?',
+];
+
+const indexTargets = [
+  'informacoes-coletamos',
+  'como-processamos',
+  'compartilhamos',
+  'cookies',
+  'retencao',
+  'seguranca',
+  'menores',
+  'direitos-privacidade',
+  'nao-rastrear',
+  'atualizamos-aviso',
+  'contato-aviso',
+  'revisar-dados',
 ];
 
 const summaryClass = 'text-sm italic text-gray-600';
@@ -106,8 +121,8 @@ const sections: PolicySection[] = [
           </p>
           <p>
             <strong>Informações pessoais fornecidas por você.</strong> As informações pessoais que coletamos dependem do
-            contexto de suas interações conosco e com os Serviços, das escolhas que você faz e dos produtos e recursos que
-            você utiliza. As informações pessoais que coletamos podem incluir o seguinte:
+            contexto de suas interações conosco e com os Serviços, das escolhas que você faz e dos produtos e recursos
+            que você utiliza. As informações pessoais que coletamos podem incluir o seguinte:
           </p>
           <ul className="list-disc pl-5 space-y-2">
             <li>nomes</li>
@@ -126,8 +141,8 @@ const sections: PolicySection[] = [
         <div className="space-y-3">
           <h3 className={subheadingClass}>Informações coletadas automaticamente</h3>
           <p className={summaryClass}>
-            <span className="font-semibold not-italic">Resumindo:</span> Algumas informações - como seu endereço de
-            Protocolo de Internet (IP) e/ou características do navegador e do dispositivo - são coletadas automaticamente
+            <span className="font-semibold not-italic">Resumindo:</span> Algumas informações — como seu endereço de
+            Protocolo de Internet (IP) e/ou características do navegador e do dispositivo — são coletadas automaticamente
             quando você visita nossos Serviços.
           </p>
           <p>
@@ -136,8 +151,8 @@ const sections: PolicySection[] = [
             incluir informações sobre o dispositivo e o uso, como seu endereço IP, características do navegador e do
             dispositivo, sistema operacional, preferências de idioma, URLs de referência, nome do dispositivo, país,
             localização, informações sobre como e quando você usa nossos Serviços e outras informações técnicas. Essas
-            informações são necessárias principalmente para manter a segurança e a operação de nossos Serviços e para fins
-            de análise e relatórios internos.
+            informações são necessárias principalmente para manter a segurança e a operação de nossos Serviços e para
+            fins de análise e relatórios internos.
           </p>
           <p>As informações que coletamos incluem:</p>
           <ul className="list-disc pl-5 space-y-2">
@@ -146,10 +161,10 @@ const sections: PolicySection[] = [
               serviço, diagnóstico, uso e desempenho que nossos servidores coletam automaticamente quando você acessa ou
               usa nossos Serviços e que registramos em arquivos de log. Dependendo de como você interage conosco, esses
               dados de registro podem incluir seu endereço IP, informações do dispositivo, tipo e configuração do
-              navegador e informações sobre sua atividade nos Serviços (como os registros de data e hora associados ao seu
-              uso, páginas e arquivos visualizados, pesquisas e outras ações que você realiza, como quais recursos você
-              usa), informações sobre eventos do dispositivo (como atividade do sistema, relatórios de erros (às vezes
-              chamados de "despejos de falha"), e configurações de hardware).
+              navegador e informações sobre sua atividade nos Serviços (como os registros de data e hora associados ao
+              seu uso, páginas e arquivos visualizados, pesquisas e outras ações que você realiza, como quais recursos
+              você usa), informações sobre eventos do dispositivo (como atividade do sistema, relatórios de erros (às
+              vezes chamados de "despejos de falha") e configurações de hardware).
             </li>
             <li>
               <strong>Dados do dispositivo.</strong> Coletamos dados do dispositivo, como informações sobre seu
@@ -162,11 +177,11 @@ const sections: PolicySection[] = [
             <li>
               <strong>Dados de localização.</strong> Coletamos dados de localização, como informações sobre a localização
               do seu dispositivo, que podem ser precisas ou imprecisas. A quantidade de informações coletadas depende do
-              tipo e das configurações do dispositivo que você usa para acessar os Serviços. Por exemplo, podemos usar GPS
-              e outras tecnologias para coletar dados de geolocalização que nos informam sua localização atual (com base
-              no seu endereço IP). Você pode optar por não permitir a coleta dessas informações, recusando o acesso a elas
-              ou desativando a configuração de Localização no seu dispositivo. No entanto, se optar por não permitir a
-              coleta, poderá não conseguir usar certos recursos dos Serviços.
+              tipo e das configurações do dispositivo que você usa para acessar os Serviços. Por exemplo, podemos usar
+              GPS e outras tecnologias para coletar dados de geolocalização que nos informam sua localização atual (com
+              base no seu endereço IP). Você pode optar por não permitir a coleta dessas informações, recusando o acesso
+              a elas ou desativando a configuração de localização no seu dispositivo. No entanto, se optar por não
+              permitir a coleta, poderá não conseguir usar certos recursos dos Serviços.
             </li>
           </ul>
         </div>
@@ -222,7 +237,7 @@ const sections: PolicySection[] = [
       <div className="space-y-4 text-gray-700 leading-relaxed">
         <p className={summaryClass}>
           <span className="font-semibold not-italic">Resumindo:</span> Processamos suas informações para fornecer,
-          aprimorar e administrar nossos Serviços, comunicar-nos com você, para fins de segurança e prevenção de fraudes,
+          aprimorar e administrar nossos Serviços, comunicar-nos com você, para fins de segurança e prevenção de fraudes
           e para cumprir a lei. Também podemos processar suas informações para outros fins com o seu consentimento.
         </p>
         <p>
@@ -249,8 +264,8 @@ const sections: PolicySection[] = [
           </li>
           <li>
             <strong>Para avaliar e melhorar nossos Serviços, produtos, marketing e sua experiência.</strong> Podemos
-            processar suas informações quando acreditarmos ser necessário para identificar tendências de uso, determinar a
-            eficácia de nossas campanhas promocionais e para avaliar e melhorar nossos Serviços, produtos, marketing e
+            processar suas informações quando acreditarmos ser necessário para identificar tendências de uso, determinar
+            a eficácia de nossas campanhas promocionais e para avaliar e melhorar nossos Serviços, produtos, marketing e
             sua experiência.
           </li>
           <li>
@@ -275,12 +290,12 @@ const sections: PolicySection[] = [
           <strong>Fornecedores, consultores e outros prestadores de serviços terceirizados.</strong> Podemos compartilhar
           seus dados com fornecedores, prestadores de serviços, contratados ou agentes terceirizados ("terceiros") que
           prestam serviços para nós ou em nosso nome e precisam acessar essas informações para realizar esse trabalho.
-          Temos contratos em vigor com terceiros, concebidos para ajudar a proteger as suas informações pessoais. Isto
+          Temos contratos em vigor com terceiros, concebidos para ajudar a proteger as suas informações pessoais. Isso
           significa que eles não podem fazer nada com as suas informações pessoais a menos que os instruamos a fazê-lo.
-          Eles também não partilharão as suas informações pessoais com ninguém. Além de nós, eles também se comprometem a
-          proteger os dados que detêm em nosso nome e a retê-los pelo período que instruirmos.
+          Eles também não compartilharão as suas informações pessoais com ninguém. Além de nós, eles também se comprometem
+          a proteger os dados que detêm em nosso nome e a retê-los pelo período que instruirmos.
         </p>
-        <p>Categorias de terceiros com os quais podemos compartilhar informações pessoais são os seguintes:</p>
+        <p>Categorias de terceiros com os quais podemos compartilhar informações pessoais são as seguintes:</p>
         <ul className="list-disc pl-5 space-y-2">
           <li>Programas de marketing de afiliados</li>
           <li>Ferramentas de monitoramento de desempenho</li>
@@ -299,7 +314,7 @@ const sections: PolicySection[] = [
           </li>
           <li>
             <strong>Afiliados.</strong> Podemos compartilhar suas informações com nossos afiliados, caso em que
-            exigiremos que esses afiliados honrem Este Aviso de Privacidade. As empresas afiliadas incluem nossa empresa
+            exigiremos que esses afiliados honrem este Aviso de Privacidade. As empresas afiliadas incluem nossa empresa
             controladora e quaisquer subsidiárias, parceiros de joint venture ou outras empresas que controlamos ou que
             estão sob controle comum conosco.
           </li>
@@ -327,21 +342,21 @@ const sections: PolicySection[] = [
         </p>
         <p>
           Algumas tecnologias de rastreamento online nos ajudam a manter a segurança de nossos Serviços e sua conta,
-          previne falhas, corrige erros, salva suas preferências e auxilia nas funções básicas do site.
+          previnem falhas, corrigem erros, salvam suas preferências e auxiliam nas funções básicas do site.
         </p>
         <p>
           Também permitimos que terceiros e prestadores de serviços usem tecnologias de rastreamento online em nossos
           Serviços para fins de análise e publicidade, incluindo para ajudar a gerenciar e exibir anúncios, personalizar
           anúncios de acordo com seus interesses ou enviar lembretes de carrinho de compras abandonado (dependendo de suas
           preferências de comunicação). Os terceiros e prestadores de serviços usam essa tecnologia para fornecer
-          publicidade sobre produtos e serviços personalizados de acordo com seus interesses, que podem aparecer em nossos
-          Serviços ou em outros sites.
+          publicidade sobre produtos e serviços de seu interesse, que podem aparecer em nossos Serviços ou em outros
+          sites.
         </p>
         <p>
           Informações específicas sobre como utilizamos essas tecnologias e como você pode recusar determinados cookies
           estão descritas em nosso Aviso de Cookies.
         </p>
-        <div className="space-y-2">
+        <div className="space-y-3">
           <h3 className={subheadingClass}>Google Analytics</h3>
           <p>
             Podemos compartilhar suas informações com o Google Analytics para rastrear e analisar a utilização dos
@@ -394,8 +409,8 @@ const sections: PolicySection[] = [
     content: (
       <div className="space-y-4 text-gray-700 leading-relaxed">
         <p className={summaryClass}>
-          <span className="font-semibold not-italic">Resumindo:</span> Nosso objetivo é proteger suas informações pessoais
-          por meio de um sistema de segurança organizacional e medidas de segurança técnica.
+          <span className="font-semibold not-italic">Resumindo:</span> Nosso objetivo é proteger suas informações
+          pessoais por meio de um sistema de segurança organizacional e medidas de segurança técnica.
         </p>
         <p>
           Implementamos medidas técnicas apropriadas e razoáveis, organizacionais e medidas de segurança para proteger a
@@ -423,12 +438,12 @@ const sections: PolicySection[] = [
         </p>
         <p>
           Não coletamos, solicitamos dados ou direcionamos marketing a crianças menores de 18 anos de idade, de forma
-          consciente. Nem vendemos intencionalmente essas informações pessoais. Ao usar os Serviços, você declara ter pelo
-          menos 18 anos de idade, ou que você é o pai ou responsável legal de um menor de idade e consente com o uso dos
-          Serviços por esse menor. Se tomarmos conhecimento de que informações pessoais de usuários menores de 18 anos
-          foram obtidas, desativaremos a conta e tomaremos as medidas cabíveis para excluir esses dados prontamente de
-          nossos registros. Se você tomar conhecimento de quaisquer dados que possamos ter coletado de crianças menores
-          de 18 anos, entre em contato conosco imediatamente em{' '}
+          consciente. Nem vendemos intencionalmente essas informações pessoais. Ao usar os Serviços, você declara ter
+          pelo menos 18 anos de idade, ou que você é o pai ou responsável legal de um menor de idade e consente com o uso
+          dos Serviços por esse menor. Se tomarmos conhecimento de que informações pessoais de usuários menores de 18
+          anos foram obtidas, desativaremos a conta e tomaremos as medidas cabíveis para excluir esses dados prontamente
+          de nossos registros. Se você tomar conhecimento de quaisquer dados que possamos ter coletado de crianças
+          menores de 18 anos, entre em contato conosco imediatamente em{' '}
           <a className={linkClass} href="mailto:jpereira@agroconsult.com.br">
             jpereira@agroconsult.com.br
           </a>
@@ -470,9 +485,7 @@ const sections: PolicySection[] = [
         </p>
         <div className="space-y-2">
           <p className="font-semibold text-dark-green">Informações da conta</p>
-          <p>
-            Se, a qualquer momento, desejar rever ou alterar as informações da sua conta ou encerrá-la, você pode:
-          </p>
+          <p>Se, a qualquer momento, desejar rever ou alterar as informações da sua conta ou encerrá-la, você pode:</p>
           <ul className="list-disc pl-5 space-y-2">
             <li>Faça login nas configurações da sua conta e atualize seu perfil de usuário.</li>
           </ul>
@@ -490,6 +503,71 @@ const sections: PolicySection[] = [
           </a>
           .
         </p>
+      </div>
+    ),
+  },
+  {
+    id: 'nao-rastrear',
+    number: '9',
+    title: 'Controles para recursos de não rastrear',
+    content: (
+      <div className="space-y-4 text-gray-700 leading-relaxed">
+        <p>
+          A maioria dos navegadores da web e alguns sistemas operacionais móveis e aplicativos móveis incluem um recurso
+          "Não rastrear" (Do-Not-Track, "DNT") ou configuração que você pode ativar para sinalizar sua preferência de
+          privacidade de não ter seus dados sobre suas atividades de navegação online monitorados e coletados.
+        </p>
+        <p>
+          Nesta fase, não existe um padrão tecnológico uniforme para reconhecer e implementar sinais DNT. Sendo assim,
+          atualmente não respondemos a sinais DNT (Do Not Track) do navegador ou a qualquer outro mecanismo que comunique
+          automaticamente sua escolha de não ser rastreado online. Caso seja adotado um padrão para rastreamento online
+          que devamos seguir no futuro, informaremos você sobre essa prática em uma versão revisada deste Aviso de
+          Privacidade.
+        </p>
+      </div>
+    ),
+  },
+  {
+    id: 'atualizamos-aviso',
+    number: '10',
+    title: 'Atualizamos este aviso?',
+    content: (
+      <div className="space-y-4 text-gray-700 leading-relaxed">
+        <p className={summaryClass}>
+          <span className="font-semibold not-italic">Resumindo:</span> Sim, atualizaremos este aviso conforme necessário
+          para cumprir as leis aplicáveis.
+        </p>
+        <p>
+          Podemos atualizar este Aviso de Privacidade periodicamente. A versão atualizada será indicada por um novo aviso
+          "Revisado" e a data estará no topo deste Aviso de Privacidade. Caso façamos alterações substanciais a este Aviso
+          de Privacidade, poderemos notificá-lo publicando um aviso dessas alterações em local visível ou enviando uma
+          notificação diretamente a você. Recomendamos que você revise este Aviso de Privacidade com frequência para se
+          manter informado sobre como protegemos suas informações.
+        </p>
+      </div>
+    ),
+  },
+  {
+    id: 'contato-aviso',
+    number: '11',
+    title: 'Como você pode entrar em contato conosco sobre este aviso?',
+    content: (
+      <div className="space-y-4 text-gray-700 leading-relaxed">
+        <p>
+          Se você tiver dúvidas ou comentários sobre este aviso, pode entrar em contato conosco. Entre em contato com
+          nosso Encarregado de Proteção de Dados (DPO) por e-mail em{' '}
+          <a className={linkClass} href="mailto:jpereira@agroconsult.com.br">
+            jpereira@agroconsult.com.br
+          </a>
+          , por telefone em (48) 3209-1650, ou entre em contato conosco por correio no seguinte endereço:
+        </p>
+        <div className="space-y-1 text-gray-700 leading-relaxed">
+          <p className="font-semibold">AGROCONSULT EVENTOS LTDA.</p>
+          <p>Encarregado de Proteção de Dados</p>
+          <p>Rodovia SC 401, nº 4.756 - Sala Comercial 02, 1º andar - Bloco B - Centro</p>
+          <p>Florianópolis (SC), 88032-005</p>
+          <p>Brasil</p>
+        </div>
       </div>
     ),
   },
@@ -519,7 +597,7 @@ const sections: PolicySection[] = [
 
 export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onNavigate }) => {
   return (
-    <section id="privacidade" className="relative min-h-screen overflow-hidden bg-light-sand text-dark-green pt-28 pb-16">
+    <section id="privacidade" className="relative min-h-screen overflow-hidden bg-light-sand text-dark-green pt-28 pb-6">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(202,186,156,0.25),transparent_45%),radial-gradient(circle_at_80%_10%,rgba(76,100,68,0.15),transparent_40%),radial-gradient(circle_at_10%_80%,rgba(138,98,64,0.18),transparent_45%)]" />
       <div className="absolute -top-20 right-[-10%] w-[28rem] h-[28rem] bg-khaki/30 blur-[140px] rounded-full" />
       <div className="absolute bottom-[-20%] left-[-12%] w-[30rem] h-[30rem] bg-emerald-300/20 blur-[160px] rounded-full" />
@@ -532,9 +610,7 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onNavigate }) => {
           <h1 className="mt-5 font-heading text-4xl md:text-5xl font-bold text-dark-green leading-tight">
             Aviso de Privacidade
           </h1>
-          <p className="mt-3 text-xs uppercase tracking-[0.2em] text-gray-500">
-            Última atualização 05 de janeiro de 2026
-          </p>
+          <p className="mt-3 text-xs uppercase tracking-[0.2em] text-gray-500">Última atualização 05 de janeiro de 2026</p>
           <p className="mt-4 text-lg text-gray-700 leading-relaxed">
             Este Aviso de Privacidade para AGROCONSULT EVENTOS LTDA. ("nós", "nos" ou "nosso"), descreve como e por que
             podemos acessar, coletar, armazenar, usar e/ou compartilhar ("processo") suas informações pessoais quando você
@@ -583,10 +659,17 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onNavigate }) => {
 
           <article className="bg-white/90 border border-khaki/30 rounded-3xl p-6 md:p-7 shadow-[0_24px_60px_-40px_rgba(16,40,32,0.4)]">
             <h2 className="font-heading text-2xl md:text-3xl font-bold text-dark-green">Índice</h2>
-            <ol className="mt-3 space-y-1 text-sm text-gray-700 list-decimal pl-5 leading-relaxed">
-              {indexItems.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
+            <ol className="mt-3 space-y-1 text-sm text-gray-700 list-decimal pl-5 leading-relaxed uppercase">
+              {indexItems.map((item, index) => {
+                const target = indexTargets[index] || 'privacidade';
+                return (
+                  <li key={`${target}-${index}`}>
+                    <a href={`#${target}`} className="transition-colors hover:text-raw-umber">
+                      {item}
+                    </a>
+                  </li>
+                );
+              })}
             </ol>
           </article>
         </div>
@@ -596,7 +679,7 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onNavigate }) => {
             <article
               key={section.id}
               id={section.id}
-              className="bg-white/90 border border-khaki/30 rounded-3xl p-6 md:p-7 shadow-[0_24px_60px_-40px_rgba(16,40,32,0.4)]"
+              className="bg-white/90 border border-khaki/30 rounded-3xl p-6 md:p-7 shadow-[0_24px_60px_-40px_rgba(16,40,32,0.4)] scroll-mt-24 md:scroll-mt-28"
             >
               <div className="flex items-center gap-4 mb-4">
                 <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-raw-umber to-hunter-green text-white font-bold flex items-center justify-center shadow-lg">
@@ -609,7 +692,10 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onNavigate }) => {
           ))}
         </div>
 
-        <div className="mt-12 bg-dark-green text-white rounded-3xl p-6 md:p-8 shadow-[0_30px_70px_-40px_rgba(16,40,32,0.6)]">
+        <div
+          id="contato-privacidade"
+          className="mt-12 bg-dark-green text-white rounded-3xl p-6 md:p-8 shadow-[0_30px_70px_-40px_rgba(16,40,32,0.6)]"
+        >
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <h3 className="font-heading text-2xl font-bold">Contato para privacidade</h3>
