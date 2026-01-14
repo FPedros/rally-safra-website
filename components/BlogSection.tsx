@@ -67,7 +67,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
         >
           {/* Image Side - Spans 7 cols */}
           <div
-            className="lg:col-span-7 relative h-auto md:h-80 lg:h-[500px] overflow-hidden cursor-pointer bg-dark-green/5"
+            className="lg:col-span-7 relative h-auto overflow-hidden cursor-pointer bg-dark-green/5"
             role="button"
             tabIndex={0}
             aria-label={`Abrir post: ${featuredPost.title}`}
@@ -82,7 +82,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
             <img 
               src={featuredPost.imageUrl} 
               alt={featuredPost.title}
-              className="w-full h-auto md:h-full object-contain md:object-cover transition-transform duration-700 group-hover:scale-105" 
+              className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105" 
             />
           </div>
           
