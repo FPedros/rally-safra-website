@@ -13,6 +13,7 @@ interface BlogSectionProps {
 export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost, posts, loading }) => {
   const featuredPost = posts[0];
   const otherPosts = posts.slice(1, 7);
+  const isLoading = Boolean(loading) && posts.length === 0;
 
   return (
     <section id="blog" className="py-24 bg-gradient-to-b from-white to-light-sand relative overflow-hidden">
@@ -45,7 +46,18 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
         </div>
 
         {/* Featured Post Card */}
-        {featuredPost && (
+        {isLoading ? (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 mb-12 rounded-3xl overflow-hidden shadow-2xl bg-white">
+            <div className="lg:col-span-7 h-80 lg:h-[500px] bg-gray-200 animate-pulse" />
+            <div className="lg:col-span-5 p-8 lg:p-12 bg-gray-100">
+              <div className="h-4 w-32 bg-gray-200 rounded mb-4 animate-pulse" />
+              <div className="h-8 w-4/5 bg-gray-200 rounded mb-5 animate-pulse" />
+              <div className="h-4 w-full bg-gray-200 rounded mb-3 animate-pulse" />
+              <div className="h-4 w-5/6 bg-gray-200 rounded animate-pulse" />
+            </div>
+          </div>
+        ) : (
+          featuredPost && (
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -106,78 +118,98 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
             </div>
           </div>
         </motion.div>
+          )
         )}
 
         {/* Grid of Other Posts */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {otherPosts.map((post, index) => (
-            <motion.article 
-              key={post.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:-translate-y-1"
-            >
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Array.from({ length: 3 }).map((_, index) => (
               <div
-                className="relative h-60 overflow-hidden cursor-pointer"
-                role="button"
-                tabIndex={0}
-                aria-label={`Abrir post: ${post.title}`}
-                onClick={() => onOpenPost(post.id)}
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter' || event.key === ' ') {
-                    onOpenPost(post.id);
-                  }
-                }}
+                key={`blog-loading-${index}`}
+                className="flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100"
               >
-                <img 
-                  src={post.imageUrl} 
-                  alt={post.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-green/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
-                {/* Category Badge on Image */}
-                <div className="absolute top-4 left-4">
-                  <span className="bg-white/90 backdrop-blur text-dark-green text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm">
-                    {post.category}
-                  </span>
+                <div className="h-60 bg-gray-200 animate-pulse" />
+                <div className="p-6 space-y-3">
+                  <div className="h-3 w-1/2 bg-gray-200 rounded animate-pulse" />
+                  <div className="h-5 w-4/5 bg-gray-200 rounded animate-pulse" />
+                  <div className="h-3 w-full bg-gray-200 rounded animate-pulse" />
+                  <div className="h-3 w-5/6 bg-gray-200 rounded animate-pulse" />
                 </div>
               </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {otherPosts.map((post, index) => (
+              <motion.article 
+                key={post.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                className="flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:-translate-y-1"
+              >
+                <div
+                  className="relative h-60 overflow-hidden cursor-pointer"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Abrir post: ${post.title}`}
+                  onClick={() => onOpenPost(post.id)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      onOpenPost(post.id);
+                    }
+                  }}
+                >
+                  <img 
+                    src={post.imageUrl} 
+                    alt={post.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-green/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  {/* Category Badge on Image */}
+                  <div className="absolute top-4 left-4">
+                    <span className="bg-white/90 backdrop-blur text-dark-green text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm">
+                      {post.category}
+                    </span>
+                  </div>
+                </div>
 
-              <div className="p-6 flex flex-col flex-grow relative">
-                {/* Date and Category Line */}
-                <div className="flex justify-between items-center mb-4">
-                   <div className="flex items-center text-raw-umber text-xs font-bold uppercase tracking-wider">
-                     <Bookmark className="w-3 h-3 mr-1" />
-                     {post.category}
-                   </div>
-                   <div className="flex items-center text-gray-400 text-xs font-semibold">
-                     <Calendar className="w-3 h-3 mr-1" />
-                     {post.date}
-                   </div>
+                <div className="p-6 flex flex-col flex-grow relative">
+                  {/* Date and Category Line */}
+                  <div className="flex justify-between items-center mb-4">
+                     <div className="flex items-center text-raw-umber text-xs font-bold uppercase tracking-wider">
+                       <Bookmark className="w-3 h-3 mr-1" />
+                       {post.category}
+                     </div>
+                     <div className="flex items-center text-gray-400 text-xs font-semibold">
+                       <Calendar className="w-3 h-3 mr-1" />
+                       {post.date}
+                     </div>
+                  </div>
+                  
+                  <h3 className="font-heading text-xl font-bold text-dark-green mb-3 line-clamp-2 leading-tight group-hover:text-hunter-green transition-colors">
+                    {post.title}
+                  </h3>
+                  
+                  <p className="text-gray-600 text-sm mb-6 line-clamp-3 leading-relaxed flex-grow">
+                    {post.excerpt}
+                  </p>
+                  
+                  <div className="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
+                    <button onClick={() => onOpenPost(post.id)} className="text-dark-green font-bold text-sm flex items-center group/link">
+                      Ler mais 
+                      <ArrowUpRight className="w-3 h-3 ml-1 text-raw-umber group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+                    </button>
+                    <div className="w-8 h-1 bg-gray-200 rounded-full group-hover:bg-raw-umber transition-colors duration-300" />
+                  </div>
                 </div>
-                
-                <h3 className="font-heading text-xl font-bold text-dark-green mb-3 line-clamp-2 leading-tight group-hover:text-hunter-green transition-colors">
-                  {post.title}
-                </h3>
-                
-                <p className="text-gray-600 text-sm mb-6 line-clamp-3 leading-relaxed flex-grow">
-                  {post.excerpt}
-                </p>
-                
-                <div className="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
-                  <button onClick={() => onOpenPost(post.id)} className="text-dark-green font-bold text-sm flex items-center group/link">
-                    Ler mais 
-                    <ArrowUpRight className="w-3 h-3 ml-1 text-raw-umber group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
-                  </button>
-                  <div className="w-8 h-1 bg-gray-200 rounded-full group-hover:bg-raw-umber transition-colors duration-300" />
-                </div>
-              </div>
-            </motion.article>
-          ))}
-        </div>
+              </motion.article>
+            ))}
+          </div>
+        )}
 
         {/* Mobile View All Button */}
         <div className="mt-12 text-center md:hidden">

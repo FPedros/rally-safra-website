@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ChevronUp } from 'lucide-react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -36,6 +36,10 @@ const SOCIAL_LINKS = [
   'https://www.tiktok.com/@rallydasafra',
   'https://www.linkedin.com/company/rally-da-safra/',
 ];
+const BLOG_API_BASE = 'https://darkorange-tiger-296251.hostingersite.com/wp-json/wp/v2/posts';
+const BLOG_PER_PAGE = 12;
+const BLOG_CACHE_KEY = 'rallydasafra_posts_cache_v1';
+const BLOG_CACHE_TTL_MS = 1000 * 60 * 10;
 
 const normalizeDescription = (value: string, maxLength = 160) => {
   const trimmed = value.replace(/\s+/g, ' ').trim();
@@ -152,8 +156,12 @@ const LandingPage: React.FC<{
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>('home');
   const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
-  const [posts, setPosts] = useState<BlogPost[]>(MOCK_POSTS);
-  const [loadingPosts, setLoadingPosts] = useState<boolean>(false);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loadingPosts, setLoadingPosts] = useState<boolean>(true);
+  const [hasLoadedAllPosts, setHasLoadedAllPosts] = useState<boolean>(false);
+  const postsRef = useRef<BlogPost[]>([]);
+  const totalPagesRef = useRef<number>(1);
+  const isFetchingAllRef = useRef<boolean>(false);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
   const [blogPage, setBlogPage] = useState<number>(1);
   const [scrollToPostId, setScrollToPostId] = useState<number | null>(null);
@@ -193,72 +201,185 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const normalizeCategory = (cat?: string) => {
-        const c = (cat || '').toLowerCase();
-        if (c.includes('evento')) return 'Eventos';
-        if (c.includes('ebook') || c.includes('e-book')) return 'E-book';
-        if (c.includes('newsletter')) return 'Newsletter';
-        return 'Notícias';
-      };
-      const stripHtml = (html: string) => {
-        const tmp = document.createElement('div');
-        tmp.innerHTML = html;
-        return (tmp.textContent || tmp.innerText || '').trim();
-      };
+    postsRef.current = posts;
+  }, [posts]);
 
-      try {
-        setLoadingPosts(true);
-        const perPage = 20;
-        let page = 1;
-        let totalPages = 1;
-        const allPosts: any[] = [];
+  const normalizeCategory = (cat?: string) => {
+    const c = (cat || '').toLowerCase();
+    if (c.includes('evento')) return 'Eventos';
+    if (c.includes('ebook') || c.includes('e-book')) return 'E-book';
+    if (c.includes('newsletter')) return 'Newsletter';
+    return 'Not¡cias';
+  };
 
-        while (page <= totalPages) {
-          const res = await fetch(
-            `https://darkorange-tiger-296251.hostingersite.com/wp-json/wp/v2/posts?per_page=${perPage}&page=${page}&_embed`
-          );
-          if (!res.ok) break;
-          const data = await res.json();
-          const headerTotalPages = res.headers.get('X-WP-TotalPages');
-          totalPages = headerTotalPages ? Number(headerTotalPages) : 1;
-          allPosts.push(...data);
-          page += 1;
-        }
+  const stripHtml = (html: string) => {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    return (tmp.textContent || tmp.innerText || '').trim();
+  };
 
-        const mapped: BlogPost[] = allPosts
-          .map((post: any) => {
-            const media = post._embedded?.['wp:featuredmedia']?.[0];
-            const imageUrl = media?.source_url || media?.media_details?.sizes?.medium?.source_url || '';
-            const categoryRaw = post._embedded?.['wp:term']?.[0]?.[0]?.name || 'Blog';
-            const parsedDate = post.date ? new Date(post.date) : new Date();
-            const dateISO = parsedDate.toISOString();
-            const modifiedISO = post.modified ? new Date(post.modified).toISOString() : dateISO;
-            return {
-              id: post.id,
-              title: stripHtml(post.title?.rendered || ''),
-              excerpt: stripHtml(post.excerpt?.rendered || ''),
-              date: parsedDate.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }),
-              dateISO,
-              modifiedISO,
-              imageUrl,
-              url: post.link || '#',
-              category: normalizeCategory(categoryRaw),
-              content: post.content?.rendered || '',
-            };
-          })
-          .sort((a, b) => new Date(b.dateISO).getTime() - new Date(a.dateISO).getTime());
+  const mapPost = (post: any): BlogPost => {
+    const media = post._embedded?.['wp:featuredmedia']?.[0];
+    const imageUrl = media?.source_url || media?.media_details?.sizes?.medium?.source_url || '';
+    const categoryRaw = post._embedded?.['wp:term']?.[0]?.[0]?.name || 'Blog';
+    const parsedDate = post.date ? new Date(post.date) : new Date();
+    const dateISO = parsedDate.toISOString();
+    const modifiedISO = post.modified ? new Date(post.modified).toISOString() : dateISO;
+    return {
+      id: post.id,
+      title: stripHtml(post.title?.rendered || ''),
+      excerpt: stripHtml(post.excerpt?.rendered || ''),
+      date: parsedDate.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }),
+      dateISO,
+      modifiedISO,
+      imageUrl,
+      url: post.link || '#',
+      category: normalizeCategory(categoryRaw),
+      content: post.content?.rendered || '',
+    };
+  };
 
-        if (mapped.length > 0) setPosts(mapped);
-      } catch (err) {
-        console.error('Erro ao carregar posts do WordPress', err);
-        setPosts(MOCK_POSTS.map((p) => ({ ...p, category: normalizeCategory(p.category) })));
-      } finally {
+  const sortPosts = (items: BlogPost[]) =>
+    [...items].sort((a, b) => new Date(b.dateISO).getTime() - new Date(a.dateISO).getTime());
+
+  const mergePosts = (current: BlogPost[], incoming: BlogPost[]) => {
+    const map = new Map<number, BlogPost>();
+    current.forEach((post) => map.set(post.id, post));
+    incoming.forEach((post) => {
+      const existing = map.get(post.id);
+      map.set(post.id, existing ? { ...existing, ...post } : post);
+    });
+    return sortPosts(Array.from(map.values()));
+  };
+
+  const readCachedPosts = () => {
+    try {
+      const raw = localStorage.getItem(BLOG_CACHE_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw) as { timestamp?: number; posts?: BlogPost[]; loadedAll?: boolean };
+      if (!parsed?.timestamp || !Array.isArray(parsed.posts)) return null;
+      if (Date.now() - parsed.timestamp > BLOG_CACHE_TTL_MS) return null;
+      return { posts: parsed.posts, loadedAll: Boolean(parsed.loadedAll) };
+    } catch {
+      return null;
+    }
+  };
+
+  const writeCachedPosts = (items: BlogPost[], loadedAll: boolean) => {
+    try {
+      const payload = { timestamp: Date.now(), posts: items, loadedAll };
+      localStorage.setItem(BLOG_CACHE_KEY, JSON.stringify(payload));
+    } catch {
+      // Ignore cache write errors.
+    }
+  };
+
+  const fetchPostsPage = async (page: number, signal?: AbortSignal) => {
+    const params = new URLSearchParams({
+      per_page: String(BLOG_PER_PAGE),
+      page: String(page),
+      _embed: '1',
+    });
+    const res = await fetch(`${BLOG_API_BASE}?${params.toString()}`, { signal });
+    if (!res.ok) {
+      throw new Error(`Erro ao carregar posts (HTTP ${res.status})`);
+    }
+    const data = await res.json();
+    const headerTotalPages = res.headers.get('X-WP-TotalPages');
+    const totalPages = headerTotalPages ? Number(headerTotalPages) : 1;
+    totalPagesRef.current = Math.max(totalPagesRef.current, totalPages);
+    return { posts: data.map(mapPost), totalPages };
+  };
+
+  const loadInitialPosts = async (signal: AbortSignal, hadCache: boolean) => {
+    if (!hadCache) {
+      setLoadingPosts(true);
+    }
+    try {
+      const { posts: pagePosts, totalPages } = await fetchPostsPage(1, signal);
+      if (signal.aborted) return;
+      totalPagesRef.current = totalPages;
+      const merged = mergePosts(postsRef.current, pagePosts);
+      setPosts(merged);
+      postsRef.current = merged;
+      setHasLoadedAllPosts((previous) => previous || totalPages <= 1);
+      writeCachedPosts(merged, totalPages <= 1);
+    } catch (err) {
+      if (signal.aborted) return;
+      console.error('Erro ao carregar posts do WordPress', err);
+      if (!hadCache) {
+        const fallback = MOCK_POSTS.map((p) => ({ ...p, category: normalizeCategory(p.category) }));
+        setPosts(fallback);
+        postsRef.current = fallback;
+        writeCachedPosts(fallback, true);
+        setHasLoadedAllPosts(true);
+      }
+    } finally {
+      if (!signal.aborted) {
         setLoadingPosts(false);
       }
-    };
-    fetchPosts();
+    }
+  };
+
+  const loadAllPosts = async () => {
+    if (isFetchingAllRef.current || hasLoadedAllPosts) return;
+    const totalPages = totalPagesRef.current;
+    if (totalPages <= 1) {
+      setHasLoadedAllPosts(true);
+      return;
+    }
+    isFetchingAllRef.current = true;
+    setLoadingPosts(true);
+    try {
+      const pages = Array.from({ length: totalPages - 1 }, (_, index) => index + 2);
+      const chunkSize = 3;
+      const fetched: BlogPost[] = [];
+      for (let i = 0; i < pages.length; i += chunkSize) {
+        const chunk = pages.slice(i, i + chunkSize);
+        const results = await Promise.all(chunk.map((page) => fetchPostsPage(page)));
+        results.forEach((result) => {
+          fetched.push(...result.posts);
+        });
+      }
+      if (fetched.length > 0) {
+        const merged = mergePosts(postsRef.current, fetched);
+        setPosts(merged);
+        postsRef.current = merged;
+        writeCachedPosts(merged, true);
+      } else {
+        writeCachedPosts(postsRef.current, true);
+      }
+      setHasLoadedAllPosts(true);
+    } catch (err) {
+      console.error('Erro ao carregar todas as paginas do blog', err);
+    } finally {
+      isFetchingAllRef.current = false;
+      setLoadingPosts(false);
+    }
+  };
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const cache = readCachedPosts();
+    const hadCache = Boolean(cache?.posts?.length);
+    if (cache) {
+      setPosts(cache.posts);
+      postsRef.current = cache.posts;
+      setHasLoadedAllPosts(cache.loadedAll);
+      setLoadingPosts(!hadCache);
+    } else {
+      setLoadingPosts(true);
+    }
+    loadInitialPosts(controller.signal, hadCache);
+    return () => controller.abort();
   }, []);
+
+  useEffect(() => {
+    if (currentView !== 'blog') return;
+    if (hasLoadedAllPosts) return;
+    if (loadingPosts) return;
+    loadAllPosts();
+  }, [currentView, hasLoadedAllPosts, loadingPosts]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -508,5 +629,6 @@ const App: React.FC = () => {
 };
 
 export default App;
+
 
 
