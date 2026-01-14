@@ -67,7 +67,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
         >
           {/* Image Side - Spans 7 cols */}
           <div
-            className="lg:col-span-7 relative h-80 lg:h-[500px] overflow-hidden cursor-pointer"
+            className="lg:col-span-7 relative h-auto md:h-80 lg:h-[500px] overflow-hidden cursor-pointer bg-dark-green/5"
             role="button"
             tabIndex={0}
             aria-label={`Abrir post: ${featuredPost.title}`}
@@ -82,7 +82,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
             <img 
               src={featuredPost.imageUrl} 
               alt={featuredPost.title}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+              className="w-full h-auto md:h-full object-contain md:object-cover transition-transform duration-700 group-hover:scale-105" 
             />
           </div>
           
@@ -141,14 +141,16 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {otherPosts.map((post, index) => (
+            {otherPosts.map((post, index) => {
+              const visibilityClass = index >= 3 ? 'hidden md:flex' : 'flex';
+              return (
               <motion.article 
                 key={post.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
-                className="flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:-translate-y-1"
+                className={`${visibilityClass} flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:-translate-y-1`}
               >
                 <div
                   className="relative h-60 overflow-hidden cursor-pointer"
@@ -207,7 +209,8 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
                   </div>
                 </div>
               </motion.article>
-            ))}
+              );
+            })}
           </div>
         )}
 

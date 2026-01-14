@@ -209,7 +209,7 @@ const App: React.FC = () => {
     if (c.includes('evento')) return 'Eventos';
     if (c.includes('ebook') || c.includes('e-book')) return 'E-book';
     if (c.includes('newsletter')) return 'Newsletter';
-    return 'Not¡cias';
+    return 'Notícias';
   };
 
   const stripHtml = (html: string) => {
@@ -413,7 +413,7 @@ const App: React.FC = () => {
     };
     const descriptionByView: Record<View, string> = {
       home: DEFAULT_DESCRIPTION,
-      blog: 'Noticias, insights e bastidores do Rally da Safra com dados de produtividade, clima e mercado.',
+      blog: 'Notícias, insights e bastidores do Rally da Safra com dados de produtividade, clima e mercado.',
       post: DEFAULT_DESCRIPTION,
       historia: 'Conheca a historia do Rally da Safra e a maior expedicao tecnica do agro brasileiro.',
       privacidade: 'Saiba como o Rally da Safra coleta e trata dados pessoais.',
