@@ -17,6 +17,79 @@ import { BlogPost } from './types';
 
 type View = 'home' | 'blog' | 'post' | 'historia' | 'privacidade';
 
+const SITE_URL = 'https://www.rallydasafra.com.br';
+const BASE_PATH = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+const SITE_ROOT = `${SITE_URL}${BASE_PATH}`;
+const SITE_ROOT_SLASH = SITE_ROOT.endsWith('/') ? SITE_ROOT : `${SITE_ROOT}/`;
+const SITE_NAME = 'Rally da Safra';
+const DEFAULT_TITLE = `${SITE_NAME} | Expedicao tecnica do agro brasileiro`;
+const DEFAULT_DESCRIPTION =
+  'Rally da Safra e a maior expedicao tecnica do agro brasileiro, com dados de produtividade, clima e mercado de soja e milho.';
+const DEFAULT_IMAGE = `${SITE_ROOT}/hero/msedge_yqQmmDG2Vd.png`;
+const LOGO_IMAGE = `${SITE_ROOT}/hero/marca2026-colorida.svg`;
+const TWITTER_HANDLE = '@rallydasafra';
+const SOCIAL_LINKS = [
+  'https://www.instagram.com/rallydasafra/',
+  'https://www.facebook.com/rallydasafra',
+  'https://www.youtube.com/user/rallydasafra',
+  'https://x.com/rallydasafra',
+  'https://www.tiktok.com/@rallydasafra',
+  'https://www.linkedin.com/company/rally-da-safra/',
+];
+
+const normalizeDescription = (value: string, maxLength = 160) => {
+  const trimmed = value.replace(/\s+/g, ' ').trim();
+  if (trimmed.length <= maxLength) return trimmed;
+  const slice = trimmed.slice(0, Math.max(0, maxLength - 3));
+  return `${slice.replace(/\s+\S*$/, '')}...`;
+};
+
+const upsertMetaTag = (options: { name?: string; property?: string; content?: string }) => {
+  if (typeof document === 'undefined') return;
+  const { name, property, content } = options;
+  const selector = name ? `meta[name="${name}"]` : `meta[property="${property}"]`;
+  const existing = document.querySelector(selector) as HTMLMetaElement | null;
+  if (!content) {
+    if (existing) existing.remove();
+    return;
+  }
+  const tag = existing || document.createElement('meta');
+  if (!existing) {
+    if (name) tag.setAttribute('name', name);
+    if (property) tag.setAttribute('property', property);
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute('content', content);
+};
+
+const upsertLinkTag = (rel: string, href: string, attributes: Record<string, string> = {}) => {
+  if (typeof document === 'undefined') return;
+  const selector = `link[rel="${rel}"]${Object.entries(attributes)
+    .map(([key, value]) => `[${key}="${value}"]`)
+    .join('')}`;
+  const existing = document.querySelector(selector) as HTMLLinkElement | null;
+  const link = existing || document.createElement('link');
+  if (!existing) {
+    link.setAttribute('rel', rel);
+    Object.entries(attributes).forEach(([key, value]) => link.setAttribute(key, value));
+    document.head.appendChild(link);
+  }
+  link.setAttribute('href', href);
+};
+
+const upsertJsonLd = (data: Record<string, unknown>) => {
+  if (typeof document === 'undefined') return;
+  const scriptId = 'seo-jsonld';
+  const existing = document.getElementById(scriptId) as HTMLScriptElement | null;
+  const script = existing || document.createElement('script');
+  if (!existing) {
+    script.id = scriptId;
+    script.type = 'application/ld+json';
+    document.head.appendChild(script);
+  }
+  script.textContent = JSON.stringify(data);
+};
+
 const LandingPage: React.FC<{
   onNavigate: (view: View, sectionId?: string) => void;
   onOpenPost: (postId: number | null, originPage?: number) => void;
@@ -158,18 +231,23 @@ const App: React.FC = () => {
             const media = post._embedded?.['wp:featuredmedia']?.[0];
             const imageUrl = media?.source_url || media?.media_details?.sizes?.medium?.source_url || '';
             const categoryRaw = post._embedded?.['wp:term']?.[0]?.[0]?.name || 'Blog';
+            const parsedDate = post.date ? new Date(post.date) : new Date();
+            const dateISO = parsedDate.toISOString();
+            const modifiedISO = post.modified ? new Date(post.modified).toISOString() : dateISO;
             return {
               id: post.id,
               title: stripHtml(post.title?.rendered || ''),
               excerpt: stripHtml(post.excerpt?.rendered || ''),
-              date: new Date(post.date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }),
+              date: parsedDate.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }),
+              dateISO,
+              modifiedISO,
               imageUrl,
               url: post.link || '#',
               category: normalizeCategory(categoryRaw),
-              content: stripHtml(post.content?.rendered || ''),
+              content: post.content?.rendered || '',
             };
           })
-          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+          .sort((a, b) => new Date(b.dateISO).getTime() - new Date(a.dateISO).getTime());
 
         if (mapped.length > 0) setPosts(mapped);
       } catch (err) {
@@ -200,6 +278,122 @@ const App: React.FC = () => {
       setShowPrivacyNotice(true);
     }
   }, [privacyNoticeKey]);
+
+  useEffect(() => {
+    const selectedPost = currentView === 'post' ? posts.find((post) => post.id === selectedPostId) || null : null;
+    const viewForSeo: View = currentView === 'post' && !selectedPost ? 'blog' : currentView;
+    const canonicalUrl = viewForSeo === 'privacidade' ? `${SITE_ROOT}${privacyPath}` : SITE_ROOT_SLASH;
+    const titleByView: Record<View, string> = {
+      home: DEFAULT_TITLE,
+      blog: `Blog | ${SITE_NAME}`,
+      post: DEFAULT_TITLE,
+      historia: `Nossa Historia | ${SITE_NAME}`,
+      privacidade: `Politica de Privacidade | ${SITE_NAME}`,
+    };
+    const descriptionByView: Record<View, string> = {
+      home: DEFAULT_DESCRIPTION,
+      blog: 'Noticias, insights e bastidores do Rally da Safra com dados de produtividade, clima e mercado.',
+      post: DEFAULT_DESCRIPTION,
+      historia: 'Conheca a historia do Rally da Safra e a maior expedicao tecnica do agro brasileiro.',
+      privacidade: 'Saiba como o Rally da Safra coleta e trata dados pessoais.',
+    };
+    const pageTitle = selectedPost ? `${selectedPost.title} | ${SITE_NAME}` : titleByView[viewForSeo];
+    const rawDescription = selectedPost?.excerpt || descriptionByView[viewForSeo] || DEFAULT_DESCRIPTION;
+    const pageDescription = normalizeDescription(rawDescription);
+    const pageImage = selectedPost?.imageUrl || DEFAULT_IMAGE;
+    const ogType = selectedPost ? 'article' : 'website';
+
+    document.title = pageTitle;
+    upsertMetaTag({ name: 'description', content: pageDescription });
+    upsertMetaTag({ property: 'og:title', content: pageTitle });
+    upsertMetaTag({ property: 'og:description', content: pageDescription });
+    upsertMetaTag({ property: 'og:type', content: ogType });
+    upsertMetaTag({ property: 'og:url', content: canonicalUrl });
+    upsertMetaTag({ property: 'og:image', content: pageImage });
+    upsertMetaTag({ property: 'og:image:alt', content: selectedPost?.title || SITE_NAME });
+    upsertMetaTag({ property: 'og:updated_time', content: selectedPost?.modifiedISO });
+
+    upsertMetaTag({ name: 'twitter:card', content: 'summary_large_image' });
+    upsertMetaTag({ name: 'twitter:site', content: TWITTER_HANDLE });
+    upsertMetaTag({ name: 'twitter:title', content: pageTitle });
+    upsertMetaTag({ name: 'twitter:description', content: pageDescription });
+    upsertMetaTag({ name: 'twitter:image', content: pageImage });
+
+    upsertMetaTag({ property: 'article:published_time', content: selectedPost?.dateISO });
+    upsertMetaTag({ property: 'article:modified_time', content: selectedPost?.modifiedISO });
+    upsertMetaTag({ property: 'article:section', content: selectedPost?.category });
+
+    upsertLinkTag('canonical', canonicalUrl);
+    upsertLinkTag('alternate', canonicalUrl, { hreflang: 'pt-BR' });
+
+    const organizationId = `${SITE_ROOT}/#organization`;
+    const websiteId = `${SITE_ROOT}/#website`;
+    const webpageId = `${canonicalUrl}#webpage`;
+    const jsonLdGraph: Array<Record<string, unknown>> = [
+      {
+        '@type': 'Organization',
+        '@id': organizationId,
+        name: SITE_NAME,
+        url: SITE_ROOT_SLASH,
+        logo: {
+          '@type': 'ImageObject',
+          url: LOGO_IMAGE,
+        },
+        sameAs: SOCIAL_LINKS,
+      },
+      {
+        '@type': 'WebSite',
+        '@id': websiteId,
+        url: SITE_ROOT_SLASH,
+        name: SITE_NAME,
+        inLanguage: 'pt-BR',
+        publisher: {
+          '@id': organizationId,
+        },
+      },
+      {
+        '@type': 'WebPage',
+        '@id': webpageId,
+        url: canonicalUrl,
+        name: pageTitle,
+        description: pageDescription,
+        inLanguage: 'pt-BR',
+        isPartOf: {
+          '@id': websiteId,
+        },
+        primaryImageOfPage: {
+          '@type': 'ImageObject',
+          url: pageImage,
+        },
+      },
+    ];
+
+    if (selectedPost) {
+      jsonLdGraph.push({
+        '@type': 'BlogPosting',
+        '@id': `${canonicalUrl}#blogposting`,
+        headline: selectedPost.title,
+        description: normalizeDescription(selectedPost.excerpt || DEFAULT_DESCRIPTION),
+        image: [pageImage],
+        datePublished: selectedPost.dateISO,
+        dateModified: selectedPost.modifiedISO,
+        author: {
+          '@id': organizationId,
+        },
+        publisher: {
+          '@id': organizationId,
+        },
+        mainEntityOfPage: {
+          '@id': webpageId,
+        },
+      });
+    }
+
+    upsertJsonLd({
+      '@context': 'https://schema.org',
+      '@graph': jsonLdGraph,
+    });
+  }, [currentView, selectedPostId, posts, privacyPath]);
 
   const handleNavigate = (view: View, sectionId?: string) => {
     if (view === 'blog') {

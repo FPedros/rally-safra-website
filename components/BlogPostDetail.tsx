@@ -55,11 +55,14 @@ export const BlogPostDetail: React.FC<DetailProps> = ({ postId, posts, onBack })
     );
   }
 
+  const contentHasHtml = /<\/?[a-z][\s\S]*>/i.test(post.content);
+  const contentParagraphs = contentHasHtml ? [] : post.content.split(/\n\s*\n/).filter(Boolean);
+
   return (
     <div className="bg-[#f4f1ea] min-h-screen pt-32 pb-14">
       <div className="container mx-auto px-6 md:px-10 lg:px-16">
         <div className="relative overflow-hidden rounded-3xl shadow-2xl bg-dark-green text-white mb-8">
-          <img src={post.imageUrl} alt={post.title} className="absolute inset-0 w-full h-full object-cover opacity-50" />
+          <img src={post.imageUrl} alt={post.title} className="absolute inset-0 w-full h-full object-cover object-top opacity-50" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
           <div className="relative p-8 md:p-12 flex flex-col gap-4">
             <div className="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-wide">
@@ -76,12 +79,16 @@ export const BlogPostDetail: React.FC<DetailProps> = ({ postId, posts, onBack })
           </div>
         </div>
 
-        <article className="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 md:p-12 text-gray-800 leading-relaxed prose max-w-none">
-          {post.content.split('\n\n').map((para, idx) => (
-            <p key={idx} className="text-lg mb-4">
-              {para}
-            </p>
-          ))}
+        <article className="blog-content bg-white rounded-3xl shadow-lg border border-gray-100 p-8 md:p-12 text-gray-800 leading-relaxed prose max-w-none">
+          {contentHasHtml ? (
+            <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          ) : (
+            contentParagraphs.map((para, idx) => (
+              <p key={idx} className="text-lg mb-4">
+                {para}
+              </p>
+            ))
+          )}
         </article>
 
         <div className="mt-8 flex justify-center">

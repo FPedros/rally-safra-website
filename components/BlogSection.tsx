@@ -54,22 +54,24 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
           className="grid grid-cols-1 lg:grid-cols-12 gap-0 mb-12 rounded-3xl overflow-hidden shadow-2xl bg-white group hover:shadow-3xl transition-shadow duration-500"
         >
           {/* Image Side - Spans 7 cols */}
-          <div className="lg:col-span-7 relative h-80 lg:h-[500px] overflow-hidden">
+          <div
+            className="lg:col-span-7 relative h-80 lg:h-[500px] overflow-hidden cursor-pointer"
+            role="button"
+            tabIndex={0}
+            aria-label={`Abrir post: ${featuredPost.title}`}
+            onClick={() => onOpenPost(featuredPost.id)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                onOpenPost(featuredPost.id);
+              }
+            }}
+          >
             <div className="absolute inset-0 bg-dark-green/10 z-10 group-hover:bg-transparent transition-colors duration-500" />
             <img 
               src={featuredPost.imageUrl} 
               alt={featuredPost.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
             />
-            <div className="absolute top-6 left-6 z-20 flex gap-2">
-              <span className="bg-white/90 backdrop-blur-sm text-dark-green font-bold px-4 py-2 rounded-lg text-sm shadow-lg flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-raw-umber animate-pulse"></span>
-                Destaque
-              </span>
-              <span className="bg-hunter-green/90 backdrop-blur-sm text-white font-bold px-4 py-2 rounded-lg text-sm shadow-lg">
-                {featuredPost.category}
-              </span>
-            </div>
           </div>
           
           {/* Content Side - Spans 5 cols */}
@@ -79,6 +81,9 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-raw-umber/20 rounded-full -translate-x-1/3 translate-y-1/3 blur-2xl" />
 
             <div className="relative z-10">
+              <span className="inline-flex items-center self-start bg-white/15 text-white font-bold px-3 py-1 rounded-full text-xs uppercase tracking-wider border border-white/20 mb-3">
+                {featuredPost.category}
+              </span>
               <div className="flex items-center text-khaki mb-6 font-semibold text-sm tracking-widest uppercase">
                 <Calendar className="w-4 h-4 mr-2" />
                 {featuredPost.date}
@@ -114,7 +119,18 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
               transition={{ delay: index * 0.1, duration: 0.5 }}
               className="flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:-translate-y-1"
             >
-              <div className="relative h-60 overflow-hidden">
+              <div
+                className="relative h-60 overflow-hidden cursor-pointer"
+                role="button"
+                tabIndex={0}
+                aria-label={`Abrir post: ${post.title}`}
+                onClick={() => onOpenPost(post.id)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    onOpenPost(post.id);
+                  }
+                }}
+              >
                 <img 
                   src={post.imageUrl} 
                   alt={post.title}
