@@ -302,7 +302,7 @@ const sections: PolicySection[] = [
           <li>Ferramentas de Vendas e Marketing</li>
           <li>
             A todos os patrocinadores do projeto em 2026 (BASF, Credenz, SoyTech, xarvio, Santander, John Deere, OCP
-            Brasil, Agrivalle, JDT Seguros e Mitsubishi)
+            Brasil, Agrivalle, JDT Seguros, TIM e Mitsubishi)
           </li>
         </ul>
         <p>Nós também poderemos precisar compartilhar suas informações pessoais nas seguintes situações:</p>
