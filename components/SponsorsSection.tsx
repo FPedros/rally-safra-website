@@ -11,6 +11,27 @@ const cottonImages = import.meta.glob('../public/patrocinadores-algodao/*.{png,P
   as: 'url',
 });
 
+const sponsorLinks: Array<[string, string]> = [
+  ['agrivalle', 'https://agrivalle.com.br/'],
+  ['credenz', 'https://agriculture.basf.com/br/pt/protecao-de-cultivos-e-sementes/produtos/credenz/Credenz'],
+  ['basf', 'https://www.basf.com/br/'],
+  ['jd', 'https://www.deere.com.br/pt/'],
+  ['john deere', 'https://www.deere.com.br/pt/'],
+  ['main-logo', 'https://www.xarvio.com/br/pt.html'],
+  ['xarvio', 'https://www.xarvio.com/br/pt.html'],
+  ['mitsubishi', 'https://www.mitsubishimotors.com.br/'],
+  ['ocp', 'https://www.ocpbrasil.com.br/'],
+  ['santander', 'https://www.santander.com.br/agronegocio'],
+  ['soytech', 'https://agriculture.basf.com/br/pt/conteudos/cultivos-e-sementes/soja/credenz-soytech-diferenca'],
+  ['tim', 'https://www.tim.com.br/para-empresas/iot-solutions/agro'],
+  ['jdt', 'https://www.jdtseguros.com.br/'],
+];
+
+const getSponsorLink = (fileName: string): string | undefined => {
+  const normalizedName = fileName.toLowerCase();
+  return sponsorLinks.find(([key]) => normalizedName.includes(key))?.[1];
+};
+
 const mapImagesToSponsors = (images: Record<string, string>): Sponsor[] =>
   Object.entries(images).map(([path, url], idx) => {
     const fileName = path.split('/').pop() || `patrocinador-${idx + 1}`;
@@ -18,11 +39,37 @@ const mapImagesToSponsors = (images: Record<string, string>): Sponsor[] =>
       .replace(/\.[^.]+$/, '')
       .replace(/[-_]+/g, ' ')
       .replace(/\b\w/g, (c) => c.toUpperCase());
-    return { id: idx + 1, name, logoUrl: url };
+    return { id: idx + 1, name, logoUrl: url, websiteUrl: getSponsorLink(fileName) };
   });
 
 const sponsorsSoy = mapImagesToSponsors(soyImages as Record<string, string>);
 const sponsorsCotton = mapImagesToSponsors(cottonImages as Record<string, string>);
+
+const SponsorCard: React.FC<{ sponsor: Sponsor; className: string }> = ({ sponsor, className }) => {
+  const content = (
+    <img
+      src={sponsor.logoUrl}
+      alt={sponsor.name}
+      className="max-h-full max-w-full w-auto h-auto object-contain"
+    />
+  );
+
+  if (!sponsor.websiteUrl) {
+    return <div className={className}>{content}</div>;
+  }
+
+  return (
+    <a
+      href={sponsor.websiteUrl}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`Acessar site de ${sponsor.name}`}
+      className={`${className} cursor-pointer focus:outline-none focus:ring-2 focus:ring-hunter-green focus:ring-offset-2 hover:-translate-y-1`}
+    >
+      {content}
+    </a>
+  );
+};
 
 export const SponsorsSection: React.FC = () => {
   const hasSoy = sponsorsSoy.length > 0;
@@ -51,13 +98,11 @@ export const SponsorsSection: React.FC = () => {
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
               {sponsorsSoy.map((sponsor) => (
-                <div key={sponsor.id} className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center justify-center h-40 border border-gray-100">
-                  <img 
-                    src={sponsor.logoUrl} 
-                    alt={sponsor.name} 
-                    className="max-h-full max-w-full w-auto h-auto object-contain"
-                  />
-                </div>
+                <SponsorCard
+                  key={sponsor.id}
+                  sponsor={sponsor}
+                  className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all flex items-center justify-center h-40 border border-gray-100"
+                />
               ))}
             </div>
           </div>
@@ -76,13 +121,11 @@ export const SponsorsSection: React.FC = () => {
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {sponsorsCotton.map((sponsor) => (
-                <div key={sponsor.id} className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center justify-center h-32 border border-gray-100">
-                  <img 
-                    src={sponsor.logoUrl} 
-                    alt={sponsor.name} 
-                    className="max-h-full max-w-full w-auto h-auto object-contain"
-                  />
-                </div>
+                <SponsorCard
+                  key={sponsor.id}
+                  sponsor={sponsor}
+                  className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all flex items-center justify-center h-32 border border-gray-100"
+                />
               ))}
             </div>
           </div>

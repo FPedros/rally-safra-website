@@ -8,14 +8,14 @@ declare global {
 }
 
 const TikTokIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" {...props}>
-    <path d="M168 24h-32v120c0 17.673-14.327 32-32 32-17.673 0-32-14.327-32-32s14.327-32 32-32c4.42 0 8.64.9 12.48 2.52V96.27c-4.08-.6-8.2-.92-12.48-.92-35.346 0-64 28.654-64 64s28.654 64 64 64c35.262 0 64-28.738 64-64V114.3c10.43 7.43 23.2 11.7 36.88 11.7V96c-12.75-.04-24.64-4.45-33.85-12.65C168.96 72.47 168 61.77 168 51.68V24z" />
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+    <path d="M16.6 5.82a4.9 4.9 0 0 0 3.18 1.2V10a7.9 7.9 0 0 1-3.15-.67v5.82a6.35 6.35 0 1 1-5.48-6.29v3.05a3.35 3.35 0 1 0 2.48 3.24V2.5h2.97v3.32Z" />
   </svg>
 );
 
 const XIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg viewBox="0 0 1200 1227" fill="currentColor" aria-hidden="true" {...props}>
-    <path d="M714.163 519.284L1160.89 0h-105.74L671.03 442.72 427.697 0H0l468.211 810.405L0 1226.99h105.74L529.259 762.75l256.704 464.24H1200L714.163 519.284z" />
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817-5.966 6.817H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
   </svg>
 );
 
@@ -89,13 +89,15 @@ export const ContactSection: React.FC = () => {
       href: 'https://x.com/rallydasafra',
       color: 'from-[#111] to-[#333]',
       Icon: XIcon,
+      iconClassName: 'w-5 h-5',
     },
     {
       name: 'TikTok',
       handle: '@rallydasafra',
       href: 'https://www.tiktok.com/@rallydasafra',
-      color: 'from-[#69C9D0] to-[#EE1D52]',
+      color: 'from-[#050505] to-[#1f1f1f]',
       Icon: TikTokIcon,
+      iconClassName: 'w-5 h-5',
     },
   ];
 
@@ -110,7 +112,7 @@ export const ContactSection: React.FC = () => {
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4">
-              {socialLinks.map(({ name, handle, href, color, Icon }) => (
+              {socialLinks.map(({ name, handle, href, color, Icon, iconClassName }) => (
                 <a
                   key={name}
                   href={href}
@@ -120,7 +122,7 @@ export const ContactSection: React.FC = () => {
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${color} flex items-center justify-center text-white shadow-lg`}>
-                      <Icon className="w-6 h-6" />
+                      <Icon className={iconClassName || 'w-6 h-6'} />
                     </div>
                     <div>
                       <p className="text-sm text-gray-200">Siga no {name}</p>

@@ -15,6 +15,7 @@ export interface Sponsor {
   id: number;
   name: string;
   logoUrl: string; // Using placeholders for logos
+  websiteUrl?: string;
 }
 
 export interface FormData {

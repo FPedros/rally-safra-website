@@ -6,8 +6,8 @@ type FooterProps = {
 };
 
 const XIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg viewBox="0 0 1200 1227" fill="currentColor" aria-hidden="true" {...props}>
-    <path d="M714.163 519.284L1160.89 0h-105.74L671.03 442.72 427.697 0H0l468.211 810.405L0 1226.99h105.74L529.259 762.75l256.704 464.24H1200L714.163 519.284z" />
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817-5.966 6.817H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
   </svg>
 );
 
@@ -65,7 +65,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   rel="noreferrer"
                   className="text-khaki hover:text-white transition-colors"
                 >
-                  <XIcon className="w-6 h-6" />
+                  <XIcon className="w-5 h-5" />
                 </a>
                 <a
                   href="https://www.linkedin.com/company/rally-da-safra/"

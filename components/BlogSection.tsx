@@ -172,8 +172,8 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
                   <div className="absolute inset-0 bg-gradient-to-t from-dark-green/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   
                   {/* Category Badge on Image */}
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-white/90 backdrop-blur text-dark-green text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm">
+                  <div className="absolute top-4 right-4">
+                    <span className="inline-flex items-center bg-dark-green text-white text-xs font-bold uppercase tracking-wider px-3.5 py-2 rounded-lg shadow-lg border border-white/25">
                       {post.category}
                     </span>
                   </div>
