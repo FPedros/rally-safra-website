@@ -139,9 +139,9 @@ export const ContactSection: React.FC = () => {
             </p>
           </div>
 
-          <div className="rounded-2xl p-8 border border-white/10 bg-white/5 shadow-2xl text-white">
+          <div className="newsletter-card md:self-center rounded-2xl p-6 md:p-8 border border-white/10 bg-white/5 shadow-2xl text-white">
             <h3 className="text-2xl font-bold mb-2">Inscreva-se na newsletter do Rally</h3>
-            <p className="text-gray-200 mb-6">
+            <p className="text-gray-200">
               Receba novidades e os bastidores das etapas diretamente no seu e-mail.
             </p>
             <div id="newsletter-rallydasafra-b9ac60da8f734314c843" role="main" className="newsletter-embed" />

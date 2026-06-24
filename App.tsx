@@ -6,6 +6,7 @@ import { HistorySection } from './components/HistorySection';
 import { SponsorsSection } from './components/SponsorsSection';
 import { BlogSection } from './components/BlogSection';
 import { ContactSection } from './components/ContactSection';
+import { FloatingEventCta } from './components/FloatingEventCta';
 import { Footer } from './components/Footer';
 import { BlogPage } from './components/BlogPage';
 import { BlogPostDetail } from './components/BlogPostDetail';
@@ -578,6 +579,9 @@ const App: React.FC = () => {
     setShowPrivacyNotice(false);
   };
 
+  const showFloatingEventCta = currentView !== 'privacidade';
+  const isFloatingEventCtaRaised = showFloatingEventCta && showPrivacyNotice;
+
   return (
     <div className="antialiased text-gray-800 bg-light-sand font-sans">
       <Navbar
@@ -614,11 +618,14 @@ const App: React.FC = () => {
       {showPrivacyNotice && currentView !== 'privacidade' && (
         <PrivacyNotice onNavigate={handleNavigate} onDismiss={handlePrivacyNoticeDismiss} />
       )}
+      {showFloatingEventCta && <FloatingEventCta raised={isFloatingEventCtaRaised} />}
       {showScrollTop && (
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 right-6 z-[150] p-3 rounded-full bg-gradient-to-r from-hunter-green to-raw-umber text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
+          className={`fixed left-6 z-[150] p-3 rounded-full bg-gradient-to-r from-hunter-green to-raw-umber text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all ${
+            isFloatingEventCtaRaised ? 'bottom-[13.5rem] sm:bottom-44 md:bottom-40' : 'bottom-6'
+          }`}
           aria-label="Voltar para o topo"
         >
           <ChevronUp className="w-5 h-5" />

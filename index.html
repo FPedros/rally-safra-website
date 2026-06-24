@@ -164,6 +164,109 @@
       .blog-content .wp-block-spacer {
         clear: both;
       }
+      .event-cta-stripes {
+        background: repeating-linear-gradient(
+          135deg,
+          rgba(246, 200, 79, 0.18) 0,
+          rgba(246, 200, 79, 0.18) 2px,
+          transparent 2px,
+          transparent 9px
+        );
+      }
+      .event-corn {
+        position: relative;
+        width: 3.7rem;
+        height: 3.7rem;
+        transform-origin: 52% 74%;
+        filter: drop-shadow(0 0.55rem 0.7rem rgba(0, 0, 0, 0.28));
+      }
+      .newsletter-card {
+        overflow: hidden;
+      }
+      .newsletter-embed {
+        width: 100%;
+        margin-top: 1.25rem;
+      }
+      .newsletter-embed > div,
+      .newsletter-embed form,
+      .newsletter-embed .bricks-form,
+      .newsletter-embed .bricks-form__fieldset {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .newsletter-embed .bricks-form__fieldset {
+        display: grid !important;
+        gap: 0.55rem !important;
+      }
+      .newsletter-embed .bricks-form__field,
+      .newsletter-embed .bricks-form__submit {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .newsletter-embed .bricks-form__field {
+        display: grid !important;
+        gap: 0.4rem !important;
+      }
+      .newsletter-embed label,
+      .newsletter-embed .bricks-form__label {
+        margin: 0 !important;
+        color: #ffffff !important;
+        font-size: 0.875rem !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+        text-align: left !important;
+      }
+      .newsletter-embed input:not([type="checkbox"]):not([type="radio"]),
+      .newsletter-embed select,
+      .newsletter-embed textarea {
+        width: 100% !important;
+        min-height: 2.75rem !important;
+        margin: 0 !important;
+        padding: 0.75rem 0.9rem !important;
+        border: 1px solid rgba(255, 255, 255, 0.35) !important;
+        border-radius: 0.75rem !important;
+        background: #ffffff !important;
+        color: #102820 !important;
+        font: inherit !important;
+        box-shadow: none !important;
+      }
+      .newsletter-embed button,
+      .newsletter-embed input[type="submit"],
+      .newsletter-embed .bricks-form__submit button {
+        width: 100% !important;
+        min-height: 2.75rem !important;
+        margin: 0.15rem 0 0 !important;
+        border: 0 !important;
+        border-radius: 999px !important;
+        background: #CABA9C !important;
+        color: #102820 !important;
+        font-weight: 700 !important;
+        cursor: pointer;
+        transition: filter 0.2s ease, transform 0.2s ease;
+      }
+      .newsletter-embed button:hover,
+      .newsletter-embed input[type="submit"]:hover,
+      .newsletter-embed .bricks-form__submit button:hover {
+        filter: brightness(1.05);
+        transform: translateY(-1px);
+      }
+      .newsletter-embed .bricks-form__terms {
+        margin-top: 0.75rem !important;
+        color: rgba(255, 255, 255, 0.72) !important;
+        font-size: 0.8rem !important;
+        line-height: 1.4 !important;
+      }
+      .newsletter-embed .bricks-form__terms a {
+        color: #CABA9C !important;
+      }
+      .newsletter-embed iframe {
+        display: block;
+        width: 100% !important;
+        min-height: 150px;
+        border: 0;
+      }
       .blog-content .wp-block-columns {
         display: flex;
         gap: 2rem;
