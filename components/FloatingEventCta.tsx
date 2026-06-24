@@ -27,8 +27,8 @@ export const FloatingEventCta: React.FC<FloatingEventCtaProps> = ({ raised = fal
         y: { duration: 3.4, repeat: Infinity, ease: 'easeInOut' },
       }}
       className={`fixed right-4 ${
-        raised ? 'bottom-[13.5rem] sm:bottom-44 md:bottom-40' : 'bottom-4 md:bottom-6'
-      } z-[140] w-[calc(100vw-2rem)] max-w-[21.5rem] overflow-hidden rounded-2xl border border-khaki/50 bg-[#123529] text-white shadow-[0_24px_70px_-30px_rgba(0,0,0,0.65)] ring-1 ring-white/10 transition-[bottom] duration-300 md:right-6`}
+        raised ? 'bottom-[13.5rem] sm:bottom-44 md:bottom-auto md:top-28' : 'bottom-4 md:bottom-6'
+      } z-[140] w-[calc(100vw-2rem)] max-w-[21.5rem] overflow-hidden rounded-2xl border border-khaki/50 bg-[#123529] text-white shadow-[0_24px_70px_-30px_rgba(0,0,0,0.65)] ring-1 ring-white/10 transition-[bottom,top] duration-300 md:right-6`}
     >
       <span className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#f6c84f] via-khaki to-hunter-green" />
       <span className="absolute bottom-0 left-0 h-16 w-28 skew-x-[-18deg] bg-hunter-green/35" />
@@ -58,6 +58,7 @@ export const FloatingEventCta: React.FC<FloatingEventCtaProps> = ({ raised = fal
             Evento online
           </div>
           <p className="text-sm font-bold leading-tight md:text-[0.95rem]">Encerramento da etapa milho</p>
+          <p className="mt-1 text-xs font-semibold text-khaki">25 de junho | 17h (horario Brasilia)</p>
           <p className="mt-1.5 text-xs leading-relaxed text-white/78">
             Resultados, bastidores e leituras de campo em primeira mão.
           </p>
