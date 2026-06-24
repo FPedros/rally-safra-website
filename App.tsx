@@ -167,7 +167,7 @@ const App: React.FC = () => {
   const [blogPage, setBlogPage] = useState<number>(1);
   const [scrollToPostId, setScrollToPostId] = useState<number | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [showPrivacyNotice, setShowPrivacyNotice] = useState(false);
+  const [showPrivacyNotice, setShowPrivacyNotice] = useState(true);
   const privacyPath = '/politica-privacidade';
   const legacyPrivacyPath = '/poitica-privacidade';
 
@@ -390,17 +390,6 @@ const App: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const privacyNoticeKey = 'rallydasafra_privacy_notice_ack';
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem(privacyNoticeKey);
-      if (!stored) setShowPrivacyNotice(true);
-    } catch {
-      setShowPrivacyNotice(true);
-    }
-  }, [privacyNoticeKey]);
-
   useEffect(() => {
     const selectedPost = currentView === 'post' ? posts.find((post) => post.id === selectedPostId) || null : null;
     const viewForSeo: View = currentView === 'post' && !selectedPost ? 'blog' : currentView;
@@ -571,11 +560,6 @@ const App: React.FC = () => {
   };
 
   const handlePrivacyNoticeDismiss = () => {
-    try {
-      localStorage.setItem(privacyNoticeKey, new Date().toISOString());
-    } catch {
-      // Ignore storage errors to avoid blocking dismissal.
-    }
     setShowPrivacyNotice(false);
   };
 

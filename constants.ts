@@ -25,6 +25,7 @@ export const HERO_IMAGES = dynamicHeroImages;
 export const EBOOK_DOWNLOAD_URL = `${assetBase}arquivo-download/e-book-rally-safra.pdf`;
 export const FEATURED_EVENT_REGISTRATION_URL =
   'http://rallydasafra.rds.land/evento-online-rally-da-safra-2026-encerramento-milho';
+export const FEATURED_EVENT_START_AT = '2026-06-25T17:00:00-03:00';
 
 export const MOCK_POSTS: BlogPost[] = [
   {

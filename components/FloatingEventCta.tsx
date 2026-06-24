@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, CalendarDays, X } from 'lucide-react';
-import { FEATURED_EVENT_REGISTRATION_URL } from '../constants';
+import { FEATURED_EVENT_REGISTRATION_URL, FEATURED_EVENT_START_AT } from '../constants';
 
 type FloatingEventCtaProps = {
   raised?: boolean;
@@ -9,9 +9,21 @@ type FloatingEventCtaProps = {
 
 const assetBase = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
 const cornIconUrl = `${assetBase}icons/corn.svg`;
+const eventStartTime = new Date(FEATURED_EVENT_START_AT).getTime();
+
+const getHasEventPassed = () => Date.now() >= eventStartTime;
 
 export const FloatingEventCta: React.FC<FloatingEventCtaProps> = ({ raised = false }) => {
   const [isVisible, setIsVisible] = useState(true);
+  const [hasEventPassed, setHasEventPassed] = useState(getHasEventPassed);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setHasEventPassed(getHasEventPassed());
+    }, 30000);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   if (!isVisible) return null;
 
@@ -58,7 +70,9 @@ export const FloatingEventCta: React.FC<FloatingEventCtaProps> = ({ raised = fal
             Evento online
           </div>
           <p className="text-sm font-bold leading-tight md:text-[0.95rem]">Encerramento da etapa milho</p>
-          <p className="mt-1 text-xs font-semibold text-khaki">25 de junho | 17h (horario Brasilia)</p>
+          {!hasEventPassed && (
+            <p className="mt-1 text-xs font-semibold text-khaki">25 de junho | 17h (horario Brasilia)</p>
+          )}
           <p className="mt-1.5 text-xs leading-relaxed text-white/78">
             Resultados, bastidores e leituras de campo em primeira mão.
           </p>
