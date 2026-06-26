@@ -77,6 +77,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
     { name: 'Contato', view: 'home', sectionId: 'contato' },
   ];
   const navLinksMobile = [...navLinks, { name: 'Blog', view: 'blog', sectionId: undefined }];
+  const showHeaderEventCta = false;
 
   const ctaClass = isHeroStage
     ? 'border-2 border-white text-white bg-transparent hover:bg-white/10'
@@ -162,14 +163,16 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, categor
               </div>
             )}
           </div>
-          <a
-            href={FEATURED_EVENT_REGISTRATION_URL}
-            target="_blank"
-            rel="noreferrer"
-            className={`px-5 py-2 rounded-full font-bold text-sm transition-colors cursor-pointer ${ctaClass}`}
-          >
-            Inscreva-se: Encerramento da Etapa Milho
-          </a>
+          {showHeaderEventCta && (
+            <a
+              href={FEATURED_EVENT_REGISTRATION_URL}
+              target="_blank"
+              rel="noreferrer"
+              className={`px-5 py-2 rounded-full font-bold text-sm transition-colors cursor-pointer ${ctaClass}`}
+            >
+              Inscreva-se: Encerramento da Etapa Milho
+            </a>
+          )}
         </div>
 
         {/* Mobile Menu Button */}

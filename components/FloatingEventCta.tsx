@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, CalendarDays, X } from 'lucide-react';
-import { FEATURED_EVENT_REGISTRATION_URL, FEATURED_EVENT_START_AT } from '../constants';
+import { FEATURED_EVENT_EBOOK_URL, FEATURED_EVENT_REGISTRATION_URL, FEATURED_EVENT_START_AT } from '../constants';
 
 type FloatingEventCtaProps = {
   raised?: boolean;
@@ -9,6 +9,7 @@ type FloatingEventCtaProps = {
 
 const assetBase = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
 const cornIconUrl = `${assetBase}icons/corn.svg`;
+const ebookIconUrl = `${assetBase}icons/ebook-3d.png`;
 const eventStartTime = new Date(FEATURED_EVENT_START_AT).getTime();
 
 const getHasEventPassed = () => Date.now() >= eventStartTime;
@@ -27,10 +28,40 @@ export const FloatingEventCta: React.FC<FloatingEventCtaProps> = ({ raised = fal
 
   if (!isVisible) return null;
 
+  const ctaContent = hasEventPassed
+    ? {
+        ariaLabel: 'Anuncio do e-book Milho 25/26 do Rally da Safra',
+        closeLabel: 'Fechar anuncio do e-book',
+        eyebrow: 'E-book Milho 25/26',
+        title: 'E-book do Rally da Safra',
+        date: null,
+        description:
+          'A expedição percorreu mais de 72% da produção nacional de milho. Agora os dados estão reunidos em um único e-book, direto do campo, para você.',
+        href: FEATURED_EVENT_EBOOK_URL,
+        buttonLabel: 'Acesse o e-book',
+        buttonAriaLabel: 'Acesse o e-book do Rally da Safra',
+        eyebrowIcon: null,
+        mainIconUrl: ebookIconUrl,
+      }
+    : {
+        ariaLabel: 'Anuncio do evento Encerramento da etapa milho',
+        closeLabel: 'Fechar anuncio do evento',
+        eyebrow: 'Evento online',
+        title: 'Encerramento da etapa milho',
+        date: '25 de junho | 17h (horario Brasilia)',
+        description: 'Resultados, bastidores e leituras de campo em primeira mão.',
+        href: FEATURED_EVENT_REGISTRATION_URL,
+        buttonLabel: 'Cadastre-se aqui',
+        buttonAriaLabel: 'Cadastre-se aqui no encerramento da etapa milho',
+        eyebrowIcon: CalendarDays,
+        mainIconUrl: cornIconUrl,
+      };
+  const EyebrowIcon = ctaContent.eyebrowIcon;
+
   return (
     <motion.div
       role="complementary"
-      aria-label="Anuncio do evento Encerramento da etapa milho"
+      aria-label={ctaContent.ariaLabel}
       initial={{ opacity: 0, y: 24, scale: 0.94 }}
       animate={{ opacity: 1, y: [0, -6, 0], scale: 1 }}
       transition={{
@@ -49,7 +80,7 @@ export const FloatingEventCta: React.FC<FloatingEventCtaProps> = ({ raised = fal
         type="button"
         onClick={() => setIsVisible(false)}
         className="absolute right-2 top-2 z-10 grid h-7 w-7 place-items-center rounded-full bg-white/10 text-white/80 transition-colors hover:bg-white/20 hover:text-white"
-        aria-label="Fechar anuncio do evento"
+        aria-label={ctaContent.closeLabel}
       >
         <X className="h-4 w-4" />
       </button>
@@ -59,33 +90,31 @@ export const FloatingEventCta: React.FC<FloatingEventCtaProps> = ({ raised = fal
           aria-hidden="true"
           animate={{ rotate: [-2, 3, -2] }}
           transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
-          className="event-corn mt-0.5 shrink-0"
+          className="event-cta-icon mt-0.5 shrink-0"
         >
-          <img src={cornIconUrl} alt="" className="h-full w-full object-contain" loading="lazy" />
+          <img src={ctaContent.mainIconUrl} alt="" className="h-full w-full object-contain" loading="lazy" />
         </motion.div>
 
         <div className="min-w-0 flex-1">
           <div className="mb-2 flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.18em] text-khaki">
-            <CalendarDays className="h-3.5 w-3.5" />
-            Evento online
+            {EyebrowIcon && <EyebrowIcon className="h-3.5 w-3.5" />}
+            {ctaContent.eyebrow}
           </div>
-          <p className="text-sm font-bold leading-tight md:text-[0.95rem]">Encerramento da etapa milho</p>
-          {!hasEventPassed && (
-            <p className="mt-1 text-xs font-semibold text-khaki">25 de junho | 17h (horario Brasilia)</p>
-          )}
+          <p className="text-sm font-bold leading-tight md:text-[0.95rem]">{ctaContent.title}</p>
+          {ctaContent.date && <p className="mt-1 text-xs font-semibold text-khaki">{ctaContent.date}</p>}
           <p className="mt-1.5 text-xs leading-relaxed text-white/78">
-            Resultados, bastidores e leituras de campo em primeira mão.
+            {ctaContent.description}
           </p>
 
           <div className="mt-3 flex items-center justify-between gap-3">
             <a
-              href={FEATURED_EVENT_REGISTRATION_URL}
+              href={ctaContent.href}
               target="_blank"
               rel="noreferrer"
               className="group inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-bold text-khaki ring-1 ring-white/10 transition-colors hover:bg-white/15"
-              aria-label="Cadastre-se aqui no encerramento da etapa milho"
+              aria-label={ctaContent.buttonAriaLabel}
             >
-              Cadastre-se aqui
+              {ctaContent.buttonLabel}
               <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-khaki text-dark-green transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                 <ArrowUpRight className="h-4 w-4" />
               </span>
