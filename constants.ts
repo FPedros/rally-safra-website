@@ -1,28 +1,16 @@
 import { BlogPost, Sponsor } from './types';
+import { HERO_IMAGE_FILES } from './generated/publicAssets';
 
 // Usa BASE_URL para funcionar em deploys em subpasta (evita path quebrado)
 const assetBase = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
 
-// Carrega automaticamente todas as imagens da pasta public/hero/banner-hero
-const heroImports = import.meta.glob('./public/hero/banner-hero/*.{jpg,jpeg,png,webp,svg,gif}', {
-  eager: true,
-  as: 'url',
-}) as Record<string, string>;
+const publicAssetUrl = (filePath: string) =>
+  `${assetBase}${filePath.split('/').map(encodeURIComponent).join('/')}`;
 
-const normalizePublicUrl = (url: string) => {
-  // Remove prefixos como "/public/" ou "./public/" e aplica BASE_URL
-  const cleaned = url.replace(/^\.?\/?public\//, '').replace(/^\//, '');
-  return `${assetBase}${cleaned}`;
-};
-
-const dynamicHeroImages = Object.keys(heroImports)
-  .sort()
-  .map((key) => normalizePublicUrl(heroImports[key]));
-
-export const HERO_IMAGES = dynamicHeroImages;
+export const HERO_IMAGES = HERO_IMAGE_FILES.map(publicAssetUrl);
 
 // E-book para download (espera-se o arquivo em /public/arquivo-download ou /dist/arquivo-download)
-export const EBOOK_DOWNLOAD_URL = `${assetBase}arquivo-download/e-book-rally-safra.pdf`;
+export const EBOOK_DOWNLOAD_URL = publicAssetUrl('arquivo-download/e-book-rally-safra.pdf');
 export const FEATURED_EVENT_REGISTRATION_URL =
   'http://rallydasafra.rds.land/evento-online-rally-da-safra-2026-encerramento-milho';
 export const FEATURED_EVENT_EBOOK_URL =
