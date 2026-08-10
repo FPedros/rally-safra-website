@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Lenis from 'lenis';
+import { motion } from 'framer-motion';
 import { ChevronUp } from 'lucide-react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -110,11 +112,23 @@ const LandingPage: React.FC<{
     <>
       <Hero />
       <div id="hero-end" className="h-px w-full" />
-      <section className="bg-light-sand text-dark-green py-12">
+      <motion.section
+        className="bg-light-sand text-dark-green py-12"
+        initial={{ opacity: 0, y: 28 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="container mx-auto px-6 md:px-10 lg:px-16">
-          <div className="bg-white shadow-[0_20px_60px_-30px_rgba(0,0,0,0.25)] border border-khaki/30 rounded-3xl p-8 md:p-10 flex flex-col gap-8">
+          <motion.div
+            className="bg-white shadow-[0_20px_60px_-30px_rgba(0,0,0,0.25)] border border-khaki/30 rounded-3xl p-8 md:p-10 flex flex-col gap-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.3 }}
+            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.14 } } }}
+          >
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <div>
+              <motion.div variants={{ hidden: { opacity: 0, x: -24 }, visible: { opacity: 1, x: 0 } }}>
                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-raw-umber mb-2">Edição</p>
                 <h2 className="font-heading text-3xl md:text-4xl font-bold">Rally da Safra 2026</h2>
                 <p className="text-gray-600 mt-2 max-w-2xl">
@@ -132,8 +146,8 @@ const LandingPage: React.FC<{
                     <span className="relative z-10 text-xs bg-white/20 px-2 py-1 rounded-full">Download</span>
                   </a>
                 </div>
-              </div>
-              <img
+              </motion.div>
+              <motion.img
                 src={edicaoImage}
                 alt="Edição Rally da Safra"
                 className="h-28 md:h-36 w-auto drop-shadow-lg rounded-2xl object-cover"
@@ -141,11 +155,13 @@ const LandingPage: React.FC<{
                   const target = e.currentTarget as HTMLImageElement;
                   if (target.src !== edicaoFallback) target.src = edicaoFallback;
                 }}
+                variants={{ hidden: { opacity: 0, x: 24, scale: 0.96 }, visible: { opacity: 1, x: 0, scale: 1 } }}
+                transition={{ duration: 0.65 }}
               />
             </div>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
       <HistorySection onNavigate={() => onNavigate('historia')} />
       <SponsorsSection />
       <BlogSection onNavigate={onNavigate} onOpenPost={onOpenPost} posts={posts} loading={loading} />
@@ -168,8 +184,47 @@ const App: React.FC = () => {
   const [scrollToPostId, setScrollToPostId] = useState<number | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showPrivacyNotice, setShowPrivacyNotice] = useState(true);
+  const lenisRef = useRef<Lenis | null>(null);
   const privacyPath = '/politica-privacidade';
   const legacyPrivacyPath = '/poitica-privacidade';
+
+  useEffect(() => {
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reducedMotionQuery.matches) return;
+
+    const lenis = new Lenis({
+      duration: 1.15,
+      smoothWheel: true,
+      syncTouch: false,
+    });
+    lenisRef.current = lenis;
+
+    let animationFrameId = 0;
+    const animate = (time: number) => {
+      lenis.raf(time);
+      animationFrameId = window.requestAnimationFrame(animate);
+    };
+    animationFrameId = window.requestAnimationFrame(animate);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+      lenis.destroy();
+      lenisRef.current = null;
+    };
+  }, []);
+
+  const scrollTo = (target: number | HTMLElement) => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(target);
+      return;
+    }
+
+    if (typeof target === 'number') {
+      window.scrollTo({ top: target, behavior: 'smooth' });
+    } else {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const normalizePath = (path: string) => (path || '/').replace(/\/+$/, '') || '/';
@@ -522,14 +577,14 @@ const App: React.FC = () => {
         setTimeout(() => {
           const element = document.getElementById(sectionId);
           if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+            scrollTo(element);
           }
         }, 100);
       } else {
-        window.scrollTo(0, 0);
+        scrollTo(0);
       }
     } else {
-      window.scrollTo(0, 0);
+      scrollTo(0);
     }
   };
 
@@ -542,7 +597,7 @@ const App: React.FC = () => {
     setSelectedPostId(postId);
     if (postId !== null) {
       setCurrentView('post');
-      window.scrollTo(0, 0);
+      scrollTo(0);
     }
   };
 
@@ -556,7 +611,7 @@ const App: React.FC = () => {
     setBlogPage(1);
     setSelectedPostId(null);
     setCurrentView('blog');
-    window.scrollTo(0, 0);
+    scrollTo(0);
   };
 
   const handlePrivacyNoticeDismiss = () => {
@@ -606,7 +661,7 @@ const App: React.FC = () => {
       {showScrollTop && (
         <button
           type="button"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={() => scrollTo(0)}
           className={`fixed left-6 z-[150] p-3 rounded-full bg-gradient-to-r from-hunter-green to-raw-umber text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all ${
             isFloatingEventCtaRaised ? 'bottom-[13.5rem] sm:bottom-44 md:bottom-40' : 'bottom-6'
           }`}
@@ -620,6 +675,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-
-

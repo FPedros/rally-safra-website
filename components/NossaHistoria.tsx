@@ -210,7 +210,7 @@ export const NossaHistoria: React.FC = () => {
                 className="relative pl-12 md:pl-16"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
+                viewport={{ once: false, amount: 0.25 }}
                 transition={{ duration: 0.55, delay: idx * 0.03, ease: 'easeOut' }}
               >
                 <div className="absolute -left-1 top-2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-amber-400 to-amber-200 text-emerald-950 font-black flex items-center justify-center shadow-[0_15px_40px_-15px_rgba(251,191,36,0.9)] ring-4 ring-emerald-900/50 rotate-2">
@@ -240,4 +240,3 @@ export const NossaHistoria: React.FC = () => {
 };
 
 export default NossaHistoria;
-

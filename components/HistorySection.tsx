@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 type HistorySectionProps = {
   onNavigate: () => void;
@@ -10,9 +11,15 @@ export const HistorySection: React.FC<HistorySectionProps> = ({ onNavigate }) =>
     <section id="historia" className="py-20 bg-white relative overflow-hidden">
       <div className="absolute top-0 right-0 w-64 h-64 bg-cerrado-brown/5 rounded-full -translate-y-1/2 translate-x-1/2" />
 
-      <div className="container mx-auto px-6 md:px-10 lg:px-16 relative z-10">
+      <motion.div
+        className="container mx-auto px-6 md:px-10 lg:px-16 relative z-10"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.22 }}
+        variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.18 } } }}
+      >
         <div className="flex flex-col md:flex-row items-center gap-12">
-          <div className="md:w-1/2">
+          <motion.div className="md:w-1/2" variants={{ hidden: { opacity: 0, x: -36 }, visible: { opacity: 1, x: 0 } }} transition={{ duration: 0.7 }}>
             <h2 className="font-heading text-4xl font-bold text-amazon-green mb-6 relative inline-block">
               Nossa História
               <span className="absolute bottom-0 left-0 w-1/3 h-1 bg-cerrado-brown rounded"></span>
@@ -30,8 +37,8 @@ export const HistorySection: React.FC<HistorySectionProps> = ({ onNavigate }) =>
               Ler história completa
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
-          </div>
-          <div className="md:w-1/2 relative">
+          </motion.div>
+          <motion.div className="md:w-1/2 relative" variants={{ hidden: { opacity: 0, x: 36, scale: 0.97 }, visible: { opacity: 1, x: 0, scale: 1 } }} transition={{ duration: 0.75 }}>
             <div className="aspect-video bg-gray-200 rounded-2xl overflow-hidden shadow-2xl relative">
               <img
                 src="/nossa-historia%20ap.JPG"
@@ -43,9 +50,9 @@ export const HistorySection: React.FC<HistorySectionProps> = ({ onNavigate }) =>
               </div>
             </div>
             <div className="absolute -bottom-4 -left-4 w-full h-full border-2 border-cerrado-brown rounded-2xl -z-10"></div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

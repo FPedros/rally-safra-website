@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Facebook, Instagram, Youtube } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 declare global {
   interface Window {
@@ -104,8 +105,14 @@ export const ContactSection: React.FC = () => {
   return (
     <section id="contato" className="py-24 bg-dark-green text-white relative">
       <div className="container mx-auto px-6 md:px-10 lg:px-16">
-        <div className="grid md:grid-cols-2 gap-16 items-start">
-          <div>
+        <motion.div
+          className="grid md:grid-cols-2 gap-16 items-start"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.18 }}
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.2 } } }}
+        >
+          <motion.div variants={{ hidden: { opacity: 0, x: -32 }, visible: { opacity: 1, x: 0 } }} transition={{ duration: 0.7 }}>
             <h2 className="font-heading text-4xl font-bold mb-6">Siga o Rally</h2>
             <p className="text-gray-200 mb-8 text-lg">
               Conteúdo oficial, bastidores das etapas e novidades em tempo real. Escolha a sua rede favorita e acompanhe o Rally da Safra.
@@ -113,12 +120,16 @@ export const ContactSection: React.FC = () => {
 
             <div className="grid sm:grid-cols-2 gap-4">
               {socialLinks.map(({ name, handle, href, color, Icon, iconClassName }) => (
-                <a
+                <motion.a
                   key={name}
                   href={href}
                   target="_blank"
                   rel="noreferrer"
                   className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false }}
+                  transition={{ duration: 0.45, delay: socialLinks.findIndex((link) => link.name === name) * 0.07 }}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${color} flex items-center justify-center text-white shadow-lg`}>
@@ -130,25 +141,28 @@ export const ContactSection: React.FC = () => {
                     </div>
                   </div>
                   <span className="text-khaki font-bold text-sm group-hover:translate-x-1 transition-transform">Seguir</span>
-                </a>
+                </motion.a>
               ))}
             </div>
 
             <p className="text-sm text-gray-300 mt-6">
               Prefere falar diretamente com a equipe? Envie uma mensagem pelas redes sociais e retornaremos em breve.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="newsletter-card md:self-center rounded-2xl p-6 md:p-8 border border-white/10 bg-white/5 shadow-2xl text-white">
+          <motion.div
+            className="newsletter-card md:self-center rounded-2xl p-6 md:p-8 border border-white/10 bg-white/5 shadow-2xl text-white"
+            variants={{ hidden: { opacity: 0, x: 32, scale: 0.97 }, visible: { opacity: 1, x: 0, scale: 1 } }}
+            transition={{ duration: 0.75 }}
+          >
             <h3 className="text-2xl font-bold mb-2">Inscreva-se na newsletter do Rally</h3>
             <p className="text-gray-200">
               Receba novidades e os bastidores das etapas diretamente no seu e-mail.
             </p>
             <div id="newsletter-rallydasafra-b9ac60da8f734314c843" role="main" className="newsletter-embed" />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
 };
-

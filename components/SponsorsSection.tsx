@@ -33,6 +33,7 @@ const sponsorLinks: Array<[string, string]> = [
   ['tim', 'https://www.tim.com.br/para-empresas/iot-solutions/agro'],
   ['yara', 'https://www.yarabrasil.com.br/'],
   ['jdt', 'https://www.jdtseguros.com.br/'],
+  ['itau_bba', 'https://www.itau.com.br/itaubba-pt'],
 ];
 
 const getSponsorLink = (fileName: string): string | undefined => {
@@ -134,7 +135,7 @@ export const SponsorsSection: React.FC = () => {
           variants={sectionEntrance}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.6 }}
+          viewport={{ once: false, amount: 0.6 }}
         >
           <h2 className="font-heading text-4xl font-bold text-dark-green mb-4">Patrocinadores</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
@@ -149,7 +150,7 @@ export const SponsorsSection: React.FC = () => {
             variants={categoryEntrance}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.18 }}
+            viewport={{ once: false, amount: 0.18 }}
           >
             <div className="flex items-center gap-4 mb-10">
               <div className="h-px bg-gray-300 flex-1"></div>
@@ -184,11 +185,11 @@ export const SponsorsSection: React.FC = () => {
             variants={categoryEntrance}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.18 }}
+            viewport={{ once: false, amount: 0.18 }}
           >
             <div className="flex items-center gap-4 mb-10">
               <div className="h-px bg-gray-300 flex-1"></div>
-              <h3 className="font-heading text-2xl font-bold text-raw-umber px-4 py-2 border border-raw-umber rounded-full bg-white">
+              <h3 className="font-heading text-2xl font-bold text-white px-5 py-2.5 border border-[#1E274C] rounded-full bg-[#1E274C] shadow-sm">
                 {SponsorCategory.COTTON}
               </h3>
               <div className="h-px bg-gray-300 flex-1"></div>

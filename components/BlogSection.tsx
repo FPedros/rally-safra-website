@@ -24,7 +24,13 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
       </div>
 
       <div className="container mx-auto px-6 md:px-10 lg:px-16 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+        <motion.div
+          className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.5 }}
+          transition={{ duration: 0.65 }}
+        >
           <div className="max-w-2xl">
             <span className="text-hunter-green font-bold tracking-wider text-sm uppercase mb-2 block">
               Notícias & Insights
@@ -43,7 +49,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
             Ver todo o blog
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
-        </div>
+        </motion.div>
 
         {/* Featured Post Card */}
         {isLoading ? (
@@ -61,7 +67,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.6 }}
           className="grid grid-cols-1 lg:grid-cols-12 gap-0 mb-12 rounded-3xl overflow-hidden shadow-2xl bg-white group hover:shadow-3xl transition-shadow duration-500"
         >
@@ -148,7 +154,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
                 key={post.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 className={`${visibilityClass} flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:-translate-y-1`}
               >
@@ -215,16 +221,20 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onOpenPost
         )}
 
         {/* Mobile View All Button */}
-        <div className="mt-12 text-center md:hidden">
+        <motion.div
+          className="mt-12 text-center md:hidden"
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+        >
           <button 
             onClick={() => onNavigate('blog')}
             className="w-full bg-white border border-gray-300 text-dark-green font-bold py-4 rounded-xl hover:bg-gray-50 transition-colors shadow-sm"
           >
             Ver todas as notícias
           </button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 };
-

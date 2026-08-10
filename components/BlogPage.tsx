@@ -223,7 +223,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({
                   id={`post-card-${post.id}`}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   transition={{ delay: idx * 0.05 }}
                   className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl border border-gray-100 flex flex-col cursor-pointer relative"
                   onClick={() => handleOpen(post.id)}
@@ -303,4 +303,3 @@ export const BlogPage: React.FC<BlogPageProps> = ({
     </div>
   );
 };
-

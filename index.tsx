@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { MotionConfig } from 'framer-motion';
+import 'lenis/dist/lenis.css';
 import App from './App';
 
 const rootElement = document.getElementById('root');
@@ -10,6 +12,8 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <App />
+    <MotionConfig reducedMotion="user">
+      <App />
+    </MotionConfig>
   </React.StrictMode>
 );

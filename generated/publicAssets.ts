@@ -23,6 +23,7 @@ export const SPONSOR_SOY_FILES = [
 
 export const SPONSOR_COTTON_FILES = [
   "patrocinadores-algodao/FiberMax_Logo Azul Escuro com Fundo Branco.jpg",
+  "patrocinadores-algodao/Itau_BBA__logo_neg_hex_680x680.png",
   "patrocinadores-algodao/Laferlins 2.png",
   "patrocinadores-algodao/Logo BASF_Preto.png",
   "patrocinadores-algodao/main-logo.png",

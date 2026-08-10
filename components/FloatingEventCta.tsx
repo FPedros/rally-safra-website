@@ -30,16 +30,16 @@ export const FloatingEventCta: React.FC<FloatingEventCtaProps> = ({ raised = fal
 
   const ctaContent = hasEventPassed
     ? {
-        ariaLabel: 'Anuncio do e-book Milho 25/26 do Rally da Safra',
+        ariaLabel: 'Anuncio do e-book Algodão 25/26 do Rally da Safra',
         closeLabel: 'Fechar anuncio do e-book',
-        eyebrow: 'E-book Milho 25/26',
+        eyebrow: 'E-book Algodão 25/26',
         title: 'E-book do Rally da Safra',
         date: null,
         description:
-          'A expedição percorreu mais de 72% da produção nacional de milho. Agora os dados estão reunidos em um único e-book, direto do campo, para você.',
+          'Tenha acesso ao material completo apresentado na Largada Oficial desta etapa. Descubra as nossas projeções iniciais de área plantada...',
         href: FEATURED_EVENT_EBOOK_URL,
         buttonLabel: 'Acesse o e-book',
-        buttonAriaLabel: 'Acesse o e-book do Rally da Safra',
+        buttonAriaLabel: 'Acesse o e-book Algodão 25/26 do Rally da Safra',
         eyebrowIcon: null,
         mainIconUrl: ebookIconUrl,
       }
@@ -57,6 +57,7 @@ export const FloatingEventCta: React.FC<FloatingEventCtaProps> = ({ raised = fal
         mainIconUrl: cornIconUrl,
       };
   const EyebrowIcon = ctaContent.eyebrowIcon;
+  const isCottonEbook = hasEventPassed;
 
   return (
     <motion.div
@@ -71,10 +72,12 @@ export const FloatingEventCta: React.FC<FloatingEventCtaProps> = ({ raised = fal
       }}
       className={`fixed right-4 ${
         raised ? 'bottom-[13.5rem] sm:bottom-44 md:bottom-auto md:top-28' : 'bottom-4 md:bottom-6'
-      } z-[140] w-[calc(100vw-2rem)] max-w-[21.5rem] overflow-hidden rounded-2xl border border-khaki/50 bg-[#123529] text-white shadow-[0_24px_70px_-30px_rgba(0,0,0,0.65)] ring-1 ring-white/10 transition-[bottom,top] duration-300 md:right-6`}
+      } z-[140] w-[calc(100vw-2rem)] max-w-[21.5rem] overflow-hidden rounded-2xl border text-white shadow-[0_24px_70px_-30px_rgba(0,0,0,0.65)] ring-1 ring-white/10 transition-[bottom,top] duration-300 md:right-6 ${
+        isCottonEbook ? 'border-white/25 bg-[#1E274C]' : 'border-khaki/50 bg-[#123529]'
+      }`}
     >
-      <span className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#f6c84f] via-khaki to-hunter-green" />
-      <span className="absolute bottom-0 left-0 h-16 w-28 skew-x-[-18deg] bg-hunter-green/35" />
+      <span className={`absolute inset-x-0 top-0 h-1 ${isCottonEbook ? 'bg-gradient-to-r from-white/40 via-white to-white/40' : 'bg-gradient-to-r from-[#f6c84f] via-khaki to-hunter-green'}`} />
+      <span className={`absolute bottom-0 left-0 h-16 w-28 skew-x-[-18deg] ${isCottonEbook ? 'bg-white/10' : 'bg-hunter-green/35'}`} />
       <span className="event-cta-stripes absolute right-0 top-0 h-full w-12" />
       <button
         type="button"
@@ -96,7 +99,7 @@ export const FloatingEventCta: React.FC<FloatingEventCtaProps> = ({ raised = fal
         </motion.div>
 
         <div className="min-w-0 flex-1">
-          <div className="mb-2 flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.18em] text-khaki">
+          <div className={`mb-2 flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.18em] ${isCottonEbook ? 'text-white/80' : 'text-khaki'}`}>
             {EyebrowIcon && <EyebrowIcon className="h-3.5 w-3.5" />}
             {ctaContent.eyebrow}
           </div>
@@ -111,11 +114,11 @@ export const FloatingEventCta: React.FC<FloatingEventCtaProps> = ({ raised = fal
               href={ctaContent.href}
               target="_blank"
               rel="noreferrer"
-              className="group inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-bold text-khaki ring-1 ring-white/10 transition-colors hover:bg-white/15"
+              className={`group inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-bold ring-1 ring-white/10 transition-colors hover:bg-white/15 ${isCottonEbook ? 'text-white' : 'text-khaki'}`}
               aria-label={ctaContent.buttonAriaLabel}
             >
               {ctaContent.buttonLabel}
-              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-khaki text-dark-green transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+              <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ${isCottonEbook ? 'bg-white text-[#1E274C]' : 'bg-khaki text-dark-green'}`}>
                 <ArrowUpRight className="h-4 w-4" />
               </span>
             </a>

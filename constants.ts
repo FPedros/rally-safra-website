@@ -14,7 +14,7 @@ export const EBOOK_DOWNLOAD_URL = publicAssetUrl('arquivo-download/e-book-rally-
 export const FEATURED_EVENT_REGISTRATION_URL =
   'http://rallydasafra.rds.land/evento-online-rally-da-safra-2026-encerramento-milho';
 export const FEATURED_EVENT_EBOOK_URL =
-  'https://rallydasafra.rds.land/e-book-rally-da-safra-2026-encerramento-milho';
+  'https://rallydasafra.rds.land/e-book-rally-da-safra-2026-largada-algodao';
 export const FEATURED_EVENT_START_AT = '2026-06-25T17:00:00-03:00';
 
 export const MOCK_POSTS: BlogPost[] = [
