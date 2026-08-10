@@ -1,14 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
 import { HERO_IMAGES } from '../constants';
 import { ChevronDown } from 'lucide-react';
+
+type AnimatedCounterProps = {
+  target: number;
+  suffix: string;
+  decimals?: number;
+};
+
+const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ target, suffix, decimals = 0 }) => {
+  const counterRef = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(counterRef, { amount: 0.5 });
+  const reduceMotion = useReducedMotion();
+  const count = useMotionValue(reduceMotion ? target : 0);
+  const formattedCount = useTransform(count, (latest) => {
+    const number = new Intl.NumberFormat('pt-BR', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    }).format(latest);
+
+    return `+${number} ${suffix}`;
+  });
+
+  useEffect(() => {
+    if (reduceMotion) {
+      count.set(target);
+      return;
+    }
+
+    count.set(0);
+    if (!isInView) return;
+
+    const controls = animate(count, target, {
+      duration: 3.5,
+      delay: 0.25,
+      ease: [0.22, 1, 0.36, 1],
+    });
+
+    return () => controls.stop();
+  }, [count, isInView, reduceMotion, target]);
+
+  return <motion.span ref={counterRef}>{formattedCount}</motion.span>;
+};
 
 export const Hero: React.FC = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const editionStats = [
-    { value: '+1,99 milhões', label: 'de km percorridos' },
-    { value: '+34 mil', label: 'lavouras avaliadas' },
-    { value: '+220 mil', label: 'seguidores nas redes sociais' },
+    { target: 1.99, decimals: 2, suffix: 'milhões', label: 'de km percorridos' },
+    { target: 34, suffix: 'mil', label: 'lavouras avaliadas' },
+    { target: 220, suffix: 'mil', label: 'seguidores nas redes sociais' },
   ];
 
   useEffect(() => {
@@ -57,13 +98,15 @@ export const Hero: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
             {editionStats.map((stat, idx) => (
               <motion.div
-                key={stat.value}
+                key={stat.label}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 + idx * 0.08, duration: 0.5 }}
                 className="bg-white/10 border border-white/15 rounded-2xl p-4 md:p-5 shadow-lg backdrop-blur-sm hover:-translate-y-1 transition-transform duration-200 flex flex-col items-center"
               >
-                <p className="text-2xl md:text-3xl font-heading font-bold text-white drop-shadow-sm text-center">{stat.value}</p>
+                <p className="text-2xl md:text-3xl font-heading font-bold text-white drop-shadow-sm text-center">
+                  <AnimatedCounter target={stat.target} suffix={stat.suffix} decimals={stat.decimals} />
+                </p>
                 <p className="text-sm md:text-base text-gray-200 mt-1 leading-snug text-center">{stat.label}</p>
               </motion.div>
             ))}
