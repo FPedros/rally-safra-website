@@ -2,6 +2,7 @@
 // Run npm run generate:public-assets after adding or removing public assets.
 
 export const HERO_IMAGE_FILES = [
+  "hero/banner-hero/hero-0-algodao.webp",
   "hero/banner-hero/hero-1.webp",
   "hero/banner-hero/hero-2.webp",
   "hero/banner-hero/hero-3.webp",
